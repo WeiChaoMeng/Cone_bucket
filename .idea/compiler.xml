@@ -12,8 +12,5 @@
         <module name="conebucket-util" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="conebucket-web" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

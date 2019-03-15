@@ -1,0 +1,139 @@
+.header-top-area {
+    background: #fdfdfd;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.logo-div {
+    float: left;
+    width: 25%;
+    height: 60px;
+    vertical-align: middle;
+    line-height: 60px;
+    color: #000;
+    text-indent: 5px;
+}
+
+.action {
+    width: 60%;
+    float: left;
+    line-height: 57px;
+    color: #000;
+    display: flex;
+}
+
+.exit-div {
+    width: 15%;
+    color: #000000;
+    line-height: 60px;
+    float: left;
+    text-align: center;
+}
+
+.action-div {
+    width: 20%;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    float: left;
+}
+
+.action-div-border {
+    border-bottom: 2px #00acee solid;
+    color: #00acee;
+}
+
+.secondary-menu-outer {
+    background: #f8f8f8;
+}
+
+.secondary-menu-style {
+    width: 80%;
+    height: 40px;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+}
+
+.secondary-menu-style-color {
+    color: #00acee;
+}
+
+body {
+    background-color: #e7e8eb;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 13px;
+}
+
+.secondary-menu-system {
+    width: 25%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-system > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.secondary-menu-engineering {
+    width: 50%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-engineering > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.secondary-menu-device {
+    width: 100%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-device > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+}
+
+.secondary-menu-log {
+    width: 100%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-log > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 45%;
+}
+
+.content {
+    background: #e7e8eb;
+    width: 100%;
+    margin: 0 auto
+}
+
