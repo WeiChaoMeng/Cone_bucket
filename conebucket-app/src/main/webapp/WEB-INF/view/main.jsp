@@ -58,7 +58,7 @@
 
 <!--content-->
 <div class="content">
-    <iframe src="/engineeringQuery.do" id="inlineFrame" name="right" width="100%" style="height: 1150px;"
+    <iframe src="/projectQuery.do" id="inlineFrame" name="right" width="100%" style="height: 1150px;"
             frameborder="0" scrolling="auto"></iframe>
 </div>
 

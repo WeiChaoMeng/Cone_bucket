@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <!-- 设置自动扫描的包，只扫描Handler -->
-    <context:component-scan base-package="com.*" use-default-filters="false">
+    <context:component-scan base-package="com.jiaoke.*" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 

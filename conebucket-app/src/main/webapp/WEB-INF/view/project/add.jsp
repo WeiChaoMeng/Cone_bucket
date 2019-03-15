@@ -19,75 +19,36 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../static/css/engineering.css">
+    <link rel="stylesheet" href="../../../static/css/project.css">
+    <link rel="stylesheet" href="../../../static/plugin/date_pickers/date_picker.css">
     <!--引入高德地图JSAPI -->
     <script type="text/javascript"
             src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
     <script type="text/javascript"
             src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
-    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
-    <style>
-        .table-hover > tbody > tr:hover {
-            /*去除背景色*/
-            background-color: transparent;
-        }
-
-        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-            vertical-align: middle;
-        }
-
-        .form-control {
-            display: block;
-            width: 100%;
-        }
-
-        #windowBackgroundColor {
-            width: 100%;
-            height: 100%;
-            z-index: 8888;
-            background-color: #000000;
-            position: absolute;
-            opacity: 0.3;
-            display: none;
-            left: 0;
-        }
-
-        #container {
-            width: 100%;
-            height: 560px;
-        }
-
-        .map-close-img:before {
-            color: #f06e57;
-        }
-
-        .form-control{
-            font-size: 13px;
-        }
-    </style>
+    <%--<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>--%>
 </head>
-<body style="background: #e7e8eb;width: 80%;margin: 0 auto">
+<body>
 
 <!--<div id='windowBackgroundColor'></div>-->
 
 <div class="content" style="padding: 20px;background: #fff">
     <div class="panel-heading" style="font-size: 16px;border: 1px #bfbfbf solid;border-bottom: none;">新增工程</div>
-    <form id="streetlightDiseaseForm" type="get" onsubmit="addSubmit(); return false">
+    <form id="projectMessage">
         <table class="table table-condensed table-bordered table-hover">
             <tbody>
             <tr>
                 <td style="width: 10%">工程名称</td>
                 <td style="width: 40%">
-                    <input class="form-control" type="text" id="" name="diseaseNumber" value="" autocomplete="off"
-                           required="true">
+                    <input class="form-control" type="text" id="proName" name="proName" value="" autocomplete="off">
                 </td>
 
                 <td style="width: 10%">工程类型</td>
                 <td style="width: 40%">
-                    <select class="form-control" id="roadName" name="roadName" required="true">
-                        <option value="">大中修工程</option>
-                        <option value="">应急抢险</option>
-                        <option value="">日常维修</option>
+                    <select class="form-control" id="proType" name="proType">
+                        <c:forEach items="${projectTypeList}" var="projectType">
+                            <option value="${projectType.id}">${projectType.typeName}</option>
+                        </c:forEach>
                     </select>
                 </td>
             </tr>
@@ -95,7 +56,7 @@
             <tr>
                 <td style="width: 10%">工程概述</td>
                 <td colspan="3">
-                    <input class="form-control" type="text" id="" name="remarks" value="" required="true"
+                    <input class="form-control" type="text" id="proSummarize" name="proSummarize" value=""
                            autocomplete="off">
                 </td>
             </tr>
@@ -103,68 +64,110 @@
             <tr>
                 <td style="width: 10%">开始时间</td>
                 <td style="width: 40%">
-                    <select class="form-control" name="facilityCategory" id="facilityCategory" required="true">
-                        <option value="">--请选择--</option>
-                    </select>
+                    <input class="form-control" type="text" id="proStartTimeStr" name="proStartTimeStr"
+                           readonly="readonly"
+                           autocomplete="off">
                 </td>
 
                 <td style="width: 10%">结束时间</td>
                 <td style="width: 40%">
-                    <select class="form-control" id="diseaseDescribe" name="diseaseDescribe" keyname="病害小类"
-                            required="true">
-                        <option value="">--请选择--</option>
-                    </select>
+                    <input class="form-control" type="text" id="proEndTimeStr" name="proEndTimeStr" autocomplete="off"
+                           readonly="readonly">
                 </td>
             </tr>
 
             <tr>
-                <td style="width: 10%">是否有锥桶</td>
+                <td style="">主管单位</td>
                 <td style="width: 40%">
-                    <select class="form-control" id="" name="diseaseDescribe" keyname="病害小类"
-                            required="true">
-                        <option value="">--请选择--</option>
-                        <option value="">是</option>
-                        <option value="">否</option>
-                    </select>
+                    <input class="form-control" type="text" id="governorUnit" name="governorUnit" autocomplete="off">
                 </td>
 
-                <td style="width: 10%">锥桶类型</td>
+                <td style="">联系方式</td>
                 <td style="width: 40%">
-                    <select class="form-control" id="" name="diseaseDescribe" keyname="病害小类"
-                            required="true">
-                        <option value="">--请选择--</option>
-                        <option value="">内部监管</option>
-                        <option value="">高德平台</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td style="width: 10%">锥桶编号</td>
-                <td colspan="3">
-                    <input class="form-control" type="text" id="" name="remarks" value="" required="true"
+                    <input class="form-control" type="text" id="governorUnitPhone" name="governorUnitPhone"
                            autocomplete="off">
                 </td>
             </tr>
 
             <tr>
-                <td colspan="4" style="width: 10%">工程位置</td>
+                <td style="">施工单位</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="constructionUnit" name="constructionUnit"
+                           autocomplete="off">
+                </td>
+
+                <td style="">联系方式</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="constructionUnitPhone" name="constructionUnitPhone"
+                           autocomplete="off">
+                </td>
+            </tr>
+
+            <tr>
+                <td style="">监理单位</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="supervisorUnit" name="supervisorUnit"
+                           autocomplete="off">
+                </td>
+
+                <td style="">联系方式</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="supervisorUnitPhone" name="supervisorUnitPhone"
+                           autocomplete="off">
+                </td>
+            </tr>
+
+            <tr>
+                <td style="">工程位置</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="proLocation" name="proLocation" autocomplete="off">
+                </td>
+
+                <td style="">是否有锥桶</td>
+                <td style="width: 40%">
+                    <select class="form-control" id="coneBucket">
+                        <option value="1">否</option>
+                        <option value="2">是</option>
+                    </select>
+                </td>
+
+            </tr>
+
+            <tr id="coneBucketTypeSelect" style="display: none">
+                <td style="">锥桶类型</td>
+                <td style="width: 40%">
+                    <select class="form-control" id="coneBucketType" name="coneBucketType">
+                        <c:forEach items="${coneBucketTypeList}" var="coneBucketType">
+                            <option value="${coneBucketType.id}">${coneBucketType.typeName}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+
+                <td style="">锥桶编号</td>
+                <td colspan="3">
+                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off">
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="width: 10%">施工范围</td>
             </tr>
 
             <tr>
                 <td colspan="4" rowspan="5" style="height: 600px;">
                     <input type="button" value="重新加载地图" onclick="reloadMap()"
                            style="background: #00acee;color: #fff;padding: 5px;float: right; margin: 0 10px 5px 0;">
+                    <input type="hidden" id="proScope" name="proScope">
                     <div id="container"></div>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div style="text-align: center">
-            <input class="btn btn-primary btn-sm" type="submit" value="提交">
-            <input class="btn btn-primary btn-sm" type="button" onclick="backOff()" value="返回">
-        </div>
     </form>
+    <div style="text-align: center">
+        <input class="btn btn-primary btn-sm" type="button" value="提交" onclick="commit()">
+        <input class="btn btn-primary btn-sm" type="button" onclick="backOff()" value="返回">
+    </div>
 </div>
 
 <!--<div id="win"
@@ -183,7 +186,8 @@
           style="background: #c1bfbf;width: 100px;height: 30px;position: absolute;top: 50%;left: 45%;font-size: 16px;text-align: center;line-height: 30px;display: none">定位失败</span>
 </div>-->
 </body>
-<script src="../../../static/js/jquery-1.12.4.min.js"></script>
+<script src="../../../static/js/jquery.js"></script>
+<script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
 <script>
     //返回
     function backOff() {
@@ -226,7 +230,7 @@
             // 图标尺寸
             size: new AMap.Size(19, 23),
             // 图标的取图地址
-            image: "../img/poi-marker-default.png",
+            image: "../../../static/img/poi-marker-default.png",
             // 图标所用图片大小
             imageSize: new AMap.Size(20, 25),
             // 图标取图偏移量
@@ -273,9 +277,40 @@
         });
     }
 
+    //projectMessage
+    function commit() {
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:8080/projectMessage/add.do',
+            data: $('#projectMessage').serialize(),
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (data) {
+                if (data === "success") {
+                    alert('添加成功');
+                } else {
+                    alert('添加失败');
+                }
+            }
+        });
+    }
+
+    //是否有锥桶
+    $('#coneBucket').change(function () {
+        if ($(this).val() == 1) {
+            $('#coneBucketTypeSelect').hide();
+            $('#coneBucketType').empty();
+        } else if ($(this).val() == 2) {
+            $('#coneBucketTypeSelect').show();
+        }
+    });
+
     //初始化地图
     $(function () {
         newMap();
+        $('#proStartTimeStr').date_input();
+        $('#proEndTimeStr').date_input();
     });
 </script>
 </html>

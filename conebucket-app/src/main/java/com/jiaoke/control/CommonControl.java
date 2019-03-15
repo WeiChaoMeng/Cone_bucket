@@ -40,31 +40,11 @@ public class CommonControl {
     /**
      * 工程查询
      *
-     * @return engineering_query.jsp
+     * @return project_query.jsp
      */
-    @RequestMapping("/engineeringQuery.do")
+    @RequestMapping("/projectQuery.do")
     public String engineeringQuery() {
-        return "engineering/engineering_query";
-    }
-
-    /**
-     * 工程管理
-     *
-     * @return engineering_Manage.jsp
-     */
-    @RequestMapping("/engineeringManage.do")
-    public String engineeringManage() {
-        return "engineering/engineering_manage";
-    }
-
-    /**
-     * 添加工程
-     *
-     * @return add.jsp
-     */
-    @RequestMapping("/addEngineering.do")
-    public String addEngineering() {
-        return "engineering/add";
+        return "project/project_query";
     }
 
     /*------------------------系统管理------------------------------*/

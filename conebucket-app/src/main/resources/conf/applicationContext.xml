@@ -39,7 +39,7 @@
   <!--</bean>-->
 
   <!-- 设置自动扫描的包，不扫描Handler -->
-  <context:component-scan base-package="com.*">
+  <context:component-scan base-package="com.jiaoke.*">
     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
   </context:component-scan>
 
@@ -97,14 +97,13 @@
     <!-- 引入Mapper映射文件 -->
     <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
     <!-- MyBatis全局配置文件中其他配置：如起别名 -->
-    <property name="typeAliasesPackage" value="com.jiaoke.oa.bean"/>
+    <property name="typeAliasesPackage" value="com.jiaoke.bean"/>
   </bean>
 
 
   <!--在Spring中配置Mapper接口 -->
   <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.jiaoke.*.dao"/>
+    <property name="basePackage" value="com.jiaoke.mapper"/>
   </bean>
-
 
 </beans>
