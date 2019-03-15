@@ -24,6 +24,16 @@
         <property name="prefix" value="/WEB-INF/view/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <!--配置文件读取-->
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:conf/db.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- 静态资源访问（不拦截此目录下的东西的访问） -->
     <mvc:annotation-driven/>
     <mvc:resources location="/static/" mapping="/static/**"/>
