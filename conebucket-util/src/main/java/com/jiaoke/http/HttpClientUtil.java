@@ -7,6 +7,9 @@ package com.jiaoke.http; /**
  * 作者姓名     修改时间    版本号        描述
  **/
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -16,6 +19,9 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,7 +101,70 @@ public class HttpClientUtil {
         return doGet(url, null);
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据接口返回的json,返回需要的数据>
+     * @param
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/3/16 11:20
+     */
 
+    public static String resJsonToString(String res,String arrayName){
+
+        JSONObject jsonObject = JSONObject.parseObject(res);
+
+        JSONArray online = JSONArray.parseArray(jsonObject.get(arrayName).toString());
+
+        List<Map<String,Object> > list = new ArrayList<>();
+
+        //用于判断使用的接口是zonwi还是google
+        String str = "online";
+
+        if(str.equals(arrayName)){
+
+            for (int i = 0; i < online.size();i++){
+
+                Map<String,Object> map = new HashMap<>();
+                String id = online.getJSONObject(i).getString("id");
+                String lastLocation = online.getJSONObject(i).getString("lastLocation");
+                //处理道路信息
+                String roadInfo = online.getJSONObject(i).getString("RoadInfo");
+                String roadName = "未获取道路信息";
+
+                if (roadInfo != null){
+                    JSONObject roadJson = JSONObject.parseObject(roadInfo);
+                    Object temObj = roadJson.get("RoadName");
+                    if (temObj !=  null){
+                        roadName = temObj.toString();
+                    }
+                }
+
+                map.put("id",id);
+                map.put("lastLocation",lastLocation);
+                map.put("roadName",roadName);
+
+                list.add(map);
+            }
+        }else {
+            for (int i = 0; i < online.size();i++){
+
+                Map<String,Object> map = new HashMap<>();
+                String lastLocation= online.getJSONObject(i).getString("locPos");
+                String locRoadName = online.getJSONObject(i).getString("locRoadName");
+                String sourceName = online.getJSONObject(i).getString("sourceName");
+
+                map.put("lastLocation",lastLocation);
+                map.put("locRoadName",locRoadName);
+                map.put("sourceName",sourceName);
+
+                list.add(map);
+            }
+        }
+
+        return JSON.toJSONString(list);
+    }
 
 
 }

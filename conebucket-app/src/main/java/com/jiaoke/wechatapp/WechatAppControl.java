@@ -10,9 +10,9 @@ package com.jiaoke.wechatapp;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.http.HttpClientUtil;
+import com.jiaoke.serviceInf.AppServiceInf;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +35,19 @@ import java.util.Map;
 @Controller
 public class WechatAppControl {
 
+
+    @Autowired
+    private AppServiceInf appServiceInf;
     /**
      * 中维URL
      */
     @Value("${zonwi}")
     private String zonwiURI;
+
+
+    @Value("${googleEvent}")
+    private String googleEvent;
+
 
 
     /**
@@ -57,27 +65,87 @@ public class WechatAppControl {
 
         String res = HttpClientUtil.doGet(zonwiURI);
 
+        return HttpClientUtil.resJsonToString(res,"online");
+    }
 
-        JSONObject jsonObject = JSONObject.parseObject(res);
 
-        JSONArray online = JSONArray.parseArray(jsonObject.get("online").toString());
+    @ResponseBody
+    @RequestMapping(value = {"/getGoogleConeBucket.do"},method = RequestMethod.POST)
+    public String getGoogleConeBucket(@RequestParam("progress") String progress,@RequestParam("proStatus") String proStatus,@RequestParam("coneBucket_type") String coneBucketType){
 
-        List<Map<String,Object> > list = new ArrayList<>();
+        //url参数map
+        Map<String,String> urlParamMap = new HashMap<>();
 
-        for (int i = 0; i < online.size();i++){
-            Map<String,Object> map = new HashMap<>();
-            String id = online.getJSONObject(i).getString("id");
-            String lastLocation = online.getJSONObject(i).getString("lastLocation");
-            String roadInfo = online.getJSONObject(i).getString("RoadInfo");
+        //添加参数
+        urlParamMap.put("page","1");
+        urlParamMap.put("size","2");
+        urlParamMap.put("stateFlags[]","2");
+        urlParamMap.put("isHardWare","true");
+        urlParamMap.put("userKey","0635fe71-699a-4feb-8894-de0dc7f632ac");
 
-            map.put("id",id);
-            map.put("lastLocation",lastLocation);
-            map.put("roadInfo",roadInfo);
 
-            list.add(map);
+
+        String res = HttpClientUtil.doGet(googleEvent,urlParamMap);
+
+
+        return HttpClientUtil.resJsonToString(res,"data");
+
+
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = {"/getProgectByProgres.do"},method = RequestMethod.POST)
+    public String getProgectByProgres(@RequestParam("progress") String progress,@RequestParam("proStatus") String proStatus){
+
+        if (progress.isEmpty() || proStatus.isEmpty()){
+            return "";
         }
 
+        //查询所有符合条件的工程
+       List<Map<String,Object>> proList =  appServiceInf.getProgectByProgresAndproStatus(progress,proStatus);
 
-        return JSON.toJSONString(list);
+        //创建工程id结果集合，查询经纬度使用
+        List<String> idList = new ArrayList<>();
+        for (int i = 0; i < proList.size();i++){
+            String id = proList.get(i).get("id").toString();
+            idList.add(id);
+        }
+
+        List<Map<String,Object>> locationList =  appServiceInf.getProLocationsByIdList(idList);
+
+
+        for (int i = 0; i < proList.size();i++) {
+
+            String id = proList.get(i).get("id").toString();
+            //每个工程下经纬度结果集
+            List<Map<String,String>> temList = new ArrayList<>();
+
+            //循环查找工程下的所有经纬度
+            for (int j = 0; j < locationList.size();j++){
+
+                String proId = locationList.get(j).get("proId").toString();
+
+                if (!id.equals(proId)){
+                    continue;
+                }else {
+                    String longitude = locationList.get(j).get("longitude").toString();
+                    String latitude = locationList.get(j).get("latitude").toString();
+                    Map<String,String> map = new HashMap<>();
+                    map.put("longitude",longitude);
+                    map.put("latitude",latitude);
+
+                    //放入经纬度结果集
+                    temList.add(map);
+                }
+            }
+            //将遍历好的结果集放入工程下
+            proList.get(i).put("locations",temList);
+        }
+
+        String res = JSON.toJSONString(proList);
+
+        return res;
+
     }
 }
