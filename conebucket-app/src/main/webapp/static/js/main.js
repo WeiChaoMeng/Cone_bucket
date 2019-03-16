@@ -2,14 +2,14 @@
 $('#engineeringQuery').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "/engineeringQuery.do");
+    $('#inlineFrame').attr("src", "/projectQuery.do");
 });
 
 //工程管理
 $('#engineeringManage').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "engineeringManage.do");
+    $('#inlineFrame').attr("src", "projectMessage/toIndex.do");
 });
 
 //系统管理

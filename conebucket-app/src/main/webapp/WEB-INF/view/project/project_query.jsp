@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../static/css/engineering.css">
+    <link rel="stylesheet" href="../../../static/css/project.css">
     <!--引入高德地图JSAPI -->
     <script type="text/javascript"
             src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>

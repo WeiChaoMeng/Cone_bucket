@@ -19,7 +19,7 @@
 
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../static/css/engineering.css">
+    <link rel="stylesheet" href="../../../static/css/project.css">
     <style>
         .but-color {
             fill: #ff7d2f;
@@ -386,10 +386,10 @@
 </div>
 </body>
 
-<script src="../../../static/js/jquery-1.12.4.min.js"></script>
+<script src="../../../static/js/jquery.js"></script>
 <script>
     function add() {
-        window.location.href = "http://localhost:8080/addEngineering.do";
+        window.location.href = "http://localhost:8080/projectMessage/toAdd.do";
     }
 </script>
 </html>
