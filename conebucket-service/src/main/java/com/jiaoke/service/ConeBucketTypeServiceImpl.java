@@ -1,7 +1,7 @@
 package com.jiaoke.service;
 
 import com.jiaoke.bean.ConeBucketType;
-import com.jiaoke.mapper.ConeBucketTypeMapper;
+import com.jiaoke.web.dao.ConeBucketTypeMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

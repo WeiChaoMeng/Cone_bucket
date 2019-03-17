@@ -1,7 +1,7 @@
 package com.jiaoke.service;
 
 import com.jiaoke.bean.ProjectMessage;
-import com.jiaoke.mapper.ProjectMessageMapper;
+import com.jiaoke.web.dao.ProjectMessageMapper;
 import com.jiaoke.util.DateUtil;
 import com.jiaoke.util.RandomUtil;
 import org.springframework.stereotype.Service;

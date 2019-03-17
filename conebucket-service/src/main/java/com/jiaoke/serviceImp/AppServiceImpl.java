@@ -8,7 +8,7 @@
  **/
 package com.jiaoke.serviceImp;
 
-import com.jiaoke.dao.AppServiceDao;
+import com.jiaoke.app.dao.AppServiceDao;
 import com.jiaoke.serviceInf.AppServiceInf;
 import org.springframework.stereotype.Service;
 

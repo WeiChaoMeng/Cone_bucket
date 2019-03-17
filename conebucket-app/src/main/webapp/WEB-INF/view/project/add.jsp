@@ -21,12 +21,6 @@
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" href="../../../static/plugin/date_pickers/date_picker.css">
-    <!--引入高德地图JSAPI -->
-    <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
-    <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
-    <%--<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>--%>
 </head>
 <body>
 
@@ -188,96 +182,64 @@
 </body>
 <script src="../../../static/js/jquery.js"></script>
 <script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
+<%--引入腾讯地图--%>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
-    //返回
-    function backOff() {
-        history.back(-1);
-        //销毁地图，并清空地图容器
-        map.destroy();
+    //腾讯地图
+    function newMap() {
+        //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
+        var map = new qq.maps.Map(document.getElementById("container"), {
+            center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
+            zoom: 11                                                 // 地图的中心地理坐标。
+        });
+
+        var path = [];
+        //绑定单击事件添加参数
+        qq.maps.event.addListener(map, 'click', function (event) {
+            path.push(new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()));
+            console.log(path);
+            //创建marker
+            var marker = new qq.maps.Marker({
+                position: new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()),
+                map: map
+            });
+
+            //点
+            var anchor = new qq.maps.Point(10, 24),
+                size = new qq.maps.Size(20, 26),
+                origin = new qq.maps.Point(0, 0),
+                markerIcon = new qq.maps.MarkerImage(
+                    "../../static/img/marker.png",
+                    size,
+                    origin,
+                    anchor
+                );
+            marker.setIcon(markerIcon);
+
+            //线
+            var polyline = new qq.maps.Polyline({
+                path: path,
+                strokeColor: '#3366FF',
+                strokeWeight: 2,
+                editable: false,
+                map: map
+            });
+        });
+
     }
+
 
     //重新加载地图
     function reloadMap() {
         newMap();
     }
 
-    function newMap() {
-        //高德地图
-        var map = new AMap.Map('container', {
-            zoom: 11,//级别
-            center: [116.397428, 39.90923],//中心点坐标
-            viewMode: '3D'//使用3D视图
-        });
-
-        // 同时引入工具条插件，比例尺插件和鹰眼插件
-        AMap.plugin([
-            'AMap.ToolBar',
-            'AMap.Scale',
-            'AMap.MapType'
-        ], function () {
-            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-            map.addControl(new AMap.ToolBar());
-
-            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-            map.addControl(new AMap.Scale());
-
-            // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
-            map.addControl(new AMap.MapType());
-        });
-
-        // 创建一个 Icon
-        var startIcon = new AMap.Icon({
-            // 图标尺寸
-            size: new AMap.Size(19, 23),
-            // 图标的取图地址
-            image: "../../../static/img/poi-marker-default.png",
-            // 图标所用图片大小
-            imageSize: new AMap.Size(20, 25),
-            // 图标取图偏移量
-            imageOffset: new AMap.Pixel(0, 0)
-        });
-
-        var path = [];
-
-        //设置marker
-        map.on('click', label);
-
-        function label(e) {
-            path.push(new AMap.LngLat(e.lnglat.getLng(), e.lnglat.getLat()));
-            console.log(e.lnglat.getLng() + ',' + e.lnglat.getLat());
-            console.log(path);
-            marker = new AMap.Marker({
-                icon: startIcon,
-                position: [e.lnglat.getLng(), e.lnglat.getLat()],
-                offset: new AMap.Pixel(-10, -23)
-            });
-            marker.setMap(map);
-
-            var polyline = new AMap.Polyline({
-                path: path,
-                strokeColor: "#3366FF",
-                strokeOpacity: 1,
-                strokeWeight: 2,
-                // 折线样式还支持 'dashed'
-                strokeStyle: "solid",
-                // strokeStyle是dashed时有效
-                strokeDasharray: [10, 5],
-                lineJoin: 'round',
-                lineCap: 'round',
-                zIndex: 50
-            });
-
-            polyline.setMap(map);
-            // 缩放地图到合适的视野级别
-            map.setFitView([polyline]);
-        }
-
-        map.on('rightclick', function () {
-            map.off('click', label);
-        });
+    //返回
+    function backOff() {
+        history.back(-1);
     }
 
-    //projectMessage
+    //提交form
     function commit() {
         $.ajax({
             type: "POST",

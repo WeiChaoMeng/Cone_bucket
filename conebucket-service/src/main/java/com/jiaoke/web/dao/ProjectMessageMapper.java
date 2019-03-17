@@ -1,4 +1,4 @@
-package com.jiaoke.mapper;
+package com.jiaoke.web.dao;
 
 import com.jiaoke.bean.ProjectMessage;
 import org.springframework.stereotype.Repository;

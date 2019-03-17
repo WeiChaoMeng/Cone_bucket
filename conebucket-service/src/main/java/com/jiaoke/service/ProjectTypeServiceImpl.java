@@ -1,7 +1,7 @@
 package com.jiaoke.service;
 
 import com.jiaoke.bean.ProjectType;
-import com.jiaoke.mapper.ProjectTypeMapper;
+import com.jiaoke.web.dao.ProjectTypeMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
