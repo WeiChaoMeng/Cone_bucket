@@ -1,3 +1,10 @@
+
+$(function () {
+    //存入全局Ajax地址
+    localStorage.setItem('ajaxUrl','http://localhost:8080');
+})
+
+
 //工程查询
 $('#engineeringQuery').on('click', function () {
     mainMuneColor(this);
@@ -125,4 +132,55 @@ function secondaryMenuColor(o) {
 //退出
 function exit() {
     window.location.href = "http://localhost:8080/"
+}
+
+/**********************锥桶添加函数********************************/
+//弹出事件
+function iframeAlert() {
+   window.lar = layer.open({
+        type: 1,
+        area: ['600px', '360px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addFrom"),
+        offset:"25%"
+});
+}
+
+function addSubmit() {
+    var cone_bucket_num = $("#cbNum").val();
+    var cone_bucket_type = $("#roadName").val();
+
+    if (isNull(cone_bucket_num) || isNull(cone_bucket_type) ){
+        layer.msg('锥桶内容不能为空');
+    }else {
+        $.ajax({
+            url:localStorage.getItem("ajaxUrl") + "/addConeBucket.do",
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            data: $('#form1').serialize() ,
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.resultCode == 200) {
+                    layer.close(window.lar);
+                }
+                ;
+            },
+            error : function() {
+                layer.msg("异常！");
+            }
+        })
+    }
+}
+
+
+/****************js判空方法********************/
+
+function isNull(str) {
+
+    if (!exp && typeof(exp) =='undefined' ){
+            return true
+    }else {
+        return false
+    }
 }

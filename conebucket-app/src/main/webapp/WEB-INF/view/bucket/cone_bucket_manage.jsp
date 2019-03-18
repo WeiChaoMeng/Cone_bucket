@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/cone_bucket.css">
+    <script src="../../../static/js/jquery.js"></script>
+    <script src="../../../static/plugin/layer/layer.js"></script>
 </head>
 <body>
 
@@ -115,9 +117,10 @@
     <!-- /page content -->
 </div>
 </body>
+
 <script>
     function add() {
-        window.location.href ="add.html";
+        parent.iframeAlert();
     }
 </script>
 </html>
