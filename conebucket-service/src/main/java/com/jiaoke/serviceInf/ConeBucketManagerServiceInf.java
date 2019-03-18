@@ -8,6 +8,9 @@
  **/
 package com.jiaoke.serviceInf;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *  <一句话功能描述>
  *
@@ -19,4 +22,8 @@ public interface ConeBucketManagerServiceInf {
 
 
     int addConeBucket(String diseaseNumber, String roadName);
+
+    List<Map<String, Object>> getAllConeBucket();
+
+    int removeConeBucketById(String[] idArray);
 }

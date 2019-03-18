@@ -12,6 +12,25 @@
         create_time
         )
         VALUES
-        (#{diseaseNumber},#{roadName},curdate())
+        (#{roadName},#{diseaseNumber},current_date())
     </insert>
+    <select id="selectAllConeBucket" resultType="java.util.Map">
+        SELECT
+            CM.id,
+            CM.cone_bucket_num,
+           date_format(CM.create_time,'%Y-%m-%d') as create_time,
+            CT.type_name
+        FROM
+            cone_bucket_message AS CM
+        INNER JOIN cone_bucket_type AS CT ON CM.cone_bucket_type = CT.id;
+    </select>
+
+    <delete id="delectConeBucketById">
+        DELETE FROM cone_bucket_message
+        WHERE
+            id IN
+            <foreach collection="idArray" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+    </delete>
 </mapper>

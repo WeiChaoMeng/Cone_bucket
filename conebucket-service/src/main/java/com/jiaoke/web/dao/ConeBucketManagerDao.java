@@ -10,6 +10,9 @@ package com.jiaoke.web.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *  <一句话功能描述>
  *
@@ -21,4 +24,8 @@ public interface ConeBucketManagerDao {
 
 
     int insertConeBucket(@Param("diseaseNumber") String diseaseNumber, @Param("roadName")String roadName);
+
+    List<Map<String, Object>> selectAllConeBucket();
+
+    int delectConeBucketById(@Param("idArray") String[] idArray);
 }

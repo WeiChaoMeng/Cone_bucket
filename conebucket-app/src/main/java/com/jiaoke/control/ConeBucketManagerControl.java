@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,19 +34,84 @@ public class ConeBucketManagerControl {
     @Autowired
     private ConeBucketManagerServiceInf coneBucketManagerServiceInf;
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <锥桶添加函数>
+     * @param [diseaseNumber, roadName]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/3/18 17:52
+     */
     @ResponseBody
     @RequestMapping(value = "/addConeBucket.do" ,method = RequestMethod.POST)
     public String addConeBucket(@RequestParam("diseaseNumber") String diseaseNumber , @RequestParam("roadName") String roadName){
 
         Map<String,Object> map = new HashMap<>();
-        if (diseaseNumber.isEmpty() || roadName.isEmpty()) return JSON.toJSONString(map.put("code","404"));
+        if (diseaseNumber.isEmpty() || roadName.isEmpty()) {
+            map.put("resultCode","404");
+            return JSON.toJSONString(map);
+        }
 
         int id =  coneBucketManagerServiceInf.addConeBucket(diseaseNumber,roadName);
 
         if (id > 0){
-            return JSON.toJSONString(map.put("code","200"));
+            map.put("resultCode","200");
+            String tem = JSON.toJSONString(map);
+            return tem;
         }else {
-            return JSON.toJSONString(map.put("code","404"));
+            map.put("resultCode","404");
+            return JSON.toJSONString(map);
         }
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有锥桶>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/3/18 17:54
+     */
+    @ResponseBody
+    @RequestMapping("/getAllConeBucket.do")
+    public String getAllConeBucket(){
+
+        //返回map
+        Map<String,Object> resMap = new HashMap<>();
+        //查询数据
+        List<Map<String,Object>> coneBucketList = coneBucketManagerServiceInf.getAllConeBucket();
+
+        if (coneBucketList.size() == 0){
+            resMap.put("resCode","404");
+        }else {
+            resMap.put("resData",coneBucketList);
+            resMap.put("resCode","200");
+        }
+
+        String res = JSON.toJSONString(resMap);
+
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/removeConeBucketById.do" ,method = RequestMethod.POST)
+    public String removeConeBucketById(@RequestParam("idArray") String[] idArray){
+        Map<String,Object> resMap = new HashMap<>();
+        if (idArray.length == 0){
+            resMap.put("resCode","403");
+            String error = JSON.toJSONString(resMap);
+            return error;
+        }
+       int tem =  coneBucketManagerServiceInf.removeConeBucketById(idArray);
+
+        if (tem > 0){
+            resMap.put("resCode","200");
+        }else {
+            resMap.put("resCode","403");
+        }
+
+        return JSON.toJSONString(resMap);
     }
 }

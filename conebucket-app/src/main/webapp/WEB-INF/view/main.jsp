@@ -64,7 +64,7 @@
 </div>
 
 <!-- Start Footer area-->
-<div class="footer-copyright-area">
+<div class="footer-copyright-area" >
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -77,13 +77,9 @@
     </div>
 </div>
 
+<div class="content"  id="addFrom" style="padding: 20px;background: #fff;display:none">
 
-
-</body>
-
-<div class="content"  id="addFrom" style="padding: 20px;background: #fff">
-
-    <form id="streetlightDiseaseForm" type="get" onsubmit="addSubmit(); return false">
+    <form id="streetlightDiseaseForm"  >
         <table class="table table-condensed table-bordered table-hover">
             <tbody>
             <tr>
@@ -105,11 +101,15 @@
             </tbody>
         </table>
         <div style="text-align: center">
-            <input class="btn btn-primary btn-sm" type="submit" value="提交">
+            <input class="btn btn-primary btn-sm" type="button" onclick="addSubmit();" value="提交">
             <input class="btn btn-primary btn-sm" type="button" onclick="backOff()" value="返回">
         </div>
     </form>
 </div>
+
+</body>
+
+
 <!-- jquery -->
 <script src="../../static/js/jquery-1.12.4.min.js"></script>
 <!-- bootstrap JS-->
