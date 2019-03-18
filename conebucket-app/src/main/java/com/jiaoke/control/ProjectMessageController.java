@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 项目管理
+ * 工程管理
  *
  * @author lihui
  * @version 1.0
@@ -69,10 +69,15 @@ public class ProjectMessageController {
     @RequestMapping("/add.do")
     @ResponseBody
     public String insertSelective(ProjectMessage projectMessage) {
-        System.out.println(projectMessage);
         if (projectMessageService.insertSelective(projectMessage) > 0) {
             return "success";
         }
         return "error";
+    }
+
+
+    public List<ProjectMessage> selctAll(){
+
+        return null;
     }
 }

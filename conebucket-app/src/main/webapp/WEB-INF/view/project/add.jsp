@@ -119,7 +119,7 @@
 
                 <td style="">是否有锥桶</td>
                 <td style="width: 40%">
-                    <select class="form-control" id="coneBucket">
+                    <select class="form-control" id="containConeBucket" name="containConeBucket">
                         <option value="1">否</option>
                         <option value="2">是</option>
                     </select>
@@ -139,7 +139,7 @@
 
                 <td style="">锥桶编号</td>
                 <td colspan="3">
-                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off">
+                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off" onkeyup="this.value=this.value.replace(/，/g,',')">
                 </td>
             </tr>
 
@@ -186,6 +186,7 @@
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
     //腾讯地图
+    var path = [];
     function newMap() {
         //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
         var map = new qq.maps.Map(document.getElementById("container"), {
@@ -193,10 +194,10 @@
             zoom: 11                                                 // 地图的中心地理坐标。
         });
 
-        var path = [];
+
         //绑定单击事件添加参数
         qq.maps.event.addListener(map, 'click', function (event) {
-            path.push(new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()));
+            path.push(new qq.maps.LatLng(event.latLng.getLat(),event.latLng.getLng()));
             console.log(path);
             //创建marker
             var marker = new qq.maps.Marker({
@@ -241,6 +242,9 @@
 
     //提交form
     function commit() {
+        var proScopeJson = JSON.stringify(path);
+        console.log("------" + proScopeJson);
+        $('#proScope').val(proScopeJson);
         $.ajax({
             type: "POST",
             url: 'http://localhost:8080/projectMessage/add.do',
@@ -259,7 +263,7 @@
     }
 
     //是否有锥桶
-    $('#coneBucket').change(function () {
+    $('#containConeBucket').change(function () {
         if ($(this).val() == 1) {
             $('#coneBucketTypeSelect').hide();
             $('#coneBucketType').empty();
