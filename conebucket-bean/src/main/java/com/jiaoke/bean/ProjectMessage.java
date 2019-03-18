@@ -26,6 +26,7 @@ public class ProjectMessage {
      */
     private String proName;
 
+    /*----关联project_type----*/
     /**
      * 工程类型
      */
@@ -67,16 +68,6 @@ public class ProjectMessage {
     private String governorUnitPhone;
 
     /**
-     * 锥桶类型
-     */
-    private String coneBucketType;
-
-    /**
-     * 锥桶编号
-     */
-    private String coneBucketNum;
-
-    /**
      * 工程进度
      */
     @Transient
@@ -99,14 +90,8 @@ public class ProjectMessage {
     private String proSummarize;
 
     /**
-     * 工程范围
-     */
-    private String proScope;
-
-    /**
      * 工程开始时间
      */
-
     private Date proStartTime;
 
     @Transient
@@ -138,6 +123,29 @@ public class ProjectMessage {
     @Transient
     private Date notarizeTime;
 
+    /*----工程锥桶信息表，关联cone_bucket_type----*/
+    /**
+     * 是否有锥桶
+     */
+    private Integer containConeBucket;
+    /**
+     * 锥桶类型
+     */
+    @Transient
+    private Integer coneBucketType;
+
+    /**
+     * 锥桶编号
+     */
+    @Transient
+    private String coneBucketNum;
+
+    /*----工程经纬度表----*/
+    /**
+     * 工程范围
+     */
+    @Transient
+    private String proScope;
 
     public Integer getId() {
         return id;
@@ -219,22 +227,6 @@ public class ProjectMessage {
         this.governorUnitPhone = governorUnitPhone;
     }
 
-    public String getConeBucketType() {
-        return coneBucketType;
-    }
-
-    public void setConeBucketType(String coneBucketType) {
-        this.coneBucketType = coneBucketType;
-    }
-
-    public String getConeBucketNum() {
-        return coneBucketNum;
-    }
-
-    public void setConeBucketNum(String coneBucketNum) {
-        this.coneBucketNum = coneBucketNum;
-    }
-
     public Integer getProSchedule() {
         return proSchedule;
     }
@@ -265,14 +257,6 @@ public class ProjectMessage {
 
     public void setProSummarize(String proSummarize) {
         this.proSummarize = proSummarize;
-    }
-
-    public String getProScope() {
-        return proScope;
-    }
-
-    public void setProScope(String proScope) {
-        this.proScope = proScope;
     }
 
     public Date getProStartTime() {
@@ -329,5 +313,37 @@ public class ProjectMessage {
 
     public void setNotarizeTime(Date notarizeTime) {
         this.notarizeTime = notarizeTime;
+    }
+
+    public Integer getContainConeBucket() {
+        return containConeBucket;
+    }
+
+    public void setContainConeBucket(Integer containConeBucket) {
+        this.containConeBucket = containConeBucket;
+    }
+
+    public Integer getConeBucketType() {
+        return coneBucketType;
+    }
+
+    public void setConeBucketType(Integer coneBucketType) {
+        this.coneBucketType = coneBucketType;
+    }
+
+    public String getConeBucketNum() {
+        return coneBucketNum;
+    }
+
+    public void setConeBucketNum(String coneBucketNum) {
+        this.coneBucketNum = coneBucketNum;
+    }
+
+    public String getProScope() {
+        return proScope;
+    }
+
+    public void setProScope(String proScope) {
+        this.proScope = proScope;
     }
 }

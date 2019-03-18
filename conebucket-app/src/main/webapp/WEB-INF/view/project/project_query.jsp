@@ -15,12 +15,6 @@
     <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
-    <!--引入高德地图JSAPI -->
-    <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
-    <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.13&key=5ae1365fcf3e53e6a218d9d88cd50249&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
-    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <style>
         #container {
             width: 100%;
@@ -95,11 +89,12 @@
                     <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
                             title="刷新" style="padding: 9px 15px;"><i class="fa fa-refresh"></i></button>
                     <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
-                            title="切换" onclick="handover()">切换</button>
+                            title="切换" onclick="handover()">切换
+                    </button>
                 </div>
             </div>
 
-            <div id="tableShow" class="x_content">
+            <div id="tableShow"  style="display: none" class="x_content">
 
                 <table class="table table-bordered">
                     <thead>
@@ -136,7 +131,7 @@
 
             </div>
 
-            <div id="mapShow" style="display: none">
+            <div id="mapShow">
                 <div id="container"></div>
             </div>
         </div>
@@ -145,7 +140,74 @@
 </div>
 </body>
 <script src="../../../static/js/jquery-1.12.4.min.js"></script>
+<%--引入腾讯地图--%>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
+
+    //腾讯地图
+    var map = new qq.maps.Map(document.getElementById("container"), {
+        center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
+        zoom: 11                                                 // 地图的中心地理坐标。
+    });
+
+    //创建marker
+    var marker1 = new qq.maps.Marker({
+        position: new qq.maps.LatLng(39.91710957679777, 116.38134956359863),
+        map: map
+    });
+
+    var marker2 = new qq.maps.Marker({
+        position: new qq.maps.LatLng(39.91622086779371, 116.40512466430664),
+        map: map
+    });
+
+    var marker3 = new qq.maps.Marker({
+        position: new qq.maps.LatLng(39.901901188686146, 116.40538215637207),
+        map: map
+    });
+
+    var marker4 = new qq.maps.Marker({
+        position: new qq.maps.LatLng(39.91375217116118, 116.38031959533691),
+        map: map
+    });
+
+    //点
+    var anchor = new qq.maps.Point(10, 24),
+        size = new qq.maps.Size(20, 26),
+        origin = new qq.maps.Point(0, 0),
+        markerIcon = new qq.maps.MarkerImage(
+            "../../static/img/marker.png",
+            size,
+            origin,
+            anchor
+        );
+    marker1.setIcon(markerIcon);
+    marker2.setIcon(markerIcon);
+    marker3.setIcon(markerIcon);
+    marker4.setIcon(markerIcon);
+
+    /*
+    0: q {lat: 39.91710957679777, lng: 116.38134956359863}
+    1: q {lat: 39.91622086779371, lng: 116.40512466430664}
+    2: q {lat: 39.901901188686146, lng: 116.40538215637207}
+    3: q {lat: 39.91375217116118, lng: 116.38031959533691}
+    * */
+    var path = [
+        new qq.maps.LatLng(39.91710957679777, 116.38134956359863),
+        new qq.maps.LatLng(39.91622086779371, 116.40512466430664),
+        new qq.maps.LatLng(39.901901188686146, 116.40538215637207),
+        new qq.maps.LatLng(39.91375217116118, 116.38031959533691)
+    ];
+
+    //线
+    var polyline = new qq.maps.Polyline({
+        path: path,
+        strokeColor: '#3366FF',
+        strokeWeight: 2,
+        editable: false,
+        map: map
+    });
+
 
     //地图与表单切换
     function handover() {
@@ -157,75 +219,5 @@
             $('#tableShow').css('display', 'none');
         }
     }
-
-    //高德地图
-    var map = new AMap.Map('container', {
-        zoom: 11,//级别
-        center: [116.397428, 39.90923],//中心点坐标
-        viewMode: '3D'//使用3D视图
-    });
-
-    // 同时引入工具条插件，比例尺插件和鹰眼插件
-    AMap.plugin([
-        'AMap.ToolBar',
-        'AMap.Scale',
-        'AMap.MapType'
-    ], function () {
-        // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-        map.addControl(new AMap.ToolBar());
-
-        // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-        map.addControl(new AMap.Scale());
-
-        // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
-        map.addControl(new AMap.MapType());
-    });
-
-    //添加线
-    var polylinePath = [
-        new AMap.LngLat(116.335933, 39.942113),
-        new AMap.LngLat(116.483096, 39.944063),
-        new AMap.LngLat(116.398114, 39.908543)
-    ];
-
-    var polyline = new AMap.Polyline({
-        path: polylinePath,
-        strokeColor: "#3366FF"
-    });
-
-    // 创建一个 Icon
-    var startIcon = new AMap.Icon({
-        // 图标尺寸
-        size: new AMap.Size(19, 23),
-        // 图标的取图地址
-        image: "../../static/img/poi-marker-default.png",
-        // 图标所用图片大小
-        imageSize: new AMap.Size(20, 25),
-        // 图标取图偏移量
-        imageOffset: new AMap.Pixel(0, 0)
-    });
-
-    //添加marker
-    var markers = [{
-        icon: startIcon,
-        position: [116.335933, 39.942113]
-    }, {
-        icon: startIcon,
-        position: [116.483096, 39.944063]
-    }, {
-        icon: startIcon,
-        position: [116.398114, 39.908543]
-    }];
-
-    markers.forEach(function (marker) {
-        new AMap.Marker({
-            map: map,
-            icon: marker.icon,
-            position: [marker.position[0], marker.position[1]],
-            offset: new AMap.Pixel(-10, -23)
-        });
-    });
-
-    map.add([polyline]);
 </script>
 </html>

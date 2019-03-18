@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.ConeBucketMessageMapper">
+
+    <select id="selectByConeBucketNum" parameterType="java.lang.String" resultType="com.jiaoke.bean.ConeBucketMessage">
+        select id,cone_bucket_type,cone_bucket_num,create_time from cone_bucket_message where cone_bucket_num = #{coneBucketNum} limit 1
+    </select>
+
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" parameterType="com.jiaoke.bean.ConeBucketMessage">
+        insert into cone_bucket_message(cone_bucket_type,cone_bucket_num,create_time)
+        values(#{coneBucketType},#{coneBucketNum},#{createTime})
+    </insert>
+</mapper>

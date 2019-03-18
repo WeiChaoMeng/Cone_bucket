@@ -2,5 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.web.dao.ProjectMessageMapper">
 
-
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" parameterType="com.jiaoke.bean.ProjectMessage">
+        insert into project_message(
+          pro_name,
+          pro_type,
+          pro_num,
+          supervisor_unit,
+          supervisor_unit_phone,
+          construction_unit,
+          construction_unit_phone,
+          governor_unit,
+          governor_unit_phone,
+          pro_schedule,
+          pro_status,
+          pro_location,
+          pro_summarize,
+          pro_start_time,
+          pro_end_time,
+          reported_time,
+          approval_time,
+          notarize_time)
+        values(
+          #{proName},
+          #{proType},
+          #{proNum},
+          #{supervisorUnit},
+          #{supervisorUnitPhone},
+          #{constructionUnit},
+          #{constructionUnitPhone},
+          #{governorUnit},
+          #{governorUnitPhone},
+          #{proSchedule},
+          #{proStatus},
+          #{proLocation},
+          #{proSummarize},
+          #{proStartTime},
+          #{proEndTime},
+          #{reportedTime},
+          #{approvalTime},
+          #{notarizeTime})
+    </insert>
 </mapper>
