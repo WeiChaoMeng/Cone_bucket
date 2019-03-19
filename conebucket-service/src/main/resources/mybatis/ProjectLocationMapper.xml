@@ -9,4 +9,12 @@
             (#{item.proId}, #{item.longitude},#{item.latitude})
         </foreach>
     </insert>
+
+    <select id="selectByProId" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.ProjectLocation">
+        select  id, pro_id as proId, longitude, latitude from  project_location where pro_id = #{proId}
+    </select>
+
+    <delete id="deleteByProId" parameterType="java.lang.Integer">
+        delete from  project_location where pro_id = #{proId}
+    </delete>
 </mapper>

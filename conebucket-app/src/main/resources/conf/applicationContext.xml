@@ -98,6 +98,18 @@
     <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
     <!-- MyBatis全局配置文件中其他配置：如起别名 -->
     <property name="typeAliasesPackage" value="com.jiaoke.bean"/>
+    <!--pageHelper-->
+    <property name="plugins">
+      <array>
+        <bean class="com.github.pagehelper.PageInterceptor">
+          <property name="properties">
+            <value>
+            </value>
+          </property>
+        </bean>
+        <bean class="com.github.abel533.mapperhelper.MapperInterceptor"/>
+      </array>
+    </property>
   </bean>
 
 

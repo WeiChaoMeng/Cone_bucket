@@ -6,8 +6,24 @@
         select id,cone_bucket_type,cone_bucket_num,create_time from cone_bucket_message where cone_bucket_num = #{coneBucketNum} limit 1
     </select>
 
-    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" parameterType="com.jiaoke.bean.ConeBucketMessage">
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.jiaoke.bean.ConeBucketMessage">
         insert into cone_bucket_message(cone_bucket_type,cone_bucket_num,create_time)
         values(#{coneBucketType},#{coneBucketNum},#{createTime})
     </insert>
+
+    <select id="selectByProId" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.ConeBucketMessage">
+        SELECT
+            cbm.id,
+            cbm.cone_bucket_type as coneBucketType,
+            cpt.type_name as coneBucketTypeStr,
+            cbm.cone_bucket_num as coneBucketNum
+        FROM
+            `cone_bucket_message` AS cbm
+            LEFT JOIN project_cone_bucket AS pcb ON cbm.id = pcb.cone_bucket_id
+            LEFT JOIN cone_bucket_type AS cpt ON cbm.cone_bucket_type = cpt.id
+        WHERE
+            pcb.pro_id = #{proId}
+    </select>
+
 </mapper>

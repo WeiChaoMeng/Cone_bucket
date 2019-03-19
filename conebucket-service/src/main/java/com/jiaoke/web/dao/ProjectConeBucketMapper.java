@@ -14,4 +14,11 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface ProjectConeBucketMapper extends Mapper<ProjectConeBucket> {
 
+    /**
+     * 根据工程id删除
+     *
+     * @param proId 工程id
+     * @return 影响函数
+     */
+    int deleteByProId(Integer proId);
 }

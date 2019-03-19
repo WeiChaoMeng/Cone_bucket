@@ -25,6 +25,8 @@ public class ConeBucketMessage {
      * 锥桶类型
      */
     private Integer coneBucketType;
+    @Transient
+    private String coneBucketTypeStr;
 
     /**
      * 锥桶编号
@@ -67,5 +69,13 @@ public class ConeBucketMessage {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getConeBucketTypeStr() {
+        return coneBucketTypeStr;
+    }
+
+    public void setConeBucketTypeStr(String coneBucketTypeStr) {
+        this.coneBucketTypeStr = coneBucketTypeStr;
     }
 }

@@ -4,6 +4,8 @@ import com.jiaoke.bean.ProjectMessage;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 工程经纬度表
  *
@@ -21,4 +23,27 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
      * @return 主键
      */
     int insertReturnPrimaryKey(ProjectMessage projectMessage);
+
+    /**
+     * 查询全部数据
+     *
+     * @return list
+     */
+    List<ProjectMessage> selectAllData();
+
+    /**
+     * 根据主键查询
+     *
+     * @param id id
+     * @return ProjectMessage
+     */
+    ProjectMessage selectById(Integer id);
+
+    /**
+     * 根据主键更新
+     *
+     * @param projectMessage projectMessage
+     * @return 影响行数
+     */
+    int updateById(ProjectMessage projectMessage);
 }

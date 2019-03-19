@@ -122,4 +122,89 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return 1;
     }
 
+    public List<ProjectMessage> selectAllData() {
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectAllData();
+        for (ProjectMessage projectMessage : projectMessageList) {
+            projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+            projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+        }
+        return projectMessageList;
+    }
+
+    public ProjectMessage selectById(Integer id) {
+        ProjectMessage projectMessage = projectMessageMapper.selectById(id);
+        projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+        projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+        return projectMessage;
+    }
+
+    public int remove(Integer id) {
+        //删除工程信息
+        int projectMessage = projectMessageMapper.deleteByPrimaryKey(id);
+        if (projectMessage >= 0) {
+            //删除工程锥桶关联表
+            projectConeBucketMapper.deleteByProId(id);
+            //删除工程经纬度表
+            projectConeBucketMapper.deleteByProId(id);
+            return 1;
+        }
+        return -1;
+    }
+
+    public int updateById(ProjectMessage projectMessage) {
+        projectMessage.setProStartTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProStartTimeStr()));
+        projectMessage.setProEndTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProEndTimeStr()));
+
+        //更新工程信息表
+        if (projectMessageMapper.updateById(projectMessage) < 0) {
+            return -1;
+        }
+
+        //删除工程关联的锥桶表
+        if (projectConeBucketMapper.deleteByProId(projectMessage.getId()) < 0) {
+            return -1;
+        }
+
+        //拆分录入的锥桶编号
+        String coneBucketNum = projectMessage.getConeBucketNum();
+        String[] strings = coneBucketNum.split(",");
+        for (int i = 0; i < strings.length; i++) {
+            //查询锥桶是否已经存在
+            ConeBucketMessage coneBucket = coneBucketMessageMapper.selectByConeBucketNum(strings[i]);
+
+            //不存在则将锥桶录入锥桶管理表
+            if (coneBucket == null) {
+                //插入锥桶信息表并返回主键
+                ConeBucketMessage coneBucketMessage = new ConeBucketMessage();
+                coneBucketMessage.setConeBucketType(projectMessage.getConeBucketType());
+                coneBucketMessage.setConeBucketNum(strings[i]);
+                coneBucketMessage.setCreateTime(new Date());
+                int coneBucketMessageInsert = coneBucketMessageMapper.insertReturnPrimaryKey(coneBucketMessage);
+                if (coneBucketMessageInsert < 0) {
+                    return -1;
+                }
+
+                //插入工程锥桶表
+                ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+                projectConeBucket.setProId(projectMessage.getId());
+                projectConeBucket.setConeBucketId(coneBucketMessage.getId());
+                int projectConeBucketInsert = projectConeBucketMapper.insert(projectConeBucket);
+                if (projectConeBucketInsert < 0) {
+                    return -1;
+                }
+
+            } else {
+                //如果存在直接插入工程锥桶表
+                ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+                projectConeBucket.setProId(projectMessage.getId());
+                projectConeBucket.setConeBucketId(coneBucket.getId());
+                int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
+                if (projectConeBucketinsert < 0) {
+                    return -1;
+                }
+            }
+        }
+
+        return 1;
+    }
 }
