@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../../../static/css/cone_bucket.css">
 </head>
 
 <body>
@@ -63,7 +64,7 @@
 </div>
 
 <!-- Start Footer area-->
-<div class="footer-copyright-area">
+<div class="footer-copyright-area" >
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -75,11 +76,44 @@
         </div>
     </div>
 </div>
+
+<div class="content"  id="addFrom" style="padding: 20px;background: #fff;display:none">
+
+    <form id="streetlightDiseaseForm"  >
+        <table class="table table-condensed table-bordered table-hover">
+            <tbody>
+            <tr>
+                <td style="width: 10%">锥桶编号</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="cbNum" name="diseaseNumber" value="" autocomplete="off"
+                           required="true">
+                </td>
+
+                <td style="width: 10%">锥桶类型</td>
+                <td style="width: 40%">
+                    <select class="form-control" id="roadName" name="roadName" required="true">
+                        <option value="0" selected="selected">内部监管</option>
+                        <option value="1">高德平台</option>
+                    </select>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div style="text-align: center">
+            <input class="btn btn-primary btn-sm" type="button" onclick="addSubmit();" value="提交">
+            <input class="btn btn-primary btn-sm" type="button" onclick="backOff()" value="返回">
+        </div>
+    </form>
+</div>
+
 </body>
+
 
 <!-- jquery -->
 <script src="../../static/js/jquery-1.12.4.min.js"></script>
 <!-- bootstrap JS-->
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/main.js"></script>
+<script src="../../../static/plugin/layer/layer.js"></script>
 </html>

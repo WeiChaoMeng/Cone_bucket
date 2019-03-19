@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/cone_bucket.css">
+    <script src="../../../static/js/jquery.js"></script>
+    <script src="../../../static/plugin/layer/layer.js"></script>
 </head>
 <body>
 
@@ -61,12 +63,7 @@
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                         </button>
 
-                        <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                        </button>
-
-
-                        <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
+                        <button id="btn_delete" type="button" class="btn btn-default" onclick="dellectConeBucket()">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
 
@@ -83,28 +80,16 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th style="width: 5%"><input type="checkbox"></th>
+                        <th style="width: 5%"><input id="checkboxs" onclick="changeAllCheckCss(this.id)" type="checkbox"></th>
                         <th style="width: 5%">序号</th>
                         <th style="width: 20%">锥桶编号</th>
                         <th style="width: 20%">锥桶类型</th>
-                        <th style="width: 20%">规格</th>
-                        <th style="width: 20%">材质</th>
+                        <th style="width: 20%">创建时间</th>
                         <th style="width: 10%">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">1</th>
-                        <td>6666666</td>
-                        <td>内部监管</td>
-                        <td>高度68cm，底盘直径35cm</td>
-                        <td>高硬度橡胶</td>
-                        <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
-                            <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                            </button>
-                        </td>
-                    </tr>
+                    <tbody id="tBo">
+
 
                     </tbody>
                 </table>
@@ -115,9 +100,9 @@
     <!-- /page content -->
 </div>
 </body>
-<script>
-    function add() {
-        window.location.href ="add.html";
-    }
+
+<script src="../../static/js/coneBucketManager/coneBucketManager.js"></script>
+<script type="text/javascript">
+
 </script>
 </html>
