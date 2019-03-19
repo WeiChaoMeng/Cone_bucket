@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
     <style>
         .but-color {
             fill: #ff7d2f;
@@ -305,12 +306,12 @@
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                                     </button>
 
-                                    <button id="btn_edit" type="button" class="btn btn-default" onclick="Modify()">
+                                    <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                                     </button>
 
 
-                                    <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
+                                    <button id="btn_delete" type="button" class="btn btn-default" onclick="remove()">
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                                     </button>
 
@@ -327,18 +328,19 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th><input type="checkbox"></th>
-                                    <th>序号</th>
-                                    <th>工程编号</th>
-                                    <th>工程名称</th>
-                                    <th>工程类型</th>
-                                    <th>开始时间</th>
-                                    <th>结束时间</th>
-                                    <th>锥桶类型</th>
-                                    <th>操作</th>
+                                    <th style="width: 5%;"><input type="checkbox"></th>
+                                    <th style="width: 5%;">序号</th>
+                                    <th style="width: 23%;">工程名称</th>
+                                    <th style="width: 8%;">工程类型</th>
+                                    <th style="width: 13%;">工程编号</th>
+                                    <th style="width: 10%;">开始时间</th>
+                                    <th style="width: 10%;">结束时间</th>
+                                    <th style="width: 8%;">工程状态</th>
+                                    <th style="width: 8%;">工程进度</th>
+                                    <th style="width: 10%;">操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
                                 <tr>
                                     <th><input type="checkbox"></th>
                                     <th scope="row">1</th>
@@ -355,26 +357,22 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th><input type="checkbox"></th>
-                                    <th scope="row">2</th>
-                                    <td>2018031102</td>
-                                    <td>路面维护</td>
-                                    <td>日常维修</td>
-                                    <td>2019-03-12</td>
-                                    <td>2019-03-15</td>
-                                    <td>无</td>
-                                    <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                                        </button>
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">上报
-                                        </button>
-                                    </td>
-                                </tr>
 
                                 </tbody>
                             </table>
-
+                            <%--分页--%>
+                            <div id="paging" style="right: 10px;height: 35px;bottom: 10px;margin-right: 20px">
+                                <div class="">
+                                    <div class="" style="float: right;">
+                                        <ul class="pagination" id="pagination" style="margin: 0"></ul>
+                                        <input type="hidden" id="PageCount" runat="server"/>
+                                        <input type="hidden" id="PageSize" runat="server"/>
+                                        <input type="hidden" id="countindex" runat="server"/>
+                                        <!--设置最多显示的页码数 可以手动设置 默认为10-->
+                                        <input type="hidden" id="visiblePages" runat="server" value="10"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -387,9 +385,163 @@
 </body>
 
 <script src="../../../static/js/jquery.js"></script>
+<%--分页--%>
+<script src="../../../static/plugin/paging/jqPaginator.js" type="text/javascript"></script>
 <script>
+    //添加
     function add() {
         window.location.href = "http://localhost:8080/projectMessage/toAdd.do";
+    }
+
+    //分页
+    $(function () {
+        loadData(1);
+        loadPage(1);
+    });
+
+    //分页
+    function exeData(page, type, parameter) {
+        //全部
+        if (parameter === 1) {
+            loadData(page);
+            loadPage(parameter);
+
+            //类型
+        } else if (parameter === 2) {
+            typeFilter(page);
+            loadPage(parameter);
+
+            //搜索
+        } else if (parameter === 3) {
+            searchButton(page);
+            loadPage(parameter);
+        }
+
+    }
+
+    function loadPage(parameter) {
+        var myPageCount = parseInt($("#PageCount").val());
+        var myPageSize = parseInt($("#PageSize").val());
+        var countindex = Math.ceil(myPageCount / myPageSize);
+        $("#countindex").val(countindex);
+
+        $.jqPaginator('#pagination', {
+            totalPages: parseInt($("#countindex").val()),
+            visiblePages: parseInt($("#visiblePages").val()),
+            currentPage: 1,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (page, type) {
+                if (type == "change") {
+                    exeData(page, type, parameter);
+                }
+            }
+        });
+    }
+
+    //加载数据
+    function loadData(page) {
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/projectQueryIndex.do',
+            data: {'page': page},
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //解析list
+    function parseResult(ProjectMessages) {
+        //结果集
+        var ProjectMessageList = ProjectMessages.list;
+        //当前页
+        var pageNum = ProjectMessages.pageNum;
+        //插入tbody
+        var ProjectMessage = '';
+        if (ProjectMessageList.length === 0) {
+            ProjectMessage += '<tr>';
+            ProjectMessage += '<td colspan="9">' + '暂无数据' + '</td>';
+            ProjectMessage += '</tr>';
+        } else {
+            for (var i = 0; i < ProjectMessageList.length; i++) {
+                ProjectMessage += '<tr>';
+                ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
+                ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
+                ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                ProjectMessage += '</button>';
+                ProjectMessage += '</td>';
+                ProjectMessage += '</tr>';
+            }
+        }
+
+        $('#tbody').html(ProjectMessage);
+    }
+
+    //工程详情
+    function details(id) {
+        window.location.href = "http://localhost:8080/projectMessage/toDetails.do?id=" + id;
+    }
+
+    //删除
+    function remove() {
+        var length = $("tbody input:checked").length;
+        if (length != 1) {
+            alert("一次只能选择一条数据");
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            $.ajax({
+                type: 'post',
+                url: '/projectMessage/remove.do',
+                data: {'id': id},
+                error: function () {
+                    alert("Connection error");
+                },
+                success: function (result) {
+                    if (result == 'success') {
+                        alert("删除成功");
+                        window.location.reload();
+                    } else {
+                        alert("删除失败");
+                    }
+                }
+            });
+        }
+    }
+
+    //修改
+    function edit() {
+        var length = $("tbody input:checked").length;
+        if (length != 1) {
+            alert("一次只能选择一条数据");
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            window.location.href = "http://localhost:8080/projectMessage/toEdit?id=" + id;
+        }
     }
 </script>
 </html>

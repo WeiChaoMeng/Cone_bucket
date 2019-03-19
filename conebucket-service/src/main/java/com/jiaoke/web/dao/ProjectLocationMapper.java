@@ -23,4 +23,20 @@ public interface ProjectLocationMapper extends Mapper<ProjectLocation> {
      * @return int
      */
     int insertByBatch(List<ProjectLocation> projectLocation);
+
+    /**
+     * 根据工程id查询
+     *
+     * @param proId 工程id
+     * @return list
+     */
+    List<ProjectLocation> selectByProId(Integer proId);
+
+    /**
+     * 根据工程id删除
+     *
+     * @param proId 工程id
+     * @return 影响行数
+     */
+    int deleteByProId(Integer proId);
 }

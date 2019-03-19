@@ -2,6 +2,8 @@ package com.jiaoke.service;
 
 import com.jiaoke.bean.ProjectMessage;
 
+import java.util.List;
+
 /**
  * 项目管理
  *
@@ -18,4 +20,35 @@ public interface ProjectMessageService {
      * @return 影响行数
      */
     int insertSelective(ProjectMessage projectMessage);
+
+    /**
+     * 查询全部工程
+     *
+     * @return list
+     */
+    List<ProjectMessage> selectAllData();
+
+    /**
+     * 根据主键查询
+     *
+     * @param id id
+     * @return ProjectMessage
+     */
+    ProjectMessage selectById(Integer id);
+
+    /**
+     * 根据主键删除
+     *
+     * @param id 主键
+     * @return 影响行数
+     */
+    int remove(Integer id);
+
+    /**
+     * 根据主键更新
+     *
+     * @param projectMessage projectMessage
+     * @return 影响行数
+     */
+    int updateById(ProjectMessage projectMessage);
 }

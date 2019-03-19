@@ -2,6 +2,7 @@ package com.jiaoke.bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 项目管理
@@ -31,6 +32,8 @@ public class ProjectMessage {
      * 工程类型
      */
     private Integer proType;
+    @Transient
+    private String proTypeStr;
 
     /**
      * 工程编号
@@ -72,12 +75,16 @@ public class ProjectMessage {
      */
     @Transient
     private Integer proSchedule;
+    @Transient
+    private String proScheduleStr;
 
     /**
      * 工程状态
      */
     @Transient
     private Integer proStatus;
+    @Transient
+    private String proStatusStr;
 
     /**
      * 工程位置
@@ -146,6 +153,34 @@ public class ProjectMessage {
      */
     @Transient
     private String proScope;
+
+    /**
+     * 工程经纬度表
+     */
+    @Transient
+    private List<ProjectLocation> projectLocation;
+
+    /**
+     * 工程锥桶表
+     */
+    @Transient
+    private List<ConeBucketMessage> coneBucketMessage;
+
+    public List<ConeBucketMessage> getConeBucketMessage() {
+        return coneBucketMessage;
+    }
+
+    public void setConeBucketMessage(List<ConeBucketMessage> coneBucketMessage) {
+        this.coneBucketMessage = coneBucketMessage;
+    }
+
+    public List<ProjectLocation> getProjectLocation() {
+        return projectLocation;
+    }
+
+    public void setProjectLocation(List<ProjectLocation> projectLocation) {
+        this.projectLocation = projectLocation;
+    }
 
     public Integer getId() {
         return id;
@@ -345,5 +380,29 @@ public class ProjectMessage {
 
     public void setProScope(String proScope) {
         this.proScope = proScope;
+    }
+
+    public String getProScheduleStr() {
+        return proScheduleStr;
+    }
+
+    public void setProScheduleStr(String proScheduleStr) {
+        this.proScheduleStr = proScheduleStr;
+    }
+
+    public String getProStatusStr() {
+        return proStatusStr;
+    }
+
+    public void setProStatusStr(String proStatusStr) {
+        this.proStatusStr = proStatusStr;
+    }
+
+    public String getProTypeStr() {
+        return proTypeStr;
+    }
+
+    public void setProTypeStr(String proTypeStr) {
+        this.proTypeStr = proTypeStr;
     }
 }

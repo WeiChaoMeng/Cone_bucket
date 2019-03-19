@@ -1,17 +1,17 @@
 package com.jiaoke.control;
 
-import com.jiaoke.bean.ConeBucketType;
-import com.jiaoke.bean.ProjectMessage;
-import com.jiaoke.bean.ProjectType;
-import com.jiaoke.service.ConeBucketTypeService;
-import com.jiaoke.service.ProjectMessageService;
-import com.jiaoke.service.ProjectTypeService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.jiaoke.bean.*;
+import com.jiaoke.service.*;
+import com.jiaoke.util.JsonHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,6 +33,12 @@ public class ProjectMessageController {
 
     @Resource
     private ProjectTypeService projectTypeService;
+
+    @Resource
+    private ConeBucketMessageService coneBucketMessageService;
+
+    @Resource
+    private ProjectLocationService projectLocationService;
 
     /**
      * 跳转工程管理首页
@@ -75,9 +81,102 @@ public class ProjectMessageController {
         return "error";
     }
 
-
-    public List<ProjectMessage> selctAll(){
-
-        return null;
+    /**
+     * 查询工程页面加载数据
+     *
+     * @return list
+     */
+    @RequestMapping("/projectQueryIndex.do")
+    @ResponseBody
+    public String selectAll(int page) {
+        PageHelper.startPage(page, 10);
+        List<ProjectMessage> projectMessageList = projectMessageService.selectAllData();
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        return JsonHelper.toJSONString(pageInfo);
     }
+
+
+    /**
+     * 跳转工程详情页
+     *
+     * @return details.jsp
+     */
+    @RequestMapping("/toDetails.do")
+    public String toDetails(Integer id, Model model) {
+        model.addAttribute("id", id);
+        return "project/details";
+    }
+
+    /**
+     * 获取工程详情
+     *
+     * @param id 工程id
+     * @return 工程信息
+     */
+    @RequestMapping("/details.do")
+    @ResponseBody
+    public String details(Integer id) {
+        HashMap<String, Object> map = new HashMap<String, Object>(16);
+        ProjectMessage projectMessage = projectMessageService.selectById(id);
+        List<ConeBucketMessage> coneBucketMessageList = coneBucketMessageService.selectByProId(id);
+        map.put("projectMessage", projectMessage);
+        map.put("coneBucketMessageList", coneBucketMessageList);
+        return JsonHelper.toJSONString(map);
+    }
+
+    /**
+     * 根据主键删除
+     *
+     * @param id 主键
+     * @return s/e
+     */
+    @RequestMapping("/remove.do")
+    @ResponseBody
+    public String remove(Integer id) {
+        if (projectMessageService.remove(id) > 0) {
+            return "success";
+        }
+        return "error";
+    }
+
+    @RequestMapping("/toEdit")
+    public String toEdit(Integer id, Model model) {
+        System.out.println(id);
+        //工程信息
+        ProjectMessage projectMessage = projectMessageService.selectById(id);
+        //工程锥桶信息
+        List<ConeBucketMessage> coneBucketMessageList = projectMessage.getConeBucketMessage();
+        String coneBucketNum = "";
+        for (int i = 0; i < coneBucketMessageList.size(); i++) {
+            coneBucketNum += coneBucketMessageList.get(i).getConeBucketNum();
+            if (coneBucketMessageList.size() - 1 != i) {
+                coneBucketNum += ",";
+            }
+        }
+        //工程经纬度
+        List<ProjectLocation> projectLocationList = projectMessage.getProjectLocation();
+
+        //查询锥桶类型
+        List<ConeBucketType> coneBucketTypeList = coneBucketTypeService.selectAll();
+        //查询工程类型
+        List<ProjectType> projectTypeList = projectTypeService.selectAll();
+
+        model.addAttribute("coneBucketTypeList", coneBucketTypeList);
+        model.addAttribute("projectLocationList", JsonHelper.toJSONString(projectLocationList));
+        model.addAttribute("projectTypeList", projectTypeList);
+        model.addAttribute("projectMessage", projectMessage);
+        model.addAttribute("coneBucketNum", coneBucketNum);
+        return "project/edit";
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public String edit(ProjectMessage projectMessage) {
+        if (projectMessageService.updateById(projectMessage) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+
 }

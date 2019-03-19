@@ -4,8 +4,10 @@ import com.jiaoke.bean.ConeBucketMessage;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
- * 锥桶类型
+ * 锥桶信息
  *
  * @author lihui
  * @version 1.0
@@ -24,8 +26,17 @@ public interface ConeBucketMessageMapper extends Mapper<ConeBucketMessage> {
 
     /**
      * 插入数据并返回主键
+     *
      * @param coneBucketMessage coneBucketMessage
      * @return int
      */
     int insertReturnPrimaryKey(ConeBucketMessage coneBucketMessage);
+
+    /**
+     * 根据工程id查询锥桶信息
+     *
+     * @param proId 工程id
+     * @return list
+     */
+    List<ConeBucketMessage> selectByProId(Integer proId);
 }

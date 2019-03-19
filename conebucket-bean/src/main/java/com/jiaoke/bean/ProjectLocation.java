@@ -35,6 +35,17 @@ public class ProjectLocation {
      */
     private String latitude;
 
+
+    private ProjectMessage projectMessage;
+
+    public ProjectMessage getProjectMessage() {
+        return projectMessage;
+    }
+
+    public void setProjectMessage(ProjectMessage projectMessage) {
+        this.projectMessage = projectMessage;
+    }
+
     public Integer getId() {
         return id;
     }
