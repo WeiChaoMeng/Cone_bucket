@@ -26,4 +26,6 @@ public interface ConeBucketManagerServiceInf {
     List<Map<String, Object>> getAllConeBucket();
 
     int removeConeBucketById(String[] idArray);
+
+    List<Map<String, Object>> getConeBucketByCondition(String cbn, String cbt);
 }

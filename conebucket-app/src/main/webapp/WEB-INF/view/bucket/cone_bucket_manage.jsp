@@ -28,22 +28,21 @@
             <form id="formSearch" class="form-horizontal">
                 <div class="row">
 
-                    <label id="nickname" class="control-label col-sm-1" for="txt_search_road1">锥桶编号</label>
+                    <label class="control-label col-sm-1" >锥桶编号</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control" id="txt_search_road1" autocomplete="off">
+                        <input type="text" class="form-control" id="coneBucketNum" autocomplete="off">
                     </div>
 
                     <label id="roadgrade" class="control-label col-sm-1">锥桶类型</label>
                     <div class="col-sm-2">
-                        <select class="form-control" id="txt_search_road3">
-                            <option style="height:30px;width:160px;" value="">--请选择--</option>
-                            <option value="1">内部监管</option>
-                            <option value="2">高德平台</option>
+                        <select class="form-control" id="coneBucketType">
+                            <option value="0">内部监管</option>
+                            <option value="1">高德平台</option>
                         </select>
                     </div>
 
                     <div>
-                        <button type="button" id="btn_query" class="btn btn-primary search-btn">查询
+                        <button type="button" id="btn_query" onclick="getConeBucketByCondition()" class="btn btn-primary search-btn">查询
                         </button>
                     </div>
                 </div>

@@ -116,5 +116,76 @@ function dellectConeBucket() {
             }
         })
     }
+}
 
+//条件查询方法
+function getConeBucketByCondition() {
+    var cbn = $("#coneBucketNum").val();
+    var cbt = $("#coneBucketType").val();
+
+    if (isNull(cbn) && isNull(cbn)){
+        layer.msg("请输入查询信息")
+        return ;
+    }
+
+    $.ajax({
+        url:localStorage.getItem("ajaxUrl") + "/getConeBucketByCondition.do",
+        //几个参数需要注意一下
+        type: "Post",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        data:{
+            "cbn":cbn,
+            "cbt":cbt
+        },
+        success: function (res) {
+
+            if (res.resCode == 200){
+                $("#tBo").empty();
+                layer.msg("查询成功");
+                var coneBucketList = res.resData;
+
+                for (var i =0;i < coneBucketList.length;i++){
+                    var id = coneBucketList[i].id;
+                    var cone_bucket_num = coneBucketList[i].cone_bucket_num;
+                    var create_time = coneBucketList[i].create_time;
+                    var type_name = coneBucketList[i].type_name;
+
+                    var html = "                    <tr>\n" +
+                        "                        <th><input onclick='changeCheckCss(this.id);' id="+ id  +" + name='check' + type=\"checkbox\"></th>\n" +
+                        "                        <th  scope=\"row\"> " + id +" </th>\n" +
+                        "                        <td style=\" text-align:center;\" >" + cone_bucket_num +"</td>\n" +
+                        "                        <td style=\" text-align:center;\" >" + type_name+"</td>\n" +
+                        "                        <td style=\" text-align:center;\" >" + create_time+"</td>\n" +
+                        "                        <td style=\"text-align: center; width: 110px;padding: 0;line-height: 50px; \">\n" +
+                        "                            <button onclick='getConeBucketMessage(this.id)' id="+ id +" style=\" text-align:right;\" class=\"btn btn-primary btn-sm\">详细\n" +
+                        "                            </button>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>";
+
+
+                    $("#tBo").append(html);
+                }
+
+            } else {
+                layer.msg("无锥桶")
+            }
+        },
+        error:function () {
+            layer.msg("异常！");
+        }
+    });
+
+}
+
+
+
+/****************js判空方法********************/
+
+function isNull(str) {
+
+    if (!str && typeof(str) =='undefined' ){
+        return true
+    }else {
+        return false
+    }
 }

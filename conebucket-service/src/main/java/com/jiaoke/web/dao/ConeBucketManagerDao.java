@@ -28,4 +28,6 @@ public interface ConeBucketManagerDao {
     List<Map<String, Object>> selectAllConeBucket();
 
     int delectConeBucketById(@Param("idArray") String[] idArray);
+
+    List<Map<String, Object>> selectConeBucketByCondition(@Param("cbn")String cbn, @Param("cbt")String cbt);
 }
