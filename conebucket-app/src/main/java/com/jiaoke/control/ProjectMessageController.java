@@ -10,6 +10,8 @@ import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -191,86 +193,28 @@ public class ProjectMessageController {
     }
 
     /**
-     * 工程上报
      *
-     * @param id 工程id
-     * @return s
+     * 功能描述: <br>
+     *  <根据条件查询工程>
+     * @param [page, proName, proSchedule, proType, proStatus]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/3/19 14:05
      */
-    @RequestMapping("/projectReport.do")
     @ResponseBody
-    public String projectReport(Integer id) {
-        String processInstanceId = activiti.startProcessInstance("projectMessage", id.toString());
-        if (activiti.queryTaskIdByProcessInstanceId(processInstanceId) != null) {
-            //修改工程状态
+    @RequestMapping(value = "/getProMessageByCondition.do",method = RequestMethod.POST)
+    public String getProMessageByCondition(@RequestParam("page") int page,
+                                           @RequestParam("proName") String proName,
+                                           @RequestParam("proSchedule") String proSchedule,
+                                           @RequestParam("proType") String proType,
+                                           @RequestParam("proStatus") String proStatus){
 
-        }
-        return "error";
-    }
 
-    /**
-     * 行业审批
-     *
-     * @param page page
-     * @return json
-     */
-    @RequestMapping("/industryApproval.do")
-    @ResponseBody
-    public String industryApproval(int page) {
-        //查询行业审批任务
-        List<Task> taskList = activiti.queryTask("industryApproval");
-        List<ProjectMessage> list = new ArrayList<>();
-        for (Task task : taskList) {
-            //根据ProcessInstanceId查询businessKey
-            String businessKey = activiti.queryBusinessKey(task.getProcessInstanceId());
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
-            projectMessage.setTaskId(task.getId());
-            list.add(projectMessage);
-        }
         PageHelper.startPage(page, 10);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(list);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName,proSchedule,proType,proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
+
     }
 
-    /**
-     * 交警确认
-     *
-     * @param page page
-     * @return json
-     */
-    @RequestMapping("/policeConfirm.do")
-    @ResponseBody
-    public String policeConfirm(int page) {
-        //查询行业审批任务
-        List<Task> taskList = activiti.queryTask("policeConfirmation");
-        List<ProjectMessage> arrayList = new ArrayList<>();
-        for (Task task : taskList) {
-            //根据ProcessInstanceId查询businessKey
-            String processInstanceId = task.getProcessInstanceId();
-            String businessKey = activiti.queryBusinessKey(processInstanceId);
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
-            projectMessage.setTaskId(task.getId());
-            arrayList.add(projectMessage);
-        }
-        PageHelper.startPage(page, 10);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(arrayList);
-        return JsonHelper.toJSONString(pageInfo);
-    }
-
-
-    /**
-     * 竣工完成
-     * @param page page
-     * @return json
-     */
-    @RequestMapping("/completion.do")
-    @ResponseBody
-    public String completion(int page) {
-        //查询已审批完成的工程
-        List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
-        for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
-            //根据业务主键查询已完成工程
-            historicProcessInstance.getBusinessKey();
-        }
-        return "";
-    }
 }

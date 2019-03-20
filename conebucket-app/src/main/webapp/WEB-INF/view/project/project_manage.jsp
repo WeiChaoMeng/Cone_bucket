@@ -249,43 +249,44 @@
 
                                 <span style="margin-top:10px;float: left">工程名称:</span>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="txt_search_road2" autocomplete="off">
+                                    <input type="text" class="form-control" id="proName" autocomplete="off">
                                 </div>
 
-                                <span style="margin:10px 0 0 20px;float: left">工程类型:</span>
+                                <span style="margin:10px 0 0 20px;float: left">工程进度:</span>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="facilityCategory">
-                                        <option value="">--请选择--</option>
-                                        <option value="">大中修工程</option>
-                                        <option value="">应急抢险</option>
-                                        <option value="">日常维修</option>
+
+                                    <select class="form-control" id="proSchedule">
+                                        <option value="3">--请选择--</option>
+                                        <option value="0">未进场</option>
+                                        <option value="1">施工中</option>
+                                        <option value="2">已完工</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group row" style="margin:10px auto">
-                                <span style="margin-top:10px;float: left">工程时间:</span>
-                                <div class="col-sm-2">
-                                    <input placeholder="开始时间" type="text" class="form-control " id="star"
-                                           onfocus="WdatePicker({lang:'zh-cn'})" readonly="">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input placeholder="结束时间" type="text" class="form-control " id="end"
-                                           onfocus="WdatePicker({lang:'zh-cn'})" readonly="">
+                                <span style="margin-top:10px;float: left">工程状态:</span>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="proStatus">
+                                        <option value="3">--请选择--</option>
+                                        <option value="0">未审批</option>
+                                        <option value="1">未确认</option>
+                                    </select>
                                 </div>
 
-                                <span style="margin:10px 0 0 20px;float: left">锥桶类型:</span>
+                                <span style="margin:10px 0 0 20px;float: left">工程类型:</span>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="search">
-                                        <option value="">--请选择--</option>
-                                        <option value="">内部监管</option>
-                                        <option value="">高德平台</option>
+                                    <select class="form-control"  id="proType">
+                                        <option value="3">--请选择--</option>
+                                        <option value="0">大中修工程</option>
+                                        <option value="1">应急抢险</option>
+                                        <option value="2">日常维修</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-1" style="text-align:center;">
                                     <button type="button" id="btn_query" class="btn btn-primary btn-sm"
-                                            onclick="query()">查询
+                                            onclick="getProMessageByCondition(1)">查询
                                     </button>
                                 </div>
                             </div>
@@ -620,9 +621,40 @@
         }
     }
 
-    //分页
-    $(function () {
-        constructionReport(1,1);
-    });
+
+
+    //条件查询方法
+    function getProMessageByCondition(page) {
+        var proName =$ ("#proName").val();
+        var proSchedule =$ ("#proSchedule").val();
+        var proType =$ ("#proType").val();
+        var proStatus =$ ("#proStatus").val();
+
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/getProMessageByCondition.do',
+            data: {
+                'page': page,
+                'proName':proName,
+                'proSchedule':proSchedule,
+                'proType':proType,
+                'proStatus':proStatus
+            },
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
 </script>
 </html>

@@ -130,7 +130,7 @@
         where id = #{id}
     </update>
 
-    <select id="selectByBusinessKey" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.ProjectMessage">
+    <select id="selectProMessageByCondition" parameterType="java.lang.String"  resultMap="projectMessageMap">
         SELECT
             pm.id as id,
             pm.pro_name as proName,
@@ -145,7 +145,21 @@
             LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
             LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
             LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
-        WHERE
-	        pm.id = 15
+        <where>
+            <if test="proName != ''">
+                and  pm.pro_name = #{pro_name}
+            </if>
+            <if test="proSchedule != '' and proSchedule != 3">
+                and  pm.pro_schedule = #{proSchedule}
+            </if>
+            <if test="proType != '' and proType != 3">
+                and  pm.pro_type = #{proType}
+            </if>
+            <if test="proStatus != '' and proStatus != 3">
+                and  pm.pro_status = #{proStatus}
+            </if>
+        </where>
+        ORDER BY
+        pm.id DESC
     </select>
 </mapper>

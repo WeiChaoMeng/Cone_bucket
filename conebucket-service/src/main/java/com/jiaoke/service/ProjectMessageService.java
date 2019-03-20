@@ -54,10 +54,12 @@ public interface ProjectMessageService {
     int updateById(ProjectMessage projectMessage);
 
     /**
-     * 根据BusinessKey查询
-     *
-     * @param id id
-     * @return projectMessage
+     * 条件查询
+     * @param proName
+     * @param proSchedule
+     * @param proType
+     * @param proStatus
+     * @return
      */
-    ProjectMessage selectByBusinessKey(Integer id);
+    List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus);
 }

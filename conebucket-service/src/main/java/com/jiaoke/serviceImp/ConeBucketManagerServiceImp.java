@@ -44,4 +44,9 @@ public class ConeBucketManagerServiceImp implements ConeBucketManagerServiceInf 
     public int removeConeBucketById(String[] idArray) {
         return coneBucketManagerDao.delectConeBucketById(idArray);
     }
+
+    @Override
+    public List<Map<String, Object>> getConeBucketByCondition(String cbn, String cbt) {
+        return coneBucketManagerDao.selectConeBucketByCondition(cbn,cbt);
+    }
 }

@@ -114,4 +114,22 @@ public class ConeBucketManagerControl {
 
         return JSON.toJSONString(resMap);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getConeBucketByCondition.do" ,method = RequestMethod.POST)
+    public String getConeBucketByCondition(@RequestParam("cbn") String cbn,@RequestParam("cbt") String cbt){
+
+        Map<String,Object> resMap = new HashMap<>();
+
+        List<Map<String,Object>>  cbList = coneBucketManagerServiceInf.getConeBucketByCondition(cbn,cbt);
+
+        if (cbList.size() != 0){
+            resMap.put("resCode","200");
+            resMap.put("resData",cbList);
+        }else {
+            resMap.put("resCode","403");
+        }
+
+        return JSON.toJSONString(resMap);
+    }
 }
