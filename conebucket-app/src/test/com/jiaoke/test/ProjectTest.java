@@ -2,6 +2,7 @@ package com.jiaoke.test;
 
 import com.jiaoke.util.SpringHelper;
 import com.jiaoke.web.dao.ProjectLocationMapper;
+import com.jiaoke.web.dao.ProjectMessageMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,18 +13,18 @@ import org.junit.Test;
  */
 public class ProjectTest {
 
-//    private ProjectMessageMapper projectMessageMapper;
+    private ProjectMessageMapper projectMessageMapper;
 //    private ConeBucketMessageMapper coneBucketMessageMapper;
-    private ProjectLocationMapper projectLocationMapper;
+//    private ProjectLocationMapper projectLocationMapper;
 
     @Before
     public void setUp() {
-        projectLocationMapper = SpringHelper.getBean("projectLocationMapper");
+        projectMessageMapper = SpringHelper.getBean("projectMessageMapper");
     }
 
     @Test
     public void testUser() {
-        int i = projectLocationMapper.deleteByProId(10);
+        int i = projectMessageMapper.updateProStatus(13,1);
         System.out.println(i);
     }
 }

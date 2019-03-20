@@ -50,11 +50,35 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
 
     /**
      * 条件查询
-     * @param proName
-     * @param proSchedule
-     * @param proType
-     * @param proStatus
+     *
+     * @param proName proName
+     * @param proType proType
+     * @return list
+     */
+    List<ProjectMessage> selectProMessageByCondition(@Param("proName") String proName,
+                                                     @Param("proType") String proType);
+
+    /**
+     * 根据BusinessKey查询
+     *
+     * @param id id
+     * @return projectMessage
+     */
+    ProjectMessage selectByBusinessKey(Integer id);
+
+    /**
+     * 查询未上报
+     *
+     * @return list
+     */
+    List<ProjectMessage> selectNotReported();
+
+    /**
+     * 更新工程状态
+     *
+     * @param id     主键
+     * @param status 状态码
      * @return
      */
-    List<ProjectMessage> selectProMessageByCondition(@Param("proName") String proName,@Param("proSchedule")  String proSchedule, @Param("proType") String proType, @Param("proStatus")String proStatus);
+    int updateProStatus(@Param("id") Integer id, @Param("status") Integer status);
 }

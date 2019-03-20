@@ -198,7 +198,6 @@
         //绑定单击事件添加参数
         qq.maps.event.addListener(map, 'click', function (event) {
             path.push(new qq.maps.LatLng(event.latLng.getLat(),event.latLng.getLng()));
-            console.log(path);
             //创建marker
             var marker = new qq.maps.Marker({
                 position: new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()),
@@ -243,11 +242,10 @@
     //提交form
     function commit() {
         var proScopeJson = JSON.stringify(path);
-        console.log("------" + proScopeJson);
         $('#proScope').val(proScopeJson);
         $.ajax({
             type: "POST",
-            url: 'http://localhost:8080/projectMessage/add.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/add.do',
             data: $('#projectMessage').serialize(),
             error: function (request) {
                 alert("Connection error");

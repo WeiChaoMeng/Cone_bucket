@@ -193,28 +193,166 @@ public class ProjectMessageController {
     }
 
     /**
-     *
      * 功能描述: <br>
-     *  <根据条件查询工程>
-     * @param [page, proName, proSchedule, proType, proStatus]
-     * @return java.lang.String
+     * <根据条件查询工程>
+     * 条件查询
+     *
+     * @param proName proName
+     * @param proType proType
+     * @return json
      * @auther Melone
      * @date 2019/3/19 14:05
      */
     @ResponseBody
-    @RequestMapping(value = "/getProMessageByCondition.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
     public String getProMessageByCondition(@RequestParam("page") int page,
                                            @RequestParam("proName") String proName,
-                                           @RequestParam("proSchedule") String proSchedule,
-                                           @RequestParam("proType") String proType,
-                                           @RequestParam("proStatus") String proStatus){
+                                           @RequestParam("proType") String proType) {
 
 
         PageHelper.startPage(page, 10);
-        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName,proSchedule,proType,proStatus);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proType);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
 
     }
 
+    /**
+     * 加载未上报工程
+     *
+     * @return list
+     */
+    @RequestMapping("/notReported.do")
+    @ResponseBody
+    public String notReported(int page) {
+        PageHelper.startPage(page, 10);
+        List<ProjectMessage> projectMessageList = projectMessageService.selectNotReported();
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 工程上报
+     *
+     * @param id 工程id
+     * @return s
+     */
+    @RequestMapping("/projectReport.do")
+    @ResponseBody
+    public String projectReport(Integer id) {
+        String processInstanceId = activiti.startProcessInstance("projectMessage", id.toString());
+        if (activiti.queryTaskIdByProcessInstanceId(processInstanceId) != null) {
+            //修改工程状态
+            if (projectMessageService.updateProStatus(id, 1) >= 0) {
+                return "success";
+            }
+            return "error";
+        }
+        return "error";
+    }
+
+    /**
+     * 行业审批
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/industryApproval.do")
+    @ResponseBody
+    public String industryApproval(int page) {
+        PageHelper.startPage(page, 10);
+        //查询行业审批任务
+        List<Task> taskList = activiti.queryTask("industryApproval");
+        List<ProjectMessage> list = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据ProcessInstanceId查询businessKey
+            String businessKey = activiti.queryBusinessKey(task.getProcessInstanceId());
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
+            projectMessage.setTaskId(task.getId());
+            list.add(projectMessage);
+        }
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(list);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 交警确认
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/policeConfirm.do")
+    @ResponseBody
+    public String policeConfirm(int page) {
+        //查询行业审批任务
+        List<Task> taskList = activiti.queryTask("policeConfirmation");
+        List<ProjectMessage> arrayList = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据ProcessInstanceId查询businessKey
+            String processInstanceId = task.getProcessInstanceId();
+            String businessKey = activiti.queryBusinessKey(processInstanceId);
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
+            projectMessage.setTaskId(task.getId());
+            arrayList.add(projectMessage);
+        }
+        PageHelper.startPage(page, 10);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+
+    /**
+     * 竣工完成
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/completion.do")
+    @ResponseBody
+    public String completion(int page) {
+        List<ProjectMessage> arrayList = new ArrayList<>();
+        //查询已审批完成的工程
+        List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
+        for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
+            //根据业务主键查询已完成工程
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(historicProcessInstance.getBusinessKey()));
+            arrayList.add(projectMessage);
+        }
+        PageHelper.startPage(page, 10);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 行业通过处理
+     *
+     * @param taskId taskId
+     * @return s
+     */
+    @RequestMapping("/policePerform.do")
+    @ResponseBody
+    public String policePerform(String taskId, Integer id, Integer status) {
+        activiti.finishCurrentTaskByTaskId(taskId);
+        //修改工程状态
+        if (projectMessageService.updateProStatus(id, status) >= 0) {
+            return "success";
+        }
+        return "error";
+    }
+
+    /**
+     * 交警通过处理
+     *
+     * @param taskId taskId
+     * @return s
+     */
+    @RequestMapping("/industryPerform.do")
+    @ResponseBody
+    public String industryPerform(String taskId, Integer id, Integer status) {
+        activiti.finishCurrentTaskByTaskId(taskId);
+        if (projectMessageService.updateProStatus(id, status) >= 0) {
+            return "success";
+        }
+        return "error";
+    }
 }

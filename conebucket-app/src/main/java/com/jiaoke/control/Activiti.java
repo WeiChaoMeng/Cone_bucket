@@ -7,16 +7,18 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lihui
  * @version 1.0
  * @date 2019/3/19 13:51
  */
+
+@Component("activiti")
 public class Activiti {
 
     @Resource
@@ -79,6 +81,15 @@ public class Activiti {
      */
     public List<HistoricProcessInstance> queryHistoricProcessInstance() {
         return historyService.createHistoricProcessInstanceQuery().finished().list();
+    }
+
+    /**
+     * 已完成的流程实例
+     *
+     * @return Task
+     */
+    public void finishCurrentTaskByTaskId(String taskId) {
+        this.taskService.complete(taskId);
     }
 
 

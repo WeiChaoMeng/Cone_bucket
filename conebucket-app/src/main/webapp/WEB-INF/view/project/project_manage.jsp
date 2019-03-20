@@ -152,9 +152,9 @@
                                 </linearGradient>
                             </defs>
 
-                            <rect class="but-color" onclick="rectButton(1)" x="70" y="20" width="100" height="50" r="10"
+                            <rect onclick="rectButton(1)" x="70" y="20" width="100" height="50" r="10"
                                   rx="10" ry="10"
-                                  fill="#00a1ffbd" stroke="#ffffff" opacity="1"
+                                  fill="#ff7d2f" stroke="#ffffff" opacity="1"
                                   fill-opacity="1" stroke-width="1" id="1"
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                             ></rect>
@@ -163,8 +163,8 @@
                                   fill="#000000"
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
-                                <tspan id="goRepair" onclick="rectButton(1,1)"
-                                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">施工上报0条
+                                <tspan id="goRepair" onclick="rectButton(1)"
+                                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">施工上报
                                 </tspan>
                             </text>
 
@@ -179,7 +179,7 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="received" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(1,2)">行业审批0条
+                                       onclick="rectButton(2)">行业审批
                                 </tspan>
                             </text>
 
@@ -194,7 +194,7 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(1,3)">交警确认0条
+                                       onclick="rectButton(3)">交警确认
                                 </tspan>
                             </text>
 
@@ -209,7 +209,7 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(1,4)">竣工完成0条
+                                       onclick="rectButton(4)">竣工完成
                                 </tspan>
                             </text>
 
@@ -245,39 +245,16 @@
                     <div class="panel-body">
 
                         <form id="formSearch" class="form-horizontal">
-                            <div class="form-group row" style="margin:auto">
-
+                            <div class="form-group row" style="margin:10px auto">
                                 <span style="margin-top:10px;float: left">工程名称:</span>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" id="proName" autocomplete="off">
                                 </div>
 
-                                <span style="margin:10px 0 0 20px;float: left">工程进度:</span>
-                                <div class="col-sm-4">
-
-                                    <select class="form-control" id="proSchedule">
-                                        <option value="3">--请选择--</option>
-                                        <option value="0">未进场</option>
-                                        <option value="1">施工中</option>
-                                        <option value="2">已完工</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row" style="margin:10px auto">
-                                <span style="margin-top:10px;float: left">工程状态:</span>
-                                <div class="col-sm-4">
-                                    <select class="form-control" id="proStatus">
-                                        <option value="3">--请选择--</option>
-                                        <option value="0">未审批</option>
-                                        <option value="1">未确认</option>
-                                    </select>
-                                </div>
-
                                 <span style="margin:10px 0 0 20px;float: left">工程类型:</span>
                                 <div class="col-sm-4">
-                                    <select class="form-control"  id="proType">
-                                        <option value="3">--请选择--</option>
+                                    <select class="form-control" id="proType">
+                                        <option value="">--请选择--</option>
                                         <option value="0">大中修工程</option>
                                         <option value="1">应急抢险</option>
                                         <option value="2">日常维修</option>
@@ -389,40 +366,33 @@
 <%--分页--%>
 <script src="../../../static/plugin/paging/jqPaginator.js" type="text/javascript"></script>
 <script>
-    //添加
-    function add() {
-        window.location.href = "http://localhost:8080/projectMessage/toAdd.do";
-    }
 
     //流程图按钮颜色切换
-    function rectButton(page, parameter) {
-        $("#svg rect").removeClass("but-color");
-        $('#' + parameter).addClass('but-color');
-        if (parameter == 1) {
+    function rectButton(parameter) {
+        var page = 1;
+        $("#svg rect").attr("fill", "#00a1ffbd");
+        $('#' + parameter).attr("fill", "#ff7d2f");
+        if (parameter === 1) {
             //施工上报
             constructionReport(page, parameter);
-        } else if (parameter == 2) {
+        } else if (parameter === 2) {
             //行业审批
             industryApproval(page, parameter);
-        } else if (parameter == 3) {
+        } else if (parameter === 3) {
             //交警确认
             policeConfirm(page, parameter);
-        } else if (parameter == 4) {
+        } else if (parameter === 4) {
             //竣工完成
             completion(page, parameter);
         }
     }
 
-    //上报
-    function report(id) {
-
-    }
-
-    //施工上报
+    /*------------施工上报---------------*/
+    //施工上报页面
     function constructionReport(page, parameter) {
         $.ajax({
             type: "post",
-            url: '/projectMessage/projectQueryIndex.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/notReported.do',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -442,11 +412,71 @@
         })
     }
 
-    //行业审批
+    //解析list
+    function parseResult(ProjectMessages) {
+        //结果集
+        var ProjectMessageList = ProjectMessages.list;
+        //当前页
+        var pageNum = ProjectMessages.pageNum;
+        //插入tbody
+        var ProjectMessage = '';
+        if (ProjectMessageList.length === 0) {
+            ProjectMessage += '<tr>';
+            ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+            ProjectMessage += '</tr>';
+        } else {
+            for (var i = 0; i < ProjectMessageList.length; i++) {
+                ProjectMessage += '<tr>';
+                ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
+                ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
+                ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-bottom:5px" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                ProjectMessage += '</button>';
+                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
+                ProjectMessage += '</button>';
+                ProjectMessage += '</td>';
+                ProjectMessage += '</tr>';
+            }
+        }
+
+        $('#tbody').html(ProjectMessage);
+    }
+
+    //流程-施工上报
+    function report(id) {
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/projectReport.do',
+            data: {'id': id},
+            async: false,
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (data) {
+                if (data === "success") {
+                    alert('上报成功');
+                    window.location.reload();
+                } else {
+                    alert('上报失败');
+                }
+            }
+        })
+    }
+
+    /*----------------行业审批-----------------*/
+
+    //行业审批页面
     function industryApproval(page, parameter) {
         $.ajax({
             type: "post",
-            url: '/projectMessage/industryApproval.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/industryApproval.do',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -456,8 +486,40 @@
                 //每页显示条数
                 $("#PageSize").val("10");
 
+                //审批处理
                 //基本数据
-                parseResult(ProjectMessages);
+                var ProjectMessageList = ProjectMessages.list;
+                //当前页
+                var pageNum = ProjectMessages.pageNum;
+                //插入tbody
+                var ProjectMessage = '';
+                if (ProjectMessageList.length === 0) {
+                    ProjectMessage += '<tr>';
+                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '</tr>';
+                } else {
+                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                        ProjectMessage += '<tr>';
+                        ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '<input type="hidden" id="id" value="' + ProjectMessageList[i].id + '"></td>';
+                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-bottom:5px" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ')">通过';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '</td>';
+                        ProjectMessage += '</tr>';
+                    }
+                }
+
+                $('#tbody').html(ProjectMessage);
                 loadPage(parameter);
             },
             error: function (result) {
@@ -466,11 +528,112 @@
         })
     }
 
-    //交警确认
+    //流程-行业审批通过处理
+    function industryPerform(taskId) {
+        var id = $('#id').val();
+        var status = 2;
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/policePerform.do',
+            data: {'taskId': taskId, 'id': id, 'status': status},
+            async: false,
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (data) {
+                if (data === "success") {
+                    alert('处理成功');
+                    window.location.reload();
+                }
+            }
+        })
+    }
+
+    /*---------------交警确认--------------------*/
+    //交警确认页面
     function policeConfirm(page, parameter) {
         $.ajax({
             type: "post",
-            url: '/projectMessage/policeConfirm.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/policeConfirm.do',
+            data: {'page': page},
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //审批处理
+                //基本数据
+                var ProjectMessageList = ProjectMessages.list;
+                //当前页
+                var pageNum = ProjectMessages.pageNum;
+                //插入tbody
+                var ProjectMessage = '';
+                if (ProjectMessageList.length === 0) {
+                    ProjectMessage += '<tr>';
+                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '</tr>';
+                } else {
+                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                        ProjectMessage += '<tr>';
+                        ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '<input type="hidden" id="id" value="' + ProjectMessageList[i].id + '"></td>';
+                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-bottom:5px" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ')">通过';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '</td>';
+                        ProjectMessage += '</tr>';
+                    }
+                }
+
+                $('#tbody').html(ProjectMessage);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //流程-交警审批通过处理
+    function policePerform(taskId) {
+        var id = $('#id').val();
+        var status = 3;
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/industryPerform.do',
+            data: {'taskId': taskId, 'id': id, 'status': status},
+            async: false,
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (data) {
+                if (data === "success") {
+                    alert('处理成功');
+                    window.location.reload();
+                }
+            }
+        })
+    }
+
+    /*-----------------竣工完成------------------*/
+
+    //竣工完成 页面
+    function completion(page, parameter) {
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/completion.do',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -481,18 +644,44 @@
                 $("#PageSize").val("10");
 
                 //基本数据
-                parseResult(ProjectMessages);
+
+                //结果集
+                var ProjectMessageList = ProjectMessages.list;
+                //当前页
+                var pageNum = ProjectMessages.pageNum;
+                //插入tbody
+                var ProjectMessage = '';
+                if (ProjectMessageList.length === 0) {
+                    ProjectMessage += '<tr>';
+                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '</tr>';
+                } else {
+                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                        ProjectMessage += '<tr>';
+                        ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
+                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '</td>';
+                        ProjectMessage += '</tr>';
+                    }
+                }
+
+                $('#tbody').html(ProjectMessage);
                 loadPage(parameter);
             },
             error: function (result) {
                 alert("出错！");
             }
         })
-    }
-
-    //竣工完成
-    function completion(page, parameter) {
-
     }
 
     //分页
@@ -510,7 +699,7 @@
             policeConfirm(page);
 
             //竣工完成
-        }else if (parameter === 4) {
+        } else if (parameter === 4) {
             completion(page);
         }
 
@@ -520,8 +709,8 @@
     function loadPage(parameter) {
         var myPageCount = parseInt($("#PageCount").val());
         var myPageSize = parseInt($("#PageSize").val());
-        var countindex = Math.ceil(myPageCount / myPageSize);
-        $("#countindex").val(countindex);
+        var totalPageNum = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
+        $("#countindex").val(totalPageNum);
 
         $.jqPaginator('#pagination', {
             totalPages: parseInt($("#countindex").val()),
@@ -540,46 +729,14 @@
         });
     }
 
-    //解析list
-    function parseResult(ProjectMessages) {
-        //结果集
-        var ProjectMessageList = ProjectMessages.list;
-        //当前页
-        var pageNum = ProjectMessages.pageNum;
-        //插入tbody
-        var ProjectMessage = '';
-        if (ProjectMessageList.length === 0) {
-            ProjectMessage += '<tr>';
-            ProjectMessage += '<td colspan="9">' + '暂无数据' + '</td>';
-            ProjectMessage += '</tr>';
-        } else {
-            for (var i = 0; i < ProjectMessageList.length; i++) {
-                ProjectMessage += '<tr>';
-                ProjectMessage += '<th><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></th>';
-                ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
-                ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                ProjectMessage += '</button>';
-                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
-                ProjectMessage += '</button>';
-                ProjectMessage += '</td>';
-                ProjectMessage += '</tr>';
-            }
-        }
-
-        $('#tbody').html(ProjectMessage);
-    }
-
     //工程详情
     function details(id) {
-        window.location.href = "http://localhost:8080/projectMessage/toDetails.do?id=" + id;
+        window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toDetails.do?id=" + id;
+    }
+
+    //添加
+    function add() {
+        window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toAdd.do";
     }
 
     //删除
@@ -592,7 +749,7 @@
             var id = $("tbody input:checked").val();
             $.ajax({
                 type: 'post',
-                url: '/projectMessage/remove.do',
+                url: localStorage.getItem("ajaxUrl") + '/projectMessage/remove.do',
                 data: {'id': id},
                 error: function () {
                     alert("Connection error");
@@ -617,28 +774,22 @@
             return false;
         } else {
             var id = $("tbody input:checked").val();
-            window.location.href = "http://localhost:8080/projectMessage/toEdit.do?id=" + id;
+            window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toEdit.do?id=" + id;
         }
     }
 
-
-
     //条件查询方法
     function getProMessageByCondition(page) {
-        var proName =$ ("#proName").val();
-        var proSchedule =$ ("#proSchedule").val();
-        var proType =$ ("#proType").val();
-        var proStatus =$ ("#proStatus").val();
+        var proName = $("#proName").val();
+        var proType = $("#proType").val();
 
         $.ajax({
             type: "post",
-            url: '/projectMessage/getProMessageByCondition.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
             data: {
                 'page': page,
-                'proName':proName,
-                'proSchedule':proSchedule,
-                'proType':proType,
-                'proStatus':proStatus
+                'proName': proName,
+                'proType': proType
             },
             success: function (data) {
                 var ProjectMessages = JSON.parse(data);
@@ -656,5 +807,10 @@
             }
         })
     }
+
+    //初始化工程管理页面
+    $(function () {
+        constructionReport(1, 1);
+    });
 </script>
 </html>

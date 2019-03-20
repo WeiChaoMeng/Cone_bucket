@@ -58,7 +58,7 @@
 <script src="../../static/js/jquery-1.12.4.min.js"></script>
 <script>
     function login() {
-        window.location.href = "http://localhost:8080/main.do";
+        window.location.href = localStorage.getItem("ajaxUrl") + "/main.do";
     }
 </script>
 </html>

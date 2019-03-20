@@ -245,11 +245,10 @@
     //提交form
     function commit() {
         var proScopeJson = JSON.stringify(path);
-        console.log("------" + proScopeJson);
         $('#proScope').val(proScopeJson);
         $.ajax({
             type: "POST",
-            url: 'http://localhost:8080/projectMessage/edit.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/edit.do',
             data: $('#projectMessage').serialize(),
             error: function (request) {
                 alert("Connection error");

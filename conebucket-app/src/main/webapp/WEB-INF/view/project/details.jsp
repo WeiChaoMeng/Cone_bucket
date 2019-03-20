@@ -134,12 +134,11 @@
     var id = $('#id').val();
     $.ajax({
         type: "post",
-        url: '/projectMessage/details.do',
+        url: localStorage.getItem("ajaxUrl") + '/projectMessage/details.do',
         data: {'id': id},
         async: false,
         success: function (data) {
             var mapObject = JSON.parse(data);
-            console.log(mapObject);
             //工程基本信息
             $("#proName").append(mapObject.projectMessage.proName);
             $("#proNum").append(mapObject.projectMessage.proNum);

@@ -2,7 +2,7 @@
 $(function () {
     //存入全局Ajax地址
     localStorage.setItem('ajaxUrl','http://localhost:8080');
-})
+});
 
 
 //工程查询

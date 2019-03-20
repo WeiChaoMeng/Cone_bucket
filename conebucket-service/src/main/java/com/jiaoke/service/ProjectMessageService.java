@@ -1,7 +1,6 @@
 package com.jiaoke.service;
 
 import com.jiaoke.bean.ProjectMessage;
-import org.activiti.engine.task.Task;
 
 import java.util.List;
 
@@ -55,11 +54,34 @@ public interface ProjectMessageService {
 
     /**
      * 条件查询
-     * @param proName
-     * @param proSchedule
-     * @param proType
-     * @param proStatus
+     *
+     * @param proName     proName
+     * @param proType     proType
+     * @return list
+     */
+    List<ProjectMessage> getProMessageByCondition(String proName, String proType);
+
+    /**
+     * 根据BusinessKey查询
+     *
+     * @param id 主键
+     * @return projectMessage
+     */
+    ProjectMessage selectByBusinessKey(Integer id);
+
+    /**
+     * 更新工程状态
+     *
+     * @param id     主键
+     * @param status 状态码
      * @return
      */
-    List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus);
+    int updateProStatus(Integer id, Integer status);
+
+    /**
+     * 查询未上报
+     *
+     * @return list
+     */
+    List<ProjectMessage> selectNotReported();
 }

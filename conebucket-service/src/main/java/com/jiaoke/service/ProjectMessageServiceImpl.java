@@ -43,7 +43,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     @Resource
     private ConeBucketMessageMapper coneBucketMessageMapper;
 
-    @Override
+
     public int insertSelective(ProjectMessage projectMessage) {
         //设置工程编号
         projectMessage.setProNum(RandomUtil.random());
@@ -213,11 +213,33 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return 1;
     }
 
+    @Override
+    public List<ProjectMessage> getProMessageByCondition(String proName, String proType) {
+
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectProMessageByCondition(proName, proType);
+        for (ProjectMessage projectMessage : projectMessageList) {
+            projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+            projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+        }
+        return projectMessageList;
+    }
 
     @Override
-    public List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus) {
+    public ProjectMessage selectByBusinessKey(Integer id) {
+        ProjectMessage projectMessage = projectMessageMapper.selectByBusinessKey(id);
+        projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+        projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+        return projectMessage;
+    }
 
-        List<ProjectMessage> projectMessageList = projectMessageMapper.selectProMessageByCondition(proName,proSchedule,proType,proStatus);
+    @Override
+    public int updateProStatus(Integer id, Integer status) {
+        return projectMessageMapper.updateProStatus(id, status);
+    }
+
+    @Override
+    public List<ProjectMessage> selectNotReported() {
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectNotReported();
         for (ProjectMessage projectMessage : projectMessageList) {
             projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
             projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));

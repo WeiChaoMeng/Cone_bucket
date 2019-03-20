@@ -231,7 +231,7 @@
     function loadData(page) {
         $.ajax({
             type: "post",
-            url: '/projectMessage/projectQueryIndex.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/projectQueryIndex.do',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -337,7 +337,7 @@
 
     //工程详情
     function details(id) {
-        window.location.href = "http://localhost:8080/projectMessage/toDetails.do?id=" + id;
+        window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toDetails.do?id=" + id;
     }
 
 
@@ -350,7 +350,7 @@
 
         $.ajax({
             type: "post",
-            url: '/projectMessage/getProMessageByCondition.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
             data: {
                 'page': page,
                 'proName':proName,

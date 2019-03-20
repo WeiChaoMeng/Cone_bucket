@@ -130,7 +130,34 @@
         where id = #{id}
     </update>
 
-    <select id="selectProMessageByCondition" parameterType="java.lang.String"  resultMap="projectMessageMap">
+    <select id="selectProMessageByCondition" parameterType="java.lang.String" resultMap="projectMessageMap">
+        SELECT
+        pm.id as id,
+        pm.pro_name as proName,
+        pm.pro_num as proNum,
+        pt.type_name as proTypeStr,
+        pm.pro_start_time as proStartTime,
+        pm.pro_end_time as proEndTime,
+        ps.status_name as proStatusStr,
+        psc.schedule_name as proScheduleStr
+        FROM
+        `project_message` AS pm
+        LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+        LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+        LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        <where>
+            <if test="proName != ''">
+                and pm.pro_name = #{pro_name}
+            </if>
+            <if test="proType != '' and proType != 3">
+                and pm.pro_type = #{proType}
+            </if>
+        </where>
+        ORDER BY
+        pm.id DESC
+    </select>
+
+    <select id="selectByBusinessKey" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.ProjectMessage">
         SELECT
             pm.id as id,
             pm.pro_name as proName,
@@ -145,21 +172,34 @@
             LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
             LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
             LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
-        <where>
-            <if test="proName != ''">
-                and  pm.pro_name = #{pro_name}
-            </if>
-            <if test="proSchedule != '' and proSchedule != 3">
-                and  pm.pro_schedule = #{proSchedule}
-            </if>
-            <if test="proType != '' and proType != 3">
-                and  pm.pro_type = #{proType}
-            </if>
-            <if test="proStatus != '' and proStatus != 3">
-                and  pm.pro_status = #{proStatus}
-            </if>
-        </where>
-        ORDER BY
-        pm.id DESC
+        WHERE
+	        pm.id = #{id}
     </select>
+
+    <select id="selectNotReported" resultMap="projectMessageMap">
+        SELECT
+            pm.id as id,
+            pm.pro_name as proName,
+            pm.pro_num as proNum,
+            pt.type_name as proTypeStr,
+            pm.pro_start_time as proStartTime,
+            pm.pro_end_time as proEndTime,
+            ps.status_name as proStatusStr,
+            psc.schedule_name as proScheduleStr
+        FROM
+            `project_message` AS pm
+            LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+            LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+            LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        WHERE
+            pm.pro_status = 0
+                ORDER BY
+                    pm.id DESC
+    </select>
+
+    <update id="updateProStatus" parameterType="java.util.Map">
+        update project_message
+        set pro_status = #{status}
+        where id = #{id}
+    </update>
 </mapper>

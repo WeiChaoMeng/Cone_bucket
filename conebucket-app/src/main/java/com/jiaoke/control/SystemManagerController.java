@@ -9,6 +9,7 @@
 package com.jiaoke.control;
 
 import com.jiaoke.serviceInf.UserManagerServiceInf;
+import com.jiaoke.util.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,5 +42,6 @@ public class SystemManagerController {
         }else {
             resMap.put("resCode","403");
         }
+        return JsonHelper.toJSONString(resMap);
     }
 }
