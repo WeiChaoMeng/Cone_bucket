@@ -33,42 +33,20 @@
         <div class="panel-body">
 
             <form id="formSearch" class="form-horizontal">
-                <div class="form-group row" style="margin:auto">
 
+                <div class="form-group row" style="margin:10px auto">
                     <label  class="control-label col-sm-1">工程名称:</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" id="proName" autocomplete="off">
                     </div>
 
-                    <label id="bucket" class="control-label col-sm-1">工程状态:</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="proStatus">
-                            <option value="3">--请选择--</option>
-                            <option value="0">未审批</option>
-                            <option value="1">未确认</option>
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="form-group row" style="margin:10px auto">
-
-                    <label class="control-label col-sm-1">工程类型:</label>
+                    <span style="margin:10px 0 0 20px;float: left">工程类型:</span>
                     <div class="col-sm-4">
                         <select class="form-control" id="proType">
-                            <option value="3">--请选择--</option>
+                            <option value="">--请选择--</option>
                             <option value="0">大中修工程</option>
                             <option value="1">应急抢险</option>
                             <option value="2">日常维修</option>
-                        </select>
-                    </div>
-                    <label id="time" class="control-label col-sm-1">工程进度:</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="proSchedule">
-                            <option value="3">--请选择--</option>
-                            <option value="0">未进场</option>
-                            <option value="1">施工中</option>
-                            <option value="2">已完工</option>
                         </select>
                     </div>
 
@@ -344,9 +322,7 @@
     //条件查询方法
     function getProMessageByCondition(page) {
         var proName =$ ("#proName").val();
-        var proSchedule =$ ("#proSchedule").val();
         var proType =$ ("#proType").val();
-        var proStatus =$ ("#proStatus").val();
 
         $.ajax({
             type: "post",
@@ -354,9 +330,7 @@
             data: {
                 'page': page,
                 'proName':proName,
-                'proSchedule':proSchedule,
-                'proType':proType,
-                'proStatus':proStatus
+                'proType':proType
             },
             success: function (data) {
                 var ProjectMessages = JSON.parse(data);

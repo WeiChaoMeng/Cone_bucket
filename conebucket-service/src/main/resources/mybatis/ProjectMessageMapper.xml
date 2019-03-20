@@ -152,6 +152,7 @@
             <if test="proType != '' and proType != 3">
                 and pm.pro_type = #{proType}
             </if>
+            and pm.pro_status =0
         </where>
         ORDER BY
         pm.id DESC
