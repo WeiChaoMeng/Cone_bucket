@@ -51,4 +51,14 @@ public interface ProjectMessageService {
      * @return 影响行数
      */
     int updateById(ProjectMessage projectMessage);
+
+    /**
+     * 条件查询
+     * @param proName
+     * @param proSchedule
+     * @param proType
+     * @param proStatus
+     * @return
+     */
+    List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus);
 }

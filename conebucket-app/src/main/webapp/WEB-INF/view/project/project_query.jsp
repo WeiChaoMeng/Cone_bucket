@@ -48,7 +48,10 @@
                             <option value="1">未确认</option>
                         </select>
                     </div>
+                </div>
 
+
+                <div class="form-group row" style="margin:10px auto">
 
                     <label class="control-label col-sm-1">工程类型:</label>
                     <div class="col-sm-4">
@@ -59,9 +62,6 @@
                             <option value="2">日常维修</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="form-group row" style="margin:10px auto">
                     <label id="time" class="control-label col-sm-1">工程进度:</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="proSchedule">
@@ -72,9 +72,8 @@
                         </select>
                     </div>
 
-
                     <div class="col-sm-1" style="text-align:center;">
-                        <button type="button" id="btn_query" onclick="getProMessageByCondition()" class="btn btn-primary btn-sm">查询
+                        <button type="button" id="btn_query" onclick="getProMessageByCondition(1)" class="btn btn-primary btn-sm">查询
                         </button>
                     </div>
                 </div>
@@ -340,5 +339,54 @@
     function details(id) {
         window.location.href = "http://localhost:8080/projectMessage/toDetails.do?id=" + id;
     }
+
+
+    //条件查询方法
+    function getProMessageByCondition(page) {
+        var proName =$ ("#proName").val();
+        var proSchedule =$ ("#proSchedule").val();
+        var proType =$ ("#proType").val();
+        var proStatus =$ ("#proStatus").val();
+
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/getProMessageByCondition.do',
+            data: {
+                'page': page,
+                'proName':proName,
+                'proSchedule':proSchedule,
+                'proType':proType,
+                'proStatus':proStatus
+            },
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+
+                //施工范围
+                var list = ProjectMessages.list;
+
+                //projectMessage
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].proScheduleStr === "未进场") {
+                        projectRange(list, i, '#FF0000DD');
+                    } else if (list[i].proScheduleStr === "施工中") {
+                        projectRange(list, i, '#e1ef00');
+                    } else if (list[i].proScheduleStr === "已完工") {
+                        projectRange(list, i, '#00be8d');
+                    }
+                }
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
 </script>
 </html>

@@ -137,13 +137,48 @@
     </div>
     <!-- /page content -->
 </div>
+
+<div class="content"  id="addFrom" style="padding: 20px;background: #fff;display:none">
+
+    <form id="streetlightDiseaseForm"  >
+        <table class="table table-condensed table-bordered table-hover">
+            <tbody>
+            <tr>
+                <td style="width: 10%">用户名</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="text" id="userName" name="userName" value="" autocomplete="off"
+                           required="true">
+                </td>
+
+                <td style="width: 10%">密码</td>
+                <td style="width: 40%">
+                    <input class="form-control" type="password" id="passwords" name="password" value="" autocomplete="off"
+                           required="true">
+                </td>
+
+            </tr>
+            <tr>
+                <td style="width: 10%">电话</td>
+                <td colspan="3">
+                    <input class="form-control" type="text" id="phone" name="phone" required="true"
+                           autocomplete="off">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="text-align: center">
+            <input class="btn btn-primary btn-sm" type="button" onclick="addSubmit();" value="提交">
+            <input class="btn btn-primary btn-sm" type="button" onclick="backOff()" value="返回">
+        </div>
+    </form>
+</div>
 </body>
 <script src="../../../static/js/jquery-1.12.4.min.js"></script>
 <!-- bootstrap JS-->
 <script src="../../../static/js/bootstrap.min.js"></script>
+<script src="../../../static/js/bootstrap.min.js"></script>
+<script src="../../../static/js/systemManager/userInfo.js"></script>
+<script src="../../../static/plugin/layer/layer.js"></script>
 <script>
-    function addUser() {
-
-    }
 </script>
 </html>

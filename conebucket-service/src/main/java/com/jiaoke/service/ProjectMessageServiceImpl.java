@@ -207,4 +207,16 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
 
         return 1;
     }
+
+
+    @Override
+    public List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus) {
+
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectProMessageByCondition(proName,proSchedule,proType,proStatus);
+        for (ProjectMessage projectMessage : projectMessageList) {
+            projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+            projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+        }
+        return projectMessageList;
+    }
 }

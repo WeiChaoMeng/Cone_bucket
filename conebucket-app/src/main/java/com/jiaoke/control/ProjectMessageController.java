@@ -8,6 +8,8 @@ import com.jiaoke.util.JsonHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -178,5 +180,29 @@ public class ProjectMessageController {
         return "success";
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据条件查询工程>
+     * @param [page, proName, proSchedule, proType, proStatus]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/3/19 14:05
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getProMessageByCondition.do",method = RequestMethod.POST)
+    public String getProMessageByCondition(@RequestParam("page") int page,
+                                           @RequestParam("proName") String proName,
+                                           @RequestParam("proSchedule") String proSchedule,
+                                           @RequestParam("proType") String proType,
+                                           @RequestParam("proStatus") String proStatus){
+
+
+        PageHelper.startPage(page, 10);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName,proSchedule,proType,proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        return JsonHelper.toJSONString(pageInfo);
+
+    }
 
 }

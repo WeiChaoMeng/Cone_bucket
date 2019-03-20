@@ -1,6 +1,7 @@
 package com.jiaoke.web.dao;
 
 import com.jiaoke.bean.ProjectMessage;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -46,4 +47,14 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
      * @return 影响行数
      */
     int updateById(ProjectMessage projectMessage);
+
+    /**
+     * 条件查询
+     * @param proName
+     * @param proSchedule
+     * @param proType
+     * @param proStatus
+     * @return
+     */
+    List<ProjectMessage> selectProMessageByCondition(@Param("proName") String proName,@Param("proSchedule")  String proSchedule, @Param("proType") String proType, @Param("proStatus")String proStatus);
 }
