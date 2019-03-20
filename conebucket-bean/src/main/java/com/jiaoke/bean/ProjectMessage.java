@@ -166,6 +166,20 @@ public class ProjectMessage {
     @Transient
     private List<ConeBucketMessage> coneBucketMessage;
 
+    /**
+     * 工作流任务id
+     */
+    @Transient
+    private String taskId;
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     public List<ConeBucketMessage> getConeBucketMessage() {
         return coneBucketMessage;
     }

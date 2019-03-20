@@ -5,12 +5,15 @@ import com.github.pagehelper.PageInfo;
 import com.jiaoke.bean.*;
 import com.jiaoke.service.*;
 import com.jiaoke.util.JsonHelper;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +42,9 @@ public class ProjectMessageController {
 
     @Resource
     private ProjectLocationService projectLocationService;
+
+    @Resource
+    private Activiti activiti;
 
     /**
      * 跳转工程管理首页
@@ -139,7 +145,7 @@ public class ProjectMessageController {
         return "error";
     }
 
-    @RequestMapping("/toEdit")
+    @RequestMapping("/toEdit.do")
     public String toEdit(Integer id, Model model) {
         System.out.println(id);
         //工程信息
@@ -169,7 +175,13 @@ public class ProjectMessageController {
         return "project/edit";
     }
 
-    @RequestMapping("/edit")
+    /**
+     * 修改工程信息
+     *
+     * @param projectMessage projectMessage
+     * @return e/s
+     */
+    @RequestMapping("/edit.do")
     @ResponseBody
     public String edit(ProjectMessage projectMessage) {
         if (projectMessageService.updateById(projectMessage) < 0) {
@@ -178,5 +190,87 @@ public class ProjectMessageController {
         return "success";
     }
 
+    /**
+     * 工程上报
+     *
+     * @param id 工程id
+     * @return s
+     */
+    @RequestMapping("/projectReport.do")
+    @ResponseBody
+    public String projectReport(Integer id) {
+        String processInstanceId = activiti.startProcessInstance("projectMessage", id.toString());
+        if (activiti.queryTaskIdByProcessInstanceId(processInstanceId) != null) {
+            //修改工程状态
 
+        }
+        return "error";
+    }
+
+    /**
+     * 行业审批
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/industryApproval.do")
+    @ResponseBody
+    public String industryApproval(int page) {
+        //查询行业审批任务
+        List<Task> taskList = activiti.queryTask("industryApproval");
+        List<ProjectMessage> list = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据ProcessInstanceId查询businessKey
+            String businessKey = activiti.queryBusinessKey(task.getProcessInstanceId());
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
+            projectMessage.setTaskId(task.getId());
+            list.add(projectMessage);
+        }
+        PageHelper.startPage(page, 10);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(list);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 交警确认
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/policeConfirm.do")
+    @ResponseBody
+    public String policeConfirm(int page) {
+        //查询行业审批任务
+        List<Task> taskList = activiti.queryTask("policeConfirmation");
+        List<ProjectMessage> arrayList = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据ProcessInstanceId查询businessKey
+            String processInstanceId = task.getProcessInstanceId();
+            String businessKey = activiti.queryBusinessKey(processInstanceId);
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
+            projectMessage.setTaskId(task.getId());
+            arrayList.add(projectMessage);
+        }
+        PageHelper.startPage(page, 10);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(arrayList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+
+    /**
+     * 竣工完成
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/completion.do")
+    @ResponseBody
+    public String completion(int page) {
+        //查询已审批完成的工程
+        List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
+        for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
+            //根据业务主键查询已完成工程
+            historicProcessInstance.getBusinessKey();
+        }
+        return "";
+    }
 }

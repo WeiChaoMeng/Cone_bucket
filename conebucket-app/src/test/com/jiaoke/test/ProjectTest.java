@@ -1,14 +1,9 @@
 package com.jiaoke.test;
 
-import com.jiaoke.bean.ProjectLocation;
-import com.jiaoke.bean.ProjectMessage;
 import com.jiaoke.util.SpringHelper;
 import com.jiaoke.web.dao.ProjectLocationMapper;
-import com.jiaoke.web.dao.ProjectMessageMapper;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * @author lihui

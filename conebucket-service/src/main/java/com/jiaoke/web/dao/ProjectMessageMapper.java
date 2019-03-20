@@ -46,4 +46,12 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
      * @return 影响行数
      */
     int updateById(ProjectMessage projectMessage);
+
+    /**
+     * 根据BusinessKey查询
+     *
+     * @param id 主键
+     * @return projectMessage
+     */
+    ProjectMessage selectByBusinessKey(Integer id);
 }

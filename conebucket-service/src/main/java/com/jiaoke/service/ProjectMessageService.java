@@ -1,6 +1,7 @@
 package com.jiaoke.service;
 
 import com.jiaoke.bean.ProjectMessage;
+import org.activiti.engine.task.Task;
 
 import java.util.List;
 
@@ -51,4 +52,12 @@ public interface ProjectMessageService {
      * @return 影响行数
      */
     int updateById(ProjectMessage projectMessage);
+
+    /**
+     * 根据BusinessKey查询
+     *
+     * @param id id
+     * @return projectMessage
+     */
+    ProjectMessage selectByBusinessKey(Integer id);
 }
