@@ -163,7 +163,7 @@
                                   fill="#000000"
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
-                                <tspan id="goRepair" onclick="rectButton(1)"
+                                <tspan id="goRepair" onclick="rectButton(1,1)"
                                        style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">施工上报0条
                                 </tspan>
                             </text>
@@ -179,7 +179,7 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="received" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(2)">行业审批0条
+                                       onclick="rectButton(1,2)">行业审批0条
                                 </tspan>
                             </text>
 
@@ -194,13 +194,13 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(3)">交警确认0条
+                                       onclick="rectButton(1,3)">交警确认0条
                                 </tspan>
                             </text>
 
                             <rect x="70" y="410" width="100" height="50" r="10" rx="10" ry="10"
                                   fill="#00a1ffbd" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="3" onclick="rectButton(3)"
+                                  fill-opacity="1" stroke-width="1" id="4" onclick="rectButton(4)"
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                             ></rect>
 
@@ -209,7 +209,7 @@
                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                                   font-size="13px">
                                 <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(3)">竣工完成0条
+                                       onclick="rectButton(1,4)">竣工完成0条
                                 </tspan>
                             </text>
 
@@ -394,32 +394,129 @@
         window.location.href = "http://localhost:8080/projectMessage/toAdd.do";
     }
 
-    //分页
-    $(function () {
-        loadData(1);
-        loadPage(1);
-    });
+    //流程图按钮颜色切换
+    function rectButton(page, parameter) {
+        $("#svg rect").removeClass("but-color");
+        $('#' + parameter).addClass('but-color');
+        if (parameter == 1) {
+            //施工上报
+            constructionReport(page, parameter);
+        } else if (parameter == 2) {
+            //行业审批
+            industryApproval(page, parameter);
+        } else if (parameter == 3) {
+            //交警确认
+            policeConfirm(page, parameter);
+        } else if (parameter == 4) {
+            //竣工完成
+            completion(page, parameter);
+        }
+    }
+
+    //上报
+    function report(id) {
+
+    }
+
+    //施工上报
+    function constructionReport(page, parameter) {
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/projectQueryIndex.do',
+            data: {'page': page},
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //行业审批
+    function industryApproval(page, parameter) {
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/industryApproval.do',
+            data: {'page': page},
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //交警确认
+    function policeConfirm(page, parameter) {
+        $.ajax({
+            type: "post",
+            url: '/projectMessage/policeConfirm.do',
+            data: {'page': page},
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
+
+                //基本数据
+                parseResult(ProjectMessages);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //竣工完成
+    function completion(page, parameter) {
+
+    }
 
     //分页
     function exeData(page, type, parameter) {
-        //全部
+        //施工上报
         if (parameter === 1) {
-            loadData(page);
-            loadPage(parameter);
+            constructionReport(page);
 
-            //类型
+            //行业审批
         } else if (parameter === 2) {
-            typeFilter(page);
-            loadPage(parameter);
+            industryApproval(page);
 
-            //搜索
+            //交警确认
         } else if (parameter === 3) {
-            searchButton(page);
-            loadPage(parameter);
+            policeConfirm(page);
+
+            //竣工完成
+        }else if (parameter === 4) {
+            completion(page);
         }
 
     }
 
+    //加载页面
     function loadPage(parameter) {
         var myPageCount = parseInt($("#PageCount").val());
         var myPageSize = parseInt($("#PageSize").val());
@@ -441,29 +538,6 @@
                 }
             }
         });
-    }
-
-    //加载数据
-    function loadData(page) {
-        $.ajax({
-            type: "post",
-            url: '/projectMessage/projectQueryIndex.do',
-            data: {'page': page},
-            async: false,
-            success: function (data) {
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("10");
-
-                //基本数据
-                parseResult(ProjectMessages);
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
     }
 
     //解析list
@@ -492,6 +566,8 @@
                 ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
                 ProjectMessage += '<td style="text-align: center; width: 110px;">';
                 ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                ProjectMessage += '</button>';
+                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
                 ProjectMessage += '</button>';
                 ProjectMessage += '</td>';
                 ProjectMessage += '</tr>';
@@ -541,7 +617,7 @@
             return false;
         } else {
             var id = $("tbody input:checked").val();
-            window.location.href = "http://localhost:8080/projectMessage/toEdit?id=" + id;
+            window.location.href = "http://localhost:8080/projectMessage/toEdit.do?id=" + id;
         }
     }
 

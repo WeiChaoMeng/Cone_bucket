@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="../../static/css/main.css">
-    <link rel="stylesheet" href="../../../static/css/cone_bucket.css">
 </head>
 
 <body>

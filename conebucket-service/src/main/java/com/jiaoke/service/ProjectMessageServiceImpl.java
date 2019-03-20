@@ -13,6 +13,7 @@ import com.jiaoke.web.dao.ConeBucketMessageMapper;
 import com.jiaoke.web.dao.ProjectConeBucketMapper;
 import com.jiaoke.web.dao.ProjectLocationMapper;
 import com.jiaoke.web.dao.ProjectMessageMapper;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,7 +43,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     @Resource
     private ConeBucketMessageMapper coneBucketMessageMapper;
 
-
+    @Override
     public int insertSelective(ProjectMessage projectMessage) {
         //设置工程编号
         projectMessage.setProNum(RandomUtil.random());
@@ -122,6 +123,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return 1;
     }
 
+    @Override
     public List<ProjectMessage> selectAllData() {
         List<ProjectMessage> projectMessageList = projectMessageMapper.selectAllData();
         for (ProjectMessage projectMessage : projectMessageList) {
@@ -131,6 +133,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return projectMessageList;
     }
 
+    @Override
     public ProjectMessage selectById(Integer id) {
         ProjectMessage projectMessage = projectMessageMapper.selectById(id);
         projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
@@ -138,6 +141,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return projectMessage;
     }
 
+    @Override
     public int remove(Integer id) {
         //删除工程信息
         int projectMessage = projectMessageMapper.deleteByPrimaryKey(id);
@@ -151,6 +155,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         return -1;
     }
 
+    @Override
     public int updateById(ProjectMessage projectMessage) {
         projectMessage.setProStartTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProStartTimeStr()));
         projectMessage.setProEndTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProEndTimeStr()));

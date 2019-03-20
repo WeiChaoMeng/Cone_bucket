@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.jiaoke.bean.*;
 import com.jiaoke.service.*;
 import com.jiaoke.util.JsonHelper;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +44,9 @@ public class ProjectMessageController {
 
     @Resource
     private ProjectLocationService projectLocationService;
+
+    @Resource
+    private Activiti activiti;
 
     /**
      * 跳转工程管理首页
@@ -141,7 +147,7 @@ public class ProjectMessageController {
         return "error";
     }
 
-    @RequestMapping("/toEdit")
+    @RequestMapping("/toEdit.do")
     public String toEdit(Integer id, Model model) {
         System.out.println(id);
         //工程信息
@@ -171,7 +177,13 @@ public class ProjectMessageController {
         return "project/edit";
     }
 
-    @RequestMapping("/edit")
+    /**
+     * 修改工程信息
+     *
+     * @param projectMessage projectMessage
+     * @return e/s
+     */
+    @RequestMapping("/edit.do")
     @ResponseBody
     public String edit(ProjectMessage projectMessage) {
         if (projectMessageService.updateById(projectMessage) < 0) {
