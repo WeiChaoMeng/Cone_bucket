@@ -72,16 +72,6 @@ public class CommonControl {
     /**
      * 角色管理
      *
-     * @return permissions_manage.jsp
-     */
-    @RequestMapping("/permissionsManage.do")
-    public String permissionsManage() {
-        return "system/permissions_manage";
-    }
-
-    /**
-     * 角色管理
-     *
      * @return parameter_configure.jsp
      */
     @RequestMapping("/parameterConfigure.do")

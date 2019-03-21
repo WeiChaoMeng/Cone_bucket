@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/system.css">
+    <%--分页--%>
+    <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
 </head>
 <body>
 
@@ -26,13 +28,13 @@
             <form id="formSearch" class="form-horizontal">
                 <div class="row">
 
-                    <label id="nickname" class="control-label col-sm-1" for="txt_search_road1">权限名称</label>
+                    <label id="nickname" class="control-label col-sm-1">权限管理</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="txt_search_road1" autocomplete="off">
+                        <input type="text" class="form-control" id="description" autocomplete="off">
                     </div>
 
                     <div>
-                        <button type="button" id="btn_query" class="btn btn-primary search-btn">查询
+                        <button type="button" id="btn_query" onclick="search(1)" class="btn btn-primary search-btn">查询
                         </button>
                     </div>
                 </div>
@@ -43,82 +45,38 @@
     <!--table-->
     <div class="table-style">
         <div class="table-style-padding">
-
-            <div class="fixed-table-toolbar">
-                <div class="bs-bars pull-left">
-                    <div id="toolbar" class="btn-group">
-
-                        <button id="btn_add" type="button" class="btn btn-default" onclick="Add()">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                        </button>
-
-                        <button id="btn_edit" type="button" class="btn btn-default" onclick="Modify()">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                        </button>
-
-
-                        <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
-
-                    </div>
-                </div>
-                <div class="columns columns-right btn-group pull-right">
-                    <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
-                            title="刷新"><i class="fa fa-refresh"></i></button>
-                </div>
-            </div>
-
             <div class="x_content">
 
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th style="width: 5%;"><input type="checkbox"></th>
-                        <th style="width: 5%;">序号</th>
-                        <th style="width: 20%;">权限名称</th>
-                        <th style="width: 20%;">权限标识</th>
-                        <th style="width: 40%;">权限说明</th>
-                        <th style="width: 10%;">操作</th>
+                        <th style="width: 10%;">序号</th>
+                        <th style="width: 45%;">权限控制地址</th>
+                        <th style="width: 45%;">权限描述</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
                     <tr>
-                        <th><input type="checkbox"></th>
                         <th scope="row">1</th>
-                        <td>用户-新增</td>
                         <td>/userManage/add</td>
                         <td>系统管理-新增用户</td>
-                        <td style="text-align: center; width: 110px;">
-                            <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                            </button>
-                        </td>
                     </tr>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">2</th>
-                        <td>用户-修改</td>
-                        <td>/userManage/edit</td>
-                        <td>系统管理-修改用户</td>
-                        <td style="text-align: center; width: 110px;">
-                            <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">3</th>
-                        <td>用户-删除</td>
-                        <td>/userManage/delete</td>
-                        <td>系统管理-删除用户</td>
-                        <td style="text-align: center; width: 110px;">
-                            <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                            </button>
-                        </td>
-                    </tr>
-
                     </tbody>
                 </table>
+
+                <%--分页--%>
+                <div id="paging" style="right: 10px;height: 35px;bottom: 10px;margin-right: 20px">
+                    <div class="">
+                        <div class="" style="float: right;">
+                            <ul class="pagination" id="pagination" style="margin: 0"></ul>
+                            <input type="hidden" id="PageCount" runat="server"/>
+                            <input type="hidden" id="PageSize" runat="server"/>
+                            <input type="hidden" id="countindex" runat="server"/>
+                            <!--设置最多显示的页码数 可以手动设置 默认为10-->
+                            <input type="hidden" id="visiblePages" runat="server" value="10"/>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -126,4 +84,8 @@
     <!-- /page content -->
 </div>
 </body>
+<script src="../../../static/js/jquery.js"></script>
+<%--分页--%>
+<script src="../../../static/plugin/paging/jqPaginator.js" type="text/javascript"></script>
+<script src="../../../static/js/systemManager/permission.js" type="text/javascript"></script>
 </html>

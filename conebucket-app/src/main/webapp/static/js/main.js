@@ -86,7 +86,7 @@ function role(o) {
 //权限管理
 function permissions(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "permissionsManage.do");
+    $('#inlineFrame').attr("src", "permission/toIndex.do");
 }
 
 //参数配置

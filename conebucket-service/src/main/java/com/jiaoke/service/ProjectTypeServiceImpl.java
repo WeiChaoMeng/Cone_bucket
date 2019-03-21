@@ -20,7 +20,7 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
     @Resource
     private ProjectTypeMapper projectTypeMapper;
 
-
+    @Override
     public List<ProjectType> selectAll() {
         return projectTypeMapper.selectAll();
     }
