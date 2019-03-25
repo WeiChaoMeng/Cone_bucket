@@ -21,9 +21,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommonControl {
 
+    /**
+     * 浏览器版本校验
+     *
+     * @return jsp
+     */
     @RequestMapping("/")
     public String index() {
+        return "version_validation";
+    }
+
+    /**
+     * 登录
+     *
+     * @return jsp
+     */
+    @RequestMapping("/login.do")
+    public String login() {
         return "login";
+    }
+
+    /**
+     * 版本过低页面
+     *
+     * @return jsp
+     */
+    @RequestMapping("/version.do")
+    public String version() {
+        return "version";
     }
 
     /**
