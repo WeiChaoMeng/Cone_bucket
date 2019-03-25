@@ -36,41 +36,10 @@ public class CommonControl {
         return "main";
     }
 
-
-    /**
-     * 工程查询
-     *
-     * @return project_query.jsp
-     */
-    @RequestMapping("/projectQuery.do")
-    public String engineeringQuery() {
-        return "project/project_query";
-    }
-
     /*------------------------系统管理------------------------------*/
 
     /**
-     * 用户管理
-     *
-     * @return user_manage.jsp
-     */
-    @RequestMapping("/userManage.do")
-    public String userManage() {
-        return "system/user_manage";
-    }
-
-    /**
-     * 角色管理
-     *
-     * @return role_manage.jsp
-     */
-    @RequestMapping("/roleManage.do")
-    public String roleManage() {
-        return "system/role_manage";
-    }
-
-    /**
-     * 角色管理
+     * 参数管理
      *
      * @return parameter_configure.jsp
      */

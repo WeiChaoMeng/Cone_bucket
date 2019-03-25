@@ -8,4 +8,10 @@
         from role_info
         where role_name LIKE "%"#{roleName}"%"
     </select>
+
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.jiaoke.bean.RoleInfo">
+        insert into role_info(role_name, description, create_time)
+        values(#{roleName}, #{description}, #{createTime})
+    </insert>
 </mapper>

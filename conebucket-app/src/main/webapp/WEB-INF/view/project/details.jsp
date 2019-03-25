@@ -32,74 +32,74 @@
         <tbody>
         <tr>
             <td style="width: 10%">工程名称</td>
-            <td style="width: 40%" id="proName">
+            <td class="table-td-content" id="proName" >
                 <input type="hidden" id="id" value="${id}">
             </td>
 
             <td style="width: 10%">工程类型</td>
-            <td style="width: 40%" id="proTypeStr"></td>
+            <td class="table-td-content" id="proTypeStr"></td>
         </tr>
 
         <tr>
-            <td style="width: 10%">工程概述</td>
-            <td colspan="3" id="proSummarize"></td>
+            <td>工程概述</td>
+            <td class="table-td-content" colspan="3" id="proSummarize"></td>
         </tr>
 
         <tr>
-            <td style="width: 10%">开始时间</td>
-            <td style="width: 40%" id="proStartTimeStr"></td>
+            <td>开始时间</td>
+            <td class="table-td-content" id="proStartTimeStr"></td>
 
-            <td style="width: 10%">结束时间</td>
-            <td style="width: 40%" id="proEndTimeStr"></td>
+            <td>结束时间</td>
+            <td class="table-td-content" id="proEndTimeStr"></td>
         </tr>
 
         <tr>
-            <td style="">主管单位</td>
-            <td style="width: 40%" id="governorUnit"></td>
+            <td>主管单位</td>
+            <td class="table-td-content" id="governorUnit"></td>
 
-            <td style="">联系方式</td>
-            <td style="width: 40%" id="governorUnitPhone"></td>
+            <td>联系方式</td>
+            <td class="table-td-content" id="governorUnitPhone"></td>
         </tr>
 
         <tr>
-            <td style="">施工单位</td>
-            <td style="width: 40%" id="constructionUnit"></td>
+            <td>施工单位</td>
+            <td class="table-td-content" id="constructionUnit"></td>
 
-            <td style="">联系方式</td>
-            <td style="width: 40%" id="constructionUnitPhone"></td>
+            <td>联系方式</td>
+            <td class="table-td-content" id="constructionUnitPhone"></td>
         </tr>
 
         <tr>
-            <td style="">监理单位</td>
-            <td style="width: 40%" id="supervisorUnit"></td>
+            <td>监理单位</td>
+            <td class="table-td-content" id="supervisorUnit"></td>
 
-            <td style="">联系方式</td>
-            <td style="width: 40%" id="supervisorUnitPhone"></td>
+            <td>联系方式</td>
+            <td class="table-td-content" id="supervisorUnitPhone"></td>
         </tr>
 
         <tr>
-            <td style="">工程位置</td>
-            <td colspan="3" id="proLocation"></td>
+            <td>工程位置</td>
+            <td class="table-td-content" colspan="3" id="proLocation"></td>
         </tr>
 
         <tr>
-            <td style="">锥桶类型</td>
-            <td style="width: 40%" id="coneBucketTypeStr"></td>
+            <td>锥桶类型</td>
+            <td class="table-td-content" id="coneBucketTypeStr"></td>
 
-            <td style="">锥桶编号</td>
-            <td colspan="3" id="coneBucketNum"></td>
+            <td>锥桶编号</td>
+            <td class="table-td-content" id="coneBucketNum"></td>
         </tr>
 
         <tr>
-            <td style="">工程进度</td>
-            <td style="width: 40%" id="proScheduleStr"></td>
+            <td>工程状态</td>
+            <td class="table-td-content" id="proStatusStr"></td>
 
-            <td style="">工程状态</td>
-            <td colspan="3" id="proStatusStr"></td>
+            <td>工程进度</td>
+            <td class="table-td-content" id="proScheduleStr"></td>
         </tr>
 
         <tr>
-            <td colspan="4" style="width: 10%">施工范围</td>
+            <td class="table-td-content" colspan="4" style="width: 10%">施工范围</td>
         </tr>
 
         <tr>

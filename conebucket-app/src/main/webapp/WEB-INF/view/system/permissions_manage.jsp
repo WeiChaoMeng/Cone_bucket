@@ -21,15 +21,13 @@
 
 <div class="main_container">
     <!-- page content -->
-    <div class="panel panel-default">
+    <div class="panel panel-default query-criteria">
         <div class="panel-heading">查询条件</div>
 
         <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
                 <div class="row">
-
-                    <label id="nickname" class="control-label col-sm-1">权限管理</label>
-                    <div class="col-sm-3">
+                    <span id="nickname" class="query-criteria-name">权限管理</span>
+                    <div class="query-criteria-input">
                         <input type="text" class="form-control" id="description" autocomplete="off">
                     </div>
 
@@ -38,7 +36,6 @@
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 
@@ -65,7 +62,7 @@
                 </table>
 
                 <%--分页--%>
-                <div id="paging" style="right: 10px;height: 35px;bottom: 10px;margin-right: 20px">
+                <div id="paging" class="paging-table-div">
                     <div class="">
                         <div class="" style="float: right;">
                             <ul class="pagination" id="pagination" style="margin: 0"></ul>

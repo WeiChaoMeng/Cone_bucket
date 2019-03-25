@@ -56,10 +56,12 @@ public interface ProjectMessageService {
      * 条件查询
      *
      * @param proName     proName
+     * @param proSchedule proSchedule
      * @param proType     proType
+     * @param proStatus   proStatus
      * @return list
      */
-    List<ProjectMessage> getProMessageByCondition(String proName, String proType);
+    List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus);
 
     /**
      * 根据BusinessKey查询
@@ -84,4 +86,21 @@ public interface ProjectMessageService {
      * @return list
      */
     List<ProjectMessage> selectNotReported();
+
+    /**
+     * 根据工程状态统计总数
+     *
+     * @param status 工程状态
+     * @return int
+     */
+    int count(Integer status);
+
+    /**
+     * 更新项目进度
+     *
+     * @param id       id
+     * @param schedule 进度
+     * @return int
+     */
+    int updateProSchedule(Integer id, Integer schedule);
 }

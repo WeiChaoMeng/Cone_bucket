@@ -27,4 +27,23 @@ public interface RoleInfoService {
      * @return list
      */
     List<RoleInfo> fuzzyQueryByRoleName(String description);
+
+
+    /**
+     * 添加角色并绑定权限
+     *
+     * @param roleName    角色名称
+     * @param description 角色说明
+     * @param array       权限List
+     * @return 影响行数
+     */
+    int addRole(String roleName, String description, String[] array);
+
+    /**
+     * 删除角色
+     *
+     * @param id id
+     * @return 影响行数
+     */
+    int remove(Integer id);
 }

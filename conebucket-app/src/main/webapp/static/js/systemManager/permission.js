@@ -26,7 +26,7 @@ function loadData(page) {
             //总数
             $("#PageCount").val(objectInfo.total);
             //每页显示条数
-            $("#PageSize").val("10");
+            $("#PageSize").val("9");
 
             //基本数据
             parseResult(objectInfo);
@@ -53,8 +53,8 @@ function parseResult(objectInfo) {
         for (var i = 0; i < objectInfoList.length; i++) {
             obj += '<tr>';
             obj += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-            obj += '<td>' + objectInfoList[i].url + '</td>';
-            obj += '<td>' + objectInfoList[i].description + '</td>';
+            obj += '<td class="table-td-content">' + objectInfoList[i].url + '</td>';
+            obj += '<td class="table-td-content">' + objectInfoList[i].description + '</td>';
             obj += '</tr>';
         }
     }
@@ -99,7 +99,7 @@ function search(page) {
             //总数
             $("#PageCount").val(objectInfo.total);
             //每页显示条数
-            $("#PageSize").val("10");
+            $("#PageSize").val("9");
 
             //基本数据
             parseResult(objectInfo);

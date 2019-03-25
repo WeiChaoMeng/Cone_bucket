@@ -51,12 +51,16 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
     /**
      * 条件查询
      *
-     * @param proName proName
-     * @param proType proType
-     * @return list
+     * @param proName     proName
+     * @param proSchedule proSchedule
+     * @param proType     proType
+     * @param proStatus   proStatus
+     * @return
      */
     List<ProjectMessage> selectProMessageByCondition(@Param("proName") String proName,
-                                                     @Param("proType") String proType);
+                                                     @Param("proSchedule") String proSchedule,
+                                                     @Param("proType") String proType,
+                                                     @Param("proStatus") String proStatus);
 
     /**
      * 根据BusinessKey查询
@@ -81,4 +85,21 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
      * @return
      */
     int updateProStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    /**
+     * 根据工程状态统计总数
+     *
+     * @param status 工程状态
+     * @return int
+     */
+    int count(Integer status);
+
+    /**
+     * 更新项目进度
+     *
+     * @param id       id
+     * @param schedule 进度
+     * @return int
+     */
+    int updateProSchedule(@Param("id") Integer id, @Param("schedule") Integer schedule);
 }

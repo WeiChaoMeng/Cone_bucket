@@ -1,15 +1,8 @@
-
-$(function () {
-    //存入全局Ajax地址
-    localStorage.setItem('ajaxUrl','http://localhost:8080');
-});
-
-
 //工程查询
 $('#engineeringQuery').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "/projectQuery.do");
+    $('#inlineFrame').attr("src", "projectMessage/toProjectQueryIndex.do");
 });
 
 //工程管理
@@ -35,7 +28,7 @@ $('#system').on('click', function () {
         '<div class="secondary-menu-system">' +
         '<div onclick="parameterConfigure(this)">参数管理</div>' +
         '</div>');
-    $('#inlineFrame').attr("src", "userManage.do");
+    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
 });
 
 //设备管理
@@ -71,16 +64,17 @@ function mainMuneColor(o) {
 }
 
 /*--------------------------------系统管理--------------------------*/
+
 //用户管理
 function user(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "userManage.do");
+    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
 }
 
 //角色管理
 function role(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "roleManage.do");
+    $('#inlineFrame').attr("src", "roleInfo/toIndex.do");
 }
 
 //权限管理
@@ -97,6 +91,7 @@ function parameterConfigure(o) {
 
 
 /*--------------------------设备管理-----------------------------*/
+
 //锥桶管理
 function coneBucketManagement(o) {
     secondaryMenuColor(o);
@@ -104,6 +99,7 @@ function coneBucketManagement(o) {
 }
 
 /*--------------------------日志管理-----------------------------*/
+
 //工程日志
 function engineeringLog(o) {
     secondaryMenuColor(o);
@@ -137,32 +133,33 @@ function exit() {
 /**********************锥桶添加函数********************************/
 //弹出事件
 function iframeAlert() {
-   window.lar = layer.open({
+    window.lar = layer.open({
         type: 1,
         area: ['600px', '360px'],
         shadeClose: true, //点击遮罩关闭
         content: $("#addFrom"),
-        offset:"25%"
-});
+        offset: "25%"
+    });
 }
+
 //添加锥桶
 function addSubmit() {
     var cone_bucket_num = $("#cbNum").val();
     var cone_bucket_type = $("#roadName").val();
 
 
-    if (isNull(cone_bucket_num) || isNull(cone_bucket_type) ){
+    if (isNull(cone_bucket_num) || isNull(cone_bucket_type)) {
         layer.msg('锥桶内容不能为空');
-    }else {
+    } else {
 
         $.ajax({
-            url:localStorage.getItem("ajaxUrl") + "/addConeBucket.do",
+            url: localStorage.getItem("ajaxUrl") + "/addConeBucket.do",
             //几个参数需要注意一下
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
             data: {
-                "diseaseNumber"  : cone_bucket_num,
-                "roadName":cone_bucket_type
+                "diseaseNumber": cone_bucket_num,
+                "roadName": cone_bucket_type
             },
             success: function (result) {
                 console.log(result);//打印服务端返回的数据(调试用)
@@ -170,12 +167,12 @@ function addSubmit() {
                     layer.msg("添加成功");
                     layer.close(window.lar);
                     $("#inlineFrame")[0].contentWindow.getAllConeBucket();
-                }else {
+                } else {
                     layer.msg("添加失败");
                 }
 
             },
-            error : function() {
+            error: function () {
                 layer.msg("异常！");
             }
         })
@@ -187,9 +184,9 @@ function addSubmit() {
 
 function isNull(str) {
 
-    if (!str && typeof(str) =='undefined' ){
-            return true
-    }else {
+    if (!str && typeof(str) == 'undefined') {
+        return true
+    } else {
         return false
     }
 }

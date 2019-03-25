@@ -43,7 +43,7 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     @Resource
     private ConeBucketMessageMapper coneBucketMessageMapper;
 
-
+    @Override
     public int insertSelective(ProjectMessage projectMessage) {
         //设置工程编号
         projectMessage.setProNum(RandomUtil.random());
@@ -214,9 +214,9 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     }
 
     @Override
-    public List<ProjectMessage> getProMessageByCondition(String proName, String proType) {
+    public List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus) {
 
-        List<ProjectMessage> projectMessageList = projectMessageMapper.selectProMessageByCondition(proName, proType);
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectProMessageByCondition(proName, proSchedule, proType, proStatus);
         for (ProjectMessage projectMessage : projectMessageList) {
             projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
             projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
@@ -245,5 +245,15 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
             projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
         }
         return projectMessageList;
+    }
+
+    @Override
+    public int count(Integer status) {
+        return projectMessageMapper.count(status);
+    }
+
+    @Override
+    public int updateProSchedule(Integer id, Integer schedule) {
+        return projectMessageMapper.updateProSchedule(id, schedule);
     }
 }

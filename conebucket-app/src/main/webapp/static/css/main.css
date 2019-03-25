@@ -1,7 +1,19 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 13px;
+    background: #fff;
+    font-family: '微软雅黑';
+    overflow: hidden;
+}
+
 .header-top-area {
     background: #fdfdfd;
     width: 100%;
-    margin-bottom: 20px;
+    height: 13%;
+    margin-bottom: 1%;
 }
 
 .row {
@@ -131,9 +143,10 @@ body {
     left: 45%;
 }
 
-.content {
+.content-iframe {
     background: #e7e8eb;
     width: 100%;
-    margin: 0 auto
+    margin: 0 auto;
+    height: 85%;
 }
 

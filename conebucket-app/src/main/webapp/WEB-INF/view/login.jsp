@@ -56,9 +56,5 @@
 
 </body>
 <script src="../../static/js/jquery-1.12.4.min.js"></script>
-<script>
-    function login() {
-        window.location.href = localStorage.getItem("ajaxUrl") + "/main.do";
-    }
-</script>
+<script src="../../static/js/login.js"></script>
 </html>

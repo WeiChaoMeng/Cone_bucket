@@ -10,71 +10,71 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>工程查询</title>
+    <title>工程查询-表单</title>
     <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
-    <style>
-        #container {
-            width: 100%;
-            height: 560px;
-        }
-    </style>
 </head>
 
 <body>
 <div class="main_container">
-    <!-- page content -->
-    <div class="panel panel-default">
-        <div class="panel-heading">查询条件</div>
-
-        <div class="panel-body">
-
-            <form id="formSearch" class="form-horizontal">
-
-                <div class="form-group row" style="margin:10px auto">
-                    <label  class="control-label col-sm-1">工程名称:</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="proName" autocomplete="off">
-                    </div>
-
-                    <span style="margin:10px 0 0 20px;float: left">工程类型:</span>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="proType">
-                            <option value="">--请选择--</option>
-                            <option value="0">大中修工程</option>
-                            <option value="1">应急抢险</option>
-                            <option value="2">日常维修</option>
-                        </select>
-                    </div>
-
-                    <div class="col-sm-1" style="text-align:center;">
-                        <button type="button" id="btn_query" onclick="getProMessageByCondition(1)" class="btn btn-primary btn-sm">查询
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
     <!--table-->
-    <div class="table-style" style="min-height: 650px;">
+    <div class="table-style">
         <div class="table-style-padding">
 
-            <div class="fixed-table-toolbar">
+            <div class="query-field">
+                <span class="condition-name">工程名称:</span>
+                <div class="condition-input">
+                    <input type="text" class="form-control" id="proName" autocomplete="off">
+                </div>
+
+                <span class="condition-name">工程类型:</span>
+                <div class="condition-select">
+                    <select class="form-control" id="proType">
+                        <option value="">--请选择--</option>
+                        <c:forEach items="${projectTypeList}" var="projectType">
+                            <option value="${projectType.id}">${projectType.typeName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <span class="condition-name">工程状态:</span>
+                <div class="condition-select">
+                    <select class="form-control" id="proStatus">
+                        <option value="">--请选择--</option>
+                        <c:forEach items="${projectStatusList}" var="projectStatus">
+                            <option value="${projectStatus.id}">${projectStatus.statusName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <span class="condition-name">工程进度:</span>
+                <div class="condition-select">
+                    <select class="form-control" id="proSchedule">
+                        <option value="">--请选择--</option>
+                        <c:forEach items="${projectScheduleList}" var="projectSchedule">
+                            <option value="${projectSchedule.id}">${projectSchedule.scheduleName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="condition-btn">
+                    <button type="button" id="btn_query" onclick="getProMessageByCondition(1)"
+                            class="btn btn-primary btn-sm">查询
+                    </button>
+                </div>
+
                 <div class="columns columns-right btn-group pull-right">
-                    <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
-                            title="刷新" style="padding: 9px 15px;"><i class="fa fa-refresh"></i></button>
-                    <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
-                            title="切换" onclick="handover()">切换
+                    <button class="btn btn-default" type="button" name="refresh" aria-label="refresh" title="刷新"
+                            onclick="reload()" style="padding: 9px 15px;"><i class="fa fa-refresh"></i></button>
+                    <button class="btn btn-default" type="button" name="refresh" aria-label="refresh" title="切换"
+                            onclick="handover()">切换
                     </button>
                 </div>
             </div>
 
-            <div id="tableShow" style="display: none" class="x_content">
+            <div id="tableShow" class="pro-query-table">
 
                 <table class="table table-bordered">
                     <thead>
@@ -92,8 +92,8 @@
                     </thead>
                     <tbody id="tbody">
                     <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">1</th>
+                        <td><input type="checkbox"></td>
+                        <td scope="row">1</td>
                         <td>xxx工程</td>
                         <td>应急抢险</td>
                         <td>2019-03-14 10:00:00</td>
@@ -109,7 +109,7 @@
                     </tbody>
                 </table>
 
-                <div id="paging" style="right: 10px;height: 35px;bottom: 10px;margin-right: 20px">
+                <div id="paging" class="paging-table-div">
                     <div class="">
                         <div class="" style="float: right;">
                             <ul class="pagination" id="pagination" style="margin: 0"></ul>
@@ -123,12 +123,11 @@
                 </div>
             </div>
 
-            <div id="mapShow">
+            <div id="mapShow" class="map-content">
                 <div id="container"></div>
             </div>
         </div>
     </div>
-    <!-- /page content -->
 </div>
 </body>
 <script src="../../../static/js/jquery-1.12.4.min.js"></script>
@@ -137,13 +136,6 @@
 <%--引入腾讯地图--%>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
-
-    //腾讯地图
-    var map = new qq.maps.Map(document.getElementById("container"), {
-        center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
-        zoom: 11                                                 // 地图的中心地理坐标。
-    });
-
     //地图与表单切换
     function handover() {
         if ($('#mapShow').css('display') === 'block') {
@@ -155,11 +147,15 @@
         }
     }
 
+    //重新加载页面
+    function reload() {
+        window.location.reload();
+    }
+
 
     //分页
     $(function () {
         loadData(1);
-        loadPage(1);
     });
 
     //分页
@@ -167,17 +163,10 @@
         //全部
         if (parameter === 1) {
             loadData(page);
-            loadPage(parameter);
-
-            //类型
-        } else if (parameter === 2) {
-            typeFilter(page);
-            loadPage(parameter);
 
             //搜索
-        } else if (parameter === 3) {
-            searchButton(page);
-            loadPage(parameter);
+        } else if (parameter === 2) {
+            getProMessageByCondition(page);
         }
 
     }
@@ -222,19 +211,27 @@
                 //基本数据
                 parseResult(ProjectMessages);
 
+                //腾讯地图
+                var map = new qq.maps.Map(document.getElementById("container"), {
+                    center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
+                    zoom: 10                                                 // 地图的中心地理坐标。
+                });
+
                 //施工范围
                 var list = ProjectMessages.list;
 
                 //projectMessage
                 for (var i = 0; i < list.length; i++) {
                     if (list[i].proScheduleStr === "未进场") {
-                        projectRange(list, i, '#FF0000DD');
+                        projectRange(map, list, i, '#FF0000DD');
                     } else if (list[i].proScheduleStr === "施工中") {
-                        projectRange(list, i, '#e1ef00');
+                        projectRange(map, list, i, '#e1ef00');
                     } else if (list[i].proScheduleStr === "已完工") {
-                        projectRange(list, i, '#00be8d');
+                        projectRange(map, list, i, '#00be8d');
                     }
                 }
+
+                loadPage(1);
             },
             error: function (result) {
                 alert("出错！");
@@ -243,7 +240,7 @@
     }
 
     //加载所有工程展示在地图
-    function projectRange(pro, index, color) {
+    function projectRange(map, pro, index, color) {
         var path = [];
         //projectLocation
         for (var j = 0; j < pro[index].projectLocation.length; j++) {
@@ -295,7 +292,7 @@
             for (var i = 0; i < ProjectMessageList.length; i++) {
                 ProjectMessage += '<tr>';
                 ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proName + '</td>';
+                ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                 ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                 ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
                 ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
@@ -321,16 +318,19 @@
 
     //条件查询方法
     function getProMessageByCondition(page) {
-        var proName =$ ("#proName").val();
-        var proType =$ ("#proType").val();
-
+        var proName = $("#proName").val();
+        var proSchedule = $("#proSchedule").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
         $.ajax({
             type: "post",
             url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
             data: {
                 'page': page,
-                'proName':proName,
-                'proType':proType
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
             },
             success: function (data) {
                 var ProjectMessages = JSON.parse(data);
@@ -342,19 +342,26 @@
                 //基本数据
                 parseResult(ProjectMessages);
 
+                var map = new qq.maps.Map(document.getElementById("container"), {
+                    center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
+                    zoom: 10                                                 // 地图的中心地理坐标。
+                });
+
                 //施工范围
                 var list = ProjectMessages.list;
 
                 //projectMessage
                 for (var i = 0; i < list.length; i++) {
                     if (list[i].proScheduleStr === "未进场") {
-                        projectRange(list, i, '#FF0000DD');
+                        projectRange(map, list, i, '#FF0000DD');
                     } else if (list[i].proScheduleStr === "施工中") {
-                        projectRange(list, i, '#e1ef00');
+                        projectRange(map, list, i, '#e1ef00');
                     } else if (list[i].proScheduleStr === "已完工") {
-                        projectRange(list, i, '#00be8d');
+                        projectRange(map, list, i, '#00be8d');
                     }
                 }
+
+                loadPage(2);
             },
             error: function (result) {
                 alert("出错！");

@@ -45,7 +45,7 @@ public class PermissionController {
     @RequestMapping("/index.do")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 9);
         List<Permission> permissionList = permissionService.selectAll();
         PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
         return JsonHelper.toJSONString(pageInfo);
@@ -61,7 +61,7 @@ public class PermissionController {
     @RequestMapping("/search.do")
     @ResponseBody
     public String fuzzyQueryByDescription(int page, String description) {
-        PageHelper.startPage(page,10);
+        PageHelper.startPage(page,9);
         List<Permission> permissionList = permissionService.fuzzyQueryByDescription(description);
         PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
         return JsonHelper.toJSONString(pageInfo);
