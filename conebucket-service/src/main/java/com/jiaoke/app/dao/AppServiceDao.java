@@ -25,5 +25,5 @@ public interface AppServiceDao {
 
     List<Map<String, Object>> selectProgectByProgresAndproStatus(@Param("progress") String progress, @Param("proStatus") String proStatus);
 
-    List<Map<String, Object>> selectProLocationsByIdList(@Param("idList")List<String> idList);
+    List<Map<String, Object>> selectProLocationsByIdList(@Param("idList") List<String> idList);
 }

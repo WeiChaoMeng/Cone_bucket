@@ -21,6 +21,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring
         http://mybatis.org/schema/mybatis-spring-1.2.xsd
         http://www.springframework.org/schema/beans
@@ -28,7 +29,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/task
+             http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
   <!-- Activate Cocoon Spring Configurator -->
 
@@ -112,6 +115,12 @@
     </property>
   </bean>
 
+  <bean id="Taskaa" class="com.jiaoke.logcontrol.ConeBucketLog" />
+  <task:scheduled-tasks>
+    <task:scheduled ref="Taskaa" method="addConeBucketLog" cron="5 * *  * * ? " />
+  </task:scheduled-tasks>
+  <!--定时任务注解-->
+  <task:annotation-driven/>
 
   <!--在Spring中配置Mapper接口 -->
   <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">

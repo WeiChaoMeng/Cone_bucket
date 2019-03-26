@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.SyetemLogDao">
+    <select id="selectConeBucketLastTimeBydeviceId" resultMap="java.util.Map">
+        SELECT
+            cone_bucket_num,
+            cone_bucket_type,
+            cone_bucket_status,
+            road_name,
+            start_time,
+            end_time
+        FROM
+            cone_bucket_log
+        WHERE cone_bucket_num = #{deviceId}
+        ORDER BY id desc
+        LIMIT 1
+    </select>
+    <insert id="addConeBucketTime" >
+
+    </insert>
+</mapper>
