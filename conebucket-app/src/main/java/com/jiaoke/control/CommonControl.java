@@ -21,9 +21,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommonControl {
 
+    /**
+     * 浏览器版本校验
+     *
+     * @return jsp
+     */
     @RequestMapping("/")
     public String index() {
+        return "version_validation";
+    }
+
+    /**
+     * 登录
+     *
+     * @return jsp
+     */
+    @RequestMapping("/login.do")
+    public String login() {
         return "login";
+    }
+
+    /**
+     * 版本过低页面
+     *
+     * @return jsp
+     */
+    @RequestMapping("/version.do")
+    public String version() {
+        return "version";
     }
 
     /**
@@ -36,41 +61,10 @@ public class CommonControl {
         return "main";
     }
 
-
-    /**
-     * 工程查询
-     *
-     * @return project_query.jsp
-     */
-    @RequestMapping("/projectQuery.do")
-    public String engineeringQuery() {
-        return "project/project_query";
-    }
-
     /*------------------------系统管理------------------------------*/
 
     /**
-     * 用户管理
-     *
-     * @return user_manage.jsp
-     */
-    @RequestMapping("/userManage.do")
-    public String userManage() {
-        return "system/user_manage";
-    }
-
-    /**
-     * 角色管理
-     *
-     * @return role_manage.jsp
-     */
-    @RequestMapping("/roleManage.do")
-    public String roleManage() {
-        return "system/role_manage";
-    }
-
-    /**
-     * 角色管理
+     * 参数管理
      *
      * @return parameter_configure.jsp
      */

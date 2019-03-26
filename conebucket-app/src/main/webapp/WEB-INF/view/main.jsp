@@ -57,25 +57,12 @@
 </div>
 
 <!--content-->
-<div class="content">
-    <iframe src="/projectQuery.do" id="inlineFrame" name="right" width="100%" style="height: 1150px;"
+<div class="content-iframe">
+    <iframe src="projectMessage/toProjectQueryIndex.do" id="inlineFrame" name="right" width="100%" style="height: 100%;"
             frameborder="0" scrolling="auto"></iframe>
 </div>
 
-<!-- Start Footer area-->
-<div class="footer-copyright-area" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="footer-copy-right">
-                    <p>Copyright © 2018
-                        . All rights reserved. Template by</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<%--模态窗（锥桶）--%>
 <div class="content"  id="addFrom" style="padding: 20px;background: #fff;display:none">
 
     <form id="streetlightDiseaseForm"  >

@@ -1,15 +1,11 @@
-* {
+html, body {
     font-size: 13px;
     padding: 0;
     margin: 0;
     border: 0;
     font-family: '微软雅黑';
-}
-
-body {
     background: #e7e8eb;
-    width: 80%;
-    margin: 0 auto;
+    height: 100%;
 }
 
 .table {
@@ -36,14 +32,15 @@ body {
 }
 
 .table-style {
+    height: 83%;
     width: 100%;
     background: #fff;
     border: 1px solid #ddd;
 }
 
 .table-style-padding {
-    padding: 10px;
-    min-height: 500px
+    height: 100%;
+    padding: 2%;
 }
 
 .fixed-table-toolbar {
@@ -67,6 +64,50 @@ th {
     vertical-align: middle;
 }
 
-.table.table-bordered > tbody > tr > td, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > td, .table.table-bordered > tfoot > tr > th, .table.table-bordered > thead > tr > td, .table.table-bordered > thead > tr > th{
+.table.table-bordered > tbody > tr > td, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > td, .table.table-bordered > tfoot > tr > th, .table.table-bordered > thead > tr > td, .table.table-bordered > thead > tr > th {
     padding: 8px;
+}
+
+.query-criteria {
+    margin: 0;
+    border-bottom: none;
+    height: 17%;
+}
+
+.query-criteria-name {
+    float: left;
+    line-height: 34px;
+    margin: 0 10px 0 30px;
+}
+
+.query-criteria-input {
+    width: 20%;
+    float: left;
+}
+
+.table > thead > tr > th {
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.table > tbody > tr > td.table-td-content {
+    vertical-align: middle;
+    padding: 5px 0;
+    text-align: left;
+    text-indent: 20px;
+}
+
+.paging-table-div {
+    right: 10px;
+    height: 35px;
+    bottom: 30px;
+    margin-right: 20px;
+    position: absolute;
 }

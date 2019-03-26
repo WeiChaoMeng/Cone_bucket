@@ -92,5 +92,14 @@ public class Activiti {
         this.taskService.complete(taskId);
     }
 
-
+    /**
+     * 根据分配到任务的人获取总数
+     *
+     * @param assignee 分配到任务的人
+     * @return int
+     */
+    public int getTaskNumber(String assignee) {
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(assignee).list();
+        return taskList.size();
+    }
 }

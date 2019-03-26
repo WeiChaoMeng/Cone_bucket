@@ -19,15 +19,13 @@
 
 <div class="main_container">
     <!-- page content -->
-    <div class="panel panel-default">
+    <div class="panel panel-default query-criteria">
         <div class="panel-heading">查询条件</div>
 
         <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
                 <div class="row">
-
-                    <label id="nickname" class="control-label col-sm-1" for="txt_search_road1">参数名称</label>
-                    <div class="col-sm-3">
+                    <span id="nickname" class="query-criteria-name">参数名称</span>
+                    <div class="query-criteria-input">
                         <input type="text" class="form-control" id="txt_search_road1">
                     </div>
 
@@ -36,7 +34,6 @@
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 

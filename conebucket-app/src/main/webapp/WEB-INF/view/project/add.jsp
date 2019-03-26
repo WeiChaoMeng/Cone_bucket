@@ -21,10 +21,14 @@
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" href="../../../static/plugin/date_pickers/date_picker.css">
+    <style>
+        #container{
+            width: 100%;
+            height: 90%;
+        }
+    </style>
 </head>
 <body>
-
-<!--<div id='windowBackgroundColor'></div>-->
 
 <div class="content" style="padding: 20px;background: #fff">
     <div class="panel-heading" style="font-size: 16px;border: 1px #bfbfbf solid;border-bottom: none;">新增工程</div>
@@ -149,7 +153,7 @@
 
             <tr>
                 <td colspan="4" rowspan="5" style="height: 600px;">
-                    <input type="button" value="重新加载地图" onclick="reloadMap()"
+                    <input type="button" value="重绘地图" onclick="reloadMap()"
                            style="background: #00acee;color: #fff;padding: 5px;float: right; margin: 0 10px 5px 0;">
                     <input type="hidden" id="proScope" name="proScope">
                     <div id="container"></div>
@@ -164,21 +168,6 @@
     </div>
 </div>
 
-<!--<div id="win"
-     style="background: #fff;width: 1000px;height: 500px;display: none;position: absolute;top: 50px;left: 260px;z-index: 9999;border-radius: 10px;padding: 10px">
-    <div>
-        <input type="text" id="keyword" name="keyword"/>
-    </div>
-    <div style="float: right;height: 5%;width: 30px;text-align: center;vertical-align: middle;cursor: pointer;">
-        <img src="../img/close.png" class="map-close-img" onclick="closeMap()"/>
-    </div>
-
-    &lt;!&ndash;地图&ndash;&gt;
-    &lt;!&ndash;<div id="container"></div>&ndash;&gt;
-
-    <span id="positioningFailure"
-          style="background: #c1bfbf;width: 100px;height: 30px;position: absolute;top: 50%;left: 45%;font-size: 16px;text-align: center;line-height: 30px;display: none">定位失败</span>
-</div>-->
 </body>
 <script src="../../../static/js/jquery.js"></script>
 <script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
@@ -232,6 +221,7 @@
     //重新加载地图
     function reloadMap() {
         newMap();
+        path = [];
     }
 
     //返回
@@ -253,6 +243,7 @@
             success: function (data) {
                 if (data === "success") {
                     alert('添加成功');
+                    window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toIndex.do";
                 } else {
                     alert('添加失败');
                 }

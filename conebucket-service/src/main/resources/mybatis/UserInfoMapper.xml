@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.UserInfoMapper">
+
+    <select id="fuzzyQuery" parameterType="java.lang.String" resultType="com.jiaoke.bean.UserInfo">
+        select
+            id, username, phone, register_time as registerTime
+        from user_info
+        where username LIKE "%"#{userName}"%"
+    </select>
+
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.jiaoke.bean.UserInfo">
+        insert into user_info(username, password, phone,register_time)
+        values(#{username}, #{password}, #{phone}, #{registerTime})
+    </insert>
+</mapper>

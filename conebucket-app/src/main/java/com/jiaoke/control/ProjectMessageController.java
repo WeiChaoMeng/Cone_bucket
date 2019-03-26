@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.jiaoke.bean.*;
 import com.jiaoke.service.*;
 import com.jiaoke.util.JsonHelper;
+import com.jiaoke.web.dao.ProjectScheduleMapper;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,12 @@ public class ProjectMessageController {
     private ProjectLocationService projectLocationService;
 
     @Resource
+    private ProjectStatusService projectStatusService;
+
+    @Resource
+    private ProjectScheduleService projectScheduleService;
+
+    @Resource
     private Activiti activiti;
 
     /**
@@ -54,7 +61,35 @@ public class ProjectMessageController {
      * @return project_manage.jsp
      */
     @RequestMapping("/toIndex.do")
-    public String toIndex() {
+    public String toIndex(Model model) {
+        //流程节点数量
+        //未上报数量
+        int notReported = projectMessageService.count(0);
+        //未审批数量
+        int industryApprovalNumber = activiti.getTaskNumber("industryApproval");
+        //未确认数量
+        int policeConfirmationNumber = activiti.getTaskNumber("policeConfirmation");
+        //工程实施数量
+        int projectImplementNumber = activiti.getTaskNumber("projectImplementation");
+        //已完成数量
+        List<HistoricProcessInstance> completed = activiti.queryHistoricProcessInstance();
+
+        //筛选下拉框内容
+        //工程状态
+        List<ProjectStatus> projectStatusList = projectStatusService.selectAll();
+        //工程进度
+        List<ProjectSchedule> projectScheduleList = projectScheduleService.selectAll();
+        //工程类型
+        List<ProjectType> projectTypeList = projectTypeService.selectAll();
+
+        model.addAttribute("industryApprovalNumber", industryApprovalNumber);
+        model.addAttribute("policeConfirmationNumber", policeConfirmationNumber);
+        model.addAttribute("projectImplementNumber", projectImplementNumber);
+        model.addAttribute("completed", completed.size());
+        model.addAttribute("projectStatusList", projectStatusList);
+        model.addAttribute("projectScheduleList", projectScheduleList);
+        model.addAttribute("projectTypeList", projectTypeList);
+        model.addAttribute("notReported", notReported);
         return "project/project_manage";
     }
 
@@ -87,6 +122,25 @@ public class ProjectMessageController {
             return "success";
         }
         return "error";
+    }
+
+    /**
+     * 跳转查询工程首页
+     *
+     * @return project_manage.jsp
+     */
+    @RequestMapping("/toProjectQueryIndex.do")
+    public String toProjectQueryIndex(Model model) {
+        //工程状态
+        List<ProjectStatus> projectStatusList = projectStatusService.selectAll();
+        //工程进度
+        List<ProjectSchedule> projectScheduleList = projectScheduleService.selectAll();
+        //工程类型
+        List<ProjectType> projectTypeList = projectTypeService.selectAll();
+        model.addAttribute("projectStatusList", projectStatusList);
+        model.addAttribute("projectScheduleList", projectScheduleList);
+        model.addAttribute("projectTypeList", projectTypeList);
+        return "project/project_query";
     }
 
     /**
@@ -207,12 +261,12 @@ public class ProjectMessageController {
     @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
     public String getProMessageByCondition(@RequestParam("page") int page,
                                            @RequestParam("proName") String proName,
-                                           @RequestParam("proType") String proType) {
-
-
+                                           @RequestParam("proSchedule") String proSchedule,
+                                           @RequestParam("proType") String proType,
+                                           @RequestParam("proStatus") String proStatus) {
         PageHelper.startPage(page, 10);
-        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proType);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
 
     }
@@ -225,7 +279,7 @@ public class ProjectMessageController {
     @RequestMapping("/notReported.do")
     @ResponseBody
     public String notReported(int page) {
-        PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 8);
         List<ProjectMessage> projectMessageList = projectMessageService.selectNotReported();
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
@@ -234,16 +288,18 @@ public class ProjectMessageController {
     /**
      * 工程上报
      *
-     * @param id 工程id
+     * @param id     工程id
+     * @param status 状态
      * @return s
      */
     @RequestMapping("/projectReport.do")
     @ResponseBody
-    public String projectReport(Integer id) {
-        String processInstanceId = activiti.startProcessInstance("projectMessage", id.toString());
+    public String projectReport(Integer id, Integer status) {
+        //启动流程实例
+        String processInstanceId = activiti.startProcessInstance("project_message", id.toString());
         if (activiti.queryTaskIdByProcessInstanceId(processInstanceId) != null) {
             //修改工程状态
-            if (projectMessageService.updateProStatus(id, 1) >= 0) {
+            if (projectMessageService.updateProStatus(id, status) >= 0) {
                 return "success";
             }
             return "error";
@@ -260,7 +316,7 @@ public class ProjectMessageController {
     @RequestMapping("/industryApproval.do")
     @ResponseBody
     public String industryApproval(int page) {
-        PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 8);
         //查询行业审批任务
         List<Task> taskList = activiti.queryTask("industryApproval");
         List<ProjectMessage> list = new ArrayList<>();
@@ -295,11 +351,35 @@ public class ProjectMessageController {
             projectMessage.setTaskId(task.getId());
             arrayList.add(projectMessage);
         }
-        PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 8);
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
         return JsonHelper.toJSONString(pageInfo);
     }
 
+    /**
+     * 项目实施
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping("/projectImplement.do")
+    @ResponseBody
+    public String projectImplement(int page) {
+        //查询行业审批任务
+        List<Task> taskList = activiti.queryTask("projectImplementation");
+        List<ProjectMessage> arrayList = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据ProcessInstanceId查询businessKey
+            String processInstanceId = task.getProcessInstanceId();
+            String businessKey = activiti.queryBusinessKey(processInstanceId);
+            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
+            projectMessage.setTaskId(task.getId());
+            arrayList.add(projectMessage);
+        }
+        PageHelper.startPage(page, 8);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
 
     /**
      * 竣工完成
@@ -318,7 +398,7 @@ public class ProjectMessageController {
             ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(historicProcessInstance.getBusinessKey()));
             arrayList.add(projectMessage);
         }
-        PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 8);
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
         return JsonHelper.toJSONString(pageInfo);
     }
@@ -355,4 +435,38 @@ public class ProjectMessageController {
         }
         return "error";
     }
+
+    /**
+     * 项目进场
+     *
+     * @param id       id
+     * @param schedule schedule
+     * @return s
+     */
+    @RequestMapping("/startWork.do")
+    @ResponseBody
+    public String startWork(Integer id, Integer schedule) {
+        if (projectMessageService.updateProSchedule(id, schedule) >= 0) {
+            return "success";
+        }
+        return "error";
+    }
+
+    /**
+     * 工程实施完工
+     *
+     * @param taskId taskId
+     * @return s
+     */
+    @RequestMapping("/implementationPerform.do")
+    @ResponseBody
+    public String implementationPerform(String taskId, Integer id, Integer schedule) {
+        activiti.finishCurrentTaskByTaskId(taskId);
+        if (projectMessageService.updateProSchedule(id, schedule) >= 0) {
+            return "success";
+        }
+        return "error";
+    }
+
+
 }

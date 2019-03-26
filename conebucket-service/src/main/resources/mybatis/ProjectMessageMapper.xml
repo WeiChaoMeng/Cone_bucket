@@ -146,13 +146,18 @@
         LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
         LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
         <where>
-            <if test="proName != ''">
-                and pm.pro_name = #{pro_name}
+            <if test="proName != '' and proName != null">
+                and pm.pro_name LIKE "%"#{proName}"%"
             </if>
-            <if test="proType != '' and proType != 3">
+            <if test="proSchedule != '' and proSchedule != null">
+                and pm.pro_schedule = #{proSchedule}
+            </if>
+            <if test="proType != '' and proType != null">
                 and pm.pro_type = #{proType}
             </if>
-            and pm.pro_status =0
+            <if test="proStatus != '' and proStatus != null">
+                and pm.pro_status = #{proStatus}
+            </if>
         </where>
         ORDER BY
         pm.id DESC
@@ -193,7 +198,7 @@
             LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
             LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
         WHERE
-            pm.pro_status = 0
+            pm.pro_status = 0 and pm.pro_schedule = 0
                 ORDER BY
                     pm.id DESC
     </select>
@@ -201,6 +206,21 @@
     <update id="updateProStatus" parameterType="java.util.Map">
         update project_message
         set pro_status = #{status}
+        where id = #{id}
+    </update>
+
+    <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            count( * )
+        FROM
+            `project_message`
+        WHERE
+            pro_status = #{status}
+    </select>
+
+    <update id="updateProSchedule" parameterType="java.util.Map">
+        update project_message
+        set pro_schedule = #{schedule}
         where id = #{id}
     </update>
 </mapper>

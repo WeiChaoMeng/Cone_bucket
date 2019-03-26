@@ -19,18 +19,19 @@
 </head>
 <body>
 
+<div id='windowBackgroundColor' onclick="closeWin()"
+     style=" width: 100%;height: 100%;z-index: 8888;background-color: #000000;position: absolute;opacity: 0.3;display: none;left: 0;"></div>
+
 <div class="main_container">
     <!-- page content -->
-    <div class="panel panel-default">
+    <div class="panel panel-default query-criteria">
         <div class="panel-heading">查询条件</div>
 
         <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
                 <div class="row">
-
-                    <label id="nickname" class="control-label col-sm-1">角色名称</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="roleName" autocomplete="off">
+                    <span id="nickname" class="query-criteria-name">角色名称</span>
+                    <div class="query-criteria-input">
+                        <input type="text" class="form-control" id="characterName" autocomplete="off">
                     </div>
 
                     <div>
@@ -38,7 +39,6 @@
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 
@@ -75,8 +75,8 @@
                     <thead>
                     <tr>
                         <th style="width: 5%"><input type="checkbox"></th>
-                        <th style="width: 10%">序号</th>
-                        <th style="width: 40%">角色名称</th>
+                        <th style="width: 5%">序号</th>
+                        <th style="width: 45%">角色名称</th>
                         <th style="width: 45%">角色描述</th>
                     </tr>
                     </thead>
@@ -91,7 +91,7 @@
                 </table>
 
                 <%--分页--%>
-                <div id="paging" style="right: 10px;height: 35px;bottom: 10px;margin-right: 20px">
+                <div id="paging" class="paging-table-div">
                     <div class="">
                         <div class="" style="float: right;">
                             <ul class="pagination" id="pagination" style="margin: 0"></ul>
@@ -108,13 +108,61 @@
         </div>
     </div>
     <!-- /page content -->
+
+    <div id="win"
+         style="display:none;background: rgb(255, 255, 255);width: 700px;position: absolute;top: 50px;left: 28%;z-index: 9999;border-radius: 10px;min-height: 400px;max-height: 600px">
+
+        <div style="height: 42px;padding: 0 0 0 20px;line-height: 42px;background: #efefef;border-radius: 10px 10px 0 0;">
+            <span style="font-size: 16px;">添加角色</span>
+        </div>
+
+        <div style="padding: 10px 30px;">
+            <table class="table table-bordered" style="margin: 0;">
+                <tbody>
+                <tr>
+                    <td style="width: 12%;text-align: center;">角色名称
+                    </td>
+                    <td><input type="text" id="roleName" class="form-control"></td>
+                    <td style="width: 12%;text-align: center;">角色描述
+                    </td>
+                    <td><input type="text" id="description" class="form-control"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="height: 42px;padding: 0 0 0 20px;line-height: 42px;">
+            <span style="font-size: 16px;">权限信息</span>
+        </div>
+
+        <div style="padding: 10px 30px;">
+            <table class="table table-bordered" style="margin: 0;border: none">
+                <tbody id="permissionTbody">
+                <c:forEach items="${permissionList}" var="permission">
+                    <tr>
+                        <td style="text-align: center;width: 10%;border: none;">
+                            <input type="checkbox" value="${permission.id}">
+                        </td>
+                        <td style="border: none;">${permission.description}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: center">
+            <input class="btn btn-primary btn-sm" type="button" onclick="commit()" value="提交">
+            <input class="btn btn-primary btn-sm" type="button" onclick="closeWin()" value="取消">
+        </div>
+    </div>
+
 </div>
 </body>
 <script src="../../../static/js/jquery.js"></script>
 <%--分页--%>
 <script src="../../../static/plugin/paging/jqPaginator.js" type="text/javascript"></script>
 <script>
-    //初始化工程管理页面
+    //初始化
     $(function () {
         loadData(1);
         loadPage(1);
@@ -142,7 +190,7 @@
                 //总数
                 $("#PageCount").val(objectInfo.total);
                 //每页显示条数
-                $("#PageSize").val("10");
+                $("#PageSize").val("9");
 
                 //基本数据
                 parseResult(objectInfo);
@@ -170,8 +218,8 @@
                 obj += '<tr>';
                 obj += '<th><input type="checkbox" value="' + objectInfoList[i].id + '"></th>';
                 obj += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                obj += '<td>' + objectInfoList[i].roleName + '</td>';
-                obj += '<td>' + objectInfoList[i].description + '</td>';
+                obj += '<td class="table-td-content">' + objectInfoList[i].roleName + '</td>';
+                obj += '<td class="table-td-content">' + objectInfoList[i].description + '</td>';
                 obj += '</tr>';
             }
         }
@@ -205,7 +253,7 @@
 
     //搜索
     function search(page) {
-        var roleName = $('#roleName').val();
+        var roleName = $('#characterName').val();
         $.ajax({
             type: "post",
             url: localStorage.getItem("ajaxUrl") + '/roleInfo/search.do',
@@ -216,7 +264,7 @@
                 //总数
                 $("#PageCount").val(objectInfo.total);
                 //每页显示条数
-                $("#PageSize").val("10");
+                $("#PageSize").val("9");
 
                 //基本数据
                 parseResult(objectInfo);
@@ -226,6 +274,74 @@
                 alert("出错！");
             }
         })
+    }
+
+    //弹窗添加
+    function add() {
+        $('#windowBackgroundColor').show();
+        $('#win').show();
+    }
+
+    //关闭
+    function closeWin() {
+        $('#windowBackgroundColor').hide();
+        $('#win').hide();
+    }
+
+    //提交添加角色
+    function commit() {
+        var roleName = $('#roleName').val();
+        var description = $('#description').val();
+        //选择的权限
+        var array = [];
+        var list = $("#permissionTbody input:checked");
+        for (var i = 0; i < list.length; i++) {
+            array.push(list[i].value);
+        }
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/roleInfo/add.do',
+            data: {'roleName': roleName, 'description': description, 'array': array},
+            traditional: true,
+            success: function (data) {
+                if (data === "success") {
+                    alert("添加成功！");
+                    window.location.reload();
+                } else {
+                    alert("添加失败！")
+                }
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+    //删除
+    function remove() {
+        var length = $("tbody input:checked").length;
+        if (length != 1) {
+            alert("请选择一条数据！");
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            $.ajax({
+                type: "post",
+                url: '/roleInfo/remove.do',
+                data: {'id': id},
+                success: function (data) {
+                    if (data === 'success') {
+                        alert('删除用户成功！');
+                        window.location.reload();
+                    } else {
+                        alert('删除用户失败！');
+                    }
+                },
+                error: function (result) {
+                    alert("出错！");
+                }
+            })
+        }
     }
 </script>
 </html>
