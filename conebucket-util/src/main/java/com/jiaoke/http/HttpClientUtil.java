@@ -124,30 +124,44 @@ public class HttpClientUtil {
 
         if(str.equals(arrayName)){
 
-            for (int i = 0; i < online.size();i++){
-
+            //展示数据
                 Map<String,Object> map = new HashMap<>();
-                String id = online.getJSONObject(i).getString("id");
-                String lastLocation = online.getJSONObject(i).getString("lastLocation");
-                //处理道路信息
-                String roadInfo = online.getJSONObject(i).getString("RoadInfo");
-                String roadName = "未获取道路信息";
 
-                if (roadInfo != null){
-                    JSONObject roadJson = JSONObject.parseObject(roadInfo);
-                    Object temObj = roadJson.get("RoadName");
-                    if (temObj !=  null){
-                        roadName = temObj.toString();
-                    }
-                }
-
-                map.put("id",id);
-                map.put("lastLocation",lastLocation);
-                map.put("roadName",roadName);
-
+                map.put("id","1");
+                map.put("lastLocation","116.324615,39.935276");
+                map.put("roadName","Test1");
+                map.put("id","2");
+                map.put("lastLocation","116.352881,39.928717");
+                map.put("roadName","Test2");
+                map.put("id","3");
+                map.put("lastLocation","116.360423,39.918734");
+                map.put("roadName","Test3");
                 list.add(map);
-            }
+//            for (int i = 0; i < online.size();i++){
+//
+//                Map<String,Object> map = new HashMap<>();
+//                String id = online.getJSONObject(i).getString("id");
+//                String lastLocation = online.getJSONObject(i).getString("lastLocation");
+//                //处理道路信息
+//                String roadInfo = online.getJSONObject(i).getString("RoadInfo");
+//                String roadName = "未获取道路信息";
+//
+//                if (roadInfo != null){
+//                    JSONObject roadJson = JSONObject.parseObject(roadInfo);
+//                    Object temObj = roadJson.get("RoadName");
+//                    if (temObj !=  null){
+//                        roadName = temObj.toString();
+//                    }
+//                }
+//
+//                map.put("id",id);
+//                map.put("lastLocation",lastLocation);
+//                map.put("roadName",roadName);
+//
+//                list.add(map);
+//            }
         }else {
+
             for (int i = 0; i < online.size();i++){
 
                 Map<String,Object> map = new HashMap<>();
@@ -166,5 +180,19 @@ public class HttpClientUtil {
         return JSON.toJSONString(list);
     }
 
+
+    public static String getConeBucketOnlineSize(String res,String arrayName){
+
+        JSONObject jsonObject = JSONObject.parseObject(res);
+
+        JSONArray online = JSONArray.parseArray(jsonObject.get(arrayName).toString());
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("coneBucketSzie",online.size());
+
+        return JSON.toJSONString(map);
+
+    }
 
 }

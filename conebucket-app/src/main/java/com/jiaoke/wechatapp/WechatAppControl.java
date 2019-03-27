@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *  <一句话功能描述>
@@ -98,7 +100,7 @@ public class WechatAppControl {
         //添加参数
         urlParamMap.put("page","1");
         urlParamMap.put("size","2");
-        urlParamMap.put("stateFlags[]","0");
+        urlParamMap.put("stateFlags[]","2");
         urlParamMap.put("isHardWare","true");
         urlParamMap.put("userKey","0635fe71-699a-4feb-8894-de0dc7f632ac");
 
@@ -182,6 +184,33 @@ public class WechatAppControl {
 
     }
 
+    @ResponseBody
+    @RequestMapping("/getZonwiOnlineCount.do")
+    public String   getZonwiOnlineCount(){
+
+        String res = HttpClientUtil.doGet(zonwiURI);
+        return HttpClientUtil.getConeBucketOnlineSize(res,"online");
+    }
+
+    @ResponseBody
+    @RequestMapping("/getGoogleOnlineCount.do")
+    public String   getGoogleOnlineCount(){
+        //url参数map
+        Map<String,String> urlParamMap = new HashMap<>();
+
+        //添加参数
+        urlParamMap.put("page","1");
+        urlParamMap.put("size","2");
+        urlParamMap.put("stateFlags[]","2");
+        urlParamMap.put("isHardWare","true");
+        urlParamMap.put("userKey","0635fe71-699a-4feb-8894-de0dc7f632ac");
+
+
+
+        String res = HttpClientUtil.doGet(googleEvent,urlParamMap);
+
+        return HttpClientUtil.getConeBucketOnlineSize(res,"data");
+    }
     /**
      *
      * 功能描述: <br>
@@ -203,35 +232,34 @@ public class WechatAppControl {
 
         if (allConeBucket.size() != 0){
 
+            List<String> dbList = new ArrayList<>();
+            List<String> portList = new ArrayList<>();
             for (int i = 0;i < allConeBucket.size();i++ ){
-
                 String coneBucketNum = allConeBucket.get(i).get("cone_bucket_num").toString();
-
-                if ("zonwi".equals(condition)){
-
-                    for (int j = 0; j < online.size();j++){
-                        String id = online.getJSONObject(j).getString("id");
-                        if (coneBucketNum.equals(id)){
-                            continue;
-                        }else {
-                            coneBucketManagerServiceInf.addConeBucket(coneBucketNum,"1");
-                        }
-                    }
-
-                }else if ("google".equals(condition)){
-
-                    for (int j = 0; j < online.size();j++){
-                        String id = online.getJSONObject(j).getString("deviceId");
-                        if (coneBucketNum.equals(id)){
-                            continue;
-                        }else {
-                            coneBucketManagerServiceInf.addConeBucket(coneBucketNum,"0");
-                        }
-                    }
-
-                }
-
+                dbList.add(coneBucketNum);
             }
+            for (int i = 0;i < online.size();i++ ){
+                String id = online.getJSONObject(i).getString("id");
+                dbList.add(id);
+            }
+            //取出没有录入数据库的值
+            List<String> res = portList.stream().filter(item -> !dbList.contains(item)).collect(Collectors.toList());
+
+            if (res.size() == 0) return;
+
+            for (int i = 0;i < online.size();i++ ){
+                String id = online.getJSONObject(i).getString("id");
+                for (int j =0;j<res.size();j++){
+                    if (id.equals(res.get(i))){
+                        if ("zonwi".equals(condition)){
+                            coneBucketManagerServiceInf.addConeBucket(id,"1");
+                        }else if ("google".equals(condition)){
+                            coneBucketManagerServiceInf.addConeBucket(id,"0");
+                        }
+                    }
+                }
+            }
+
         }else {
             if ("zonwi".equals(condition)){
                 for (int j = 0; j < online.size();j++){
