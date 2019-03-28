@@ -20,6 +20,7 @@ import java.util.Map;
  * @Description:
  */
 public interface SyetemLogDao {
+
     Map<String, String> selectConeBucketLastTimeBydeviceId(@Param("deviceId") String deviceId);
 
     int insertConeBucketTime(String deviceId, String s, String eventDesc, String locRoadName, String startDataTime, String endDataTime);

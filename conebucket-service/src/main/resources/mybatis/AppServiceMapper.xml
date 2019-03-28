@@ -29,9 +29,6 @@
             </otherwise>
         </choose>
 
-
-
-
     </select>
 
     <select id="selectProLocationsByIdList" resultType="java.util.Map">
