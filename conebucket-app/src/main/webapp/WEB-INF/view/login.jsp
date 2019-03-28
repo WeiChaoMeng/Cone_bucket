@@ -9,6 +9,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <!--[if lte IE9]>
+    <meta http-equiv="Refresh" content="0; url=/version.do"/>
+    <![endif]-->
     <meta charset="UTF-8">
     <title>登录页面</title>
     <link rel="stylesheet" href="../../static/css/login.css" type="text/css">

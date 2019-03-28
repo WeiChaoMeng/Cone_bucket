@@ -18,7 +18,7 @@
 
 <div class="main_container">
     <!-- page content -->
-    <div class="panel panel-default">
+    <div class="panel panel-default query-criteria">
         <div class="panel-heading">查询条件</div>
 
         <div class="panel-body">

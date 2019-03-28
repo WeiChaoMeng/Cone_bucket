@@ -1,7 +1,6 @@
 package com.jiaoke.test;
 
 import com.jiaoke.util.SpringHelper;
-import com.jiaoke.web.dao.ProjectLocationMapper;
 import com.jiaoke.web.dao.ProjectMessageMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +23,6 @@ public class ProjectTest {
 
     @Test
     public void testUser() {
-        int i = projectMessageMapper.updateProStatus(13,1);
-        System.out.println(i);
+
     }
 }

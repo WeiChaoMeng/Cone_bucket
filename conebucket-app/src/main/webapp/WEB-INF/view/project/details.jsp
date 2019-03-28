@@ -128,7 +128,7 @@
 
     //返回
     function backOff() {
-        history.back(-1);
+        history.go(-1);
     }
 
     var id = $('#id').val();

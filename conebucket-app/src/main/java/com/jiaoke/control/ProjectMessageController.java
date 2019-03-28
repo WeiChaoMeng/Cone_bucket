@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工程管理
@@ -232,6 +233,31 @@ public class ProjectMessageController {
     }
 
     /**
+     * 功能描述: <br>
+     * <根据条件查询工程>
+     * 条件查询
+     *
+     * @param proName proName
+     * @param proType proType
+     * @return json
+     * @auther Melone
+     * @date 2019/3/19 14:05
+     */
+    @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String getProMessageByCondition(@RequestParam("page") int page,
+                                           @RequestParam("proName") String proName,
+                                           @RequestParam("proSchedule") String proSchedule,
+                                           @RequestParam("proType") String proType,
+                                           @RequestParam("proStatus") String proStatus) {
+        PageHelper.startPage(page, 10);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        return JsonHelper.toJSONString(pageInfo);
+
+    }
+
+    /**
      * 修改工程信息
      *
      * @param projectMessage projectMessage
@@ -247,40 +273,19 @@ public class ProjectMessageController {
     }
 
     /**
-     * 功能描述: <br>
-     * <根据条件查询工程>
-     * 条件查询
-     *
-     * @param proName proName
-     * @param proType proType
-     * @return json
-     * @auther Melone
-     * @date 2019/3/19 14:05
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
-    public String getProMessageByCondition(@RequestParam("page") int page,
-                                           @RequestParam("proName") String proName,
-                                           @RequestParam("proSchedule") String proSchedule,
-                                           @RequestParam("proType") String proType,
-                                           @RequestParam("proStatus") String proStatus) {
-        PageHelper.startPage(page, 10);
-        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
-        return JsonHelper.toJSONString(pageInfo);
-
-    }
-
-    /**
      * 加载未上报工程
      *
      * @return list
      */
     @RequestMapping("/notReported.do")
     @ResponseBody
-    public String notReported(int page) {
+    public String notReported(@RequestParam("page") int page,
+                              @RequestParam("proName") String proName,
+                              @RequestParam("proSchedule") String proSchedule,
+                              @RequestParam("proType") String proType,
+                              @RequestParam("proStatus") String proStatus) {
         PageHelper.startPage(page, 8);
-        List<ProjectMessage> projectMessageList = projectMessageService.selectNotReported();
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
     }
@@ -308,76 +313,43 @@ public class ProjectMessageController {
     }
 
     /**
-     * 行业审批
+     * 根据Assignee获取任务
      *
      * @param page page
      * @return json
      */
-    @RequestMapping("/industryApproval.do")
+    @RequestMapping("/getTaskByAssignee.do")
     @ResponseBody
-    public String industryApproval(int page) {
-        PageHelper.startPage(page, 8);
-        //查询行业审批任务
-        List<Task> taskList = activiti.queryTask("industryApproval");
-        List<ProjectMessage> list = new ArrayList<>();
+    public String getTaskByAssignee(@RequestParam("assignee") String assignee,
+                                    @RequestParam("page") int page,
+                                    @RequestParam("proName") String proName,
+                                    @RequestParam("proSchedule") String proSchedule,
+                                    @RequestParam("proType") String proType,
+                                    @RequestParam("proStatus") String proStatus) {
+
+        List<Integer> list = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>(16);
+
+        List<Task> taskList = activiti.queryTask(assignee);
         for (Task task : taskList) {
-            //根据ProcessInstanceId查询businessKey
+            //根据taskId查询businessKey
             String businessKey = activiti.queryBusinessKey(task.getProcessInstanceId());
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
-            projectMessage.setTaskId(task.getId());
-            list.add(projectMessage);
+            list.add(Integer.valueOf(businessKey));
+            map.put(task.getId(), businessKey);
         }
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(list);
-        return JsonHelper.toJSONString(pageInfo);
-    }
 
-    /**
-     * 交警确认
-     *
-     * @param page page
-     * @return json
-     */
-    @RequestMapping("/policeConfirm.do")
-    @ResponseBody
-    public String policeConfirm(int page) {
-        //查询行业审批任务
-        List<Task> taskList = activiti.queryTask("policeConfirmation");
-        List<ProjectMessage> arrayList = new ArrayList<>();
-        for (Task task : taskList) {
-            //根据ProcessInstanceId查询businessKey
-            String processInstanceId = task.getProcessInstanceId();
-            String businessKey = activiti.queryBusinessKey(processInstanceId);
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
-            projectMessage.setTaskId(task.getId());
-            arrayList.add(projectMessage);
-        }
         PageHelper.startPage(page, 8);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
-        return JsonHelper.toJSONString(pageInfo);
-    }
+        List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
 
-    /**
-     * 项目实施
-     *
-     * @param page page
-     * @return json
-     */
-    @RequestMapping("/projectImplement.do")
-    @ResponseBody
-    public String projectImplement(int page) {
-        //查询行业审批任务
-        List<Task> taskList = activiti.queryTask("projectImplementation");
-        List<ProjectMessage> arrayList = new ArrayList<>();
-        for (Task task : taskList) {
-            //根据ProcessInstanceId查询businessKey
-            String processInstanceId = task.getProcessInstanceId();
-            String businessKey = activiti.queryBusinessKey(processInstanceId);
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(businessKey));
-            projectMessage.setTaskId(task.getId());
-            arrayList.add(projectMessage);
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            for (ProjectMessage projectMessage : projectMessageList) {
+                if (projectMessage.getId().equals(Integer.valueOf(entry.getValue()))) {
+                    projectMessage.setTaskId(entry.getKey());
+                }
+            }
         }
-        PageHelper.startPage(page, 8);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
+
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
     }
 
@@ -389,17 +361,23 @@ public class ProjectMessageController {
      */
     @RequestMapping("/completion.do")
     @ResponseBody
-    public String completion(int page) {
-        List<ProjectMessage> arrayList = new ArrayList<>();
+    public String completion(@RequestParam("page") int page,
+                             @RequestParam("proName") String proName,
+                             @RequestParam("proSchedule") String proSchedule,
+                             @RequestParam("proType") String proType,
+                             @RequestParam("proStatus") String proStatus) {
+
+        List<Integer> list = new ArrayList<>();
         //查询已审批完成的工程
         List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
         for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
-            //根据业务主键查询已完成工程
-            ProjectMessage projectMessage = projectMessageService.selectByBusinessKey(Integer.valueOf(historicProcessInstance.getBusinessKey()));
-            arrayList.add(projectMessage);
+            list.add(Integer.valueOf(historicProcessInstance.getBusinessKey()));
         }
+
         PageHelper.startPage(page, 8);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(arrayList);
+        //根据业务主键查询已完成工程
+        List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
     }
 

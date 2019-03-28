@@ -231,8 +231,11 @@
 
     //提交form
     function commit() {
-        var proScopeJson = JSON.stringify(path);
-        $('#proScope').val(proScopeJson);
+        if (path.length > 0) {
+            var proScopeJson = JSON.stringify(path);
+            $('#proScope').val(proScopeJson);
+        }
+
         $.ajax({
             type: "POST",
             url: localStorage.getItem("ajaxUrl") + '/projectMessage/add.do',

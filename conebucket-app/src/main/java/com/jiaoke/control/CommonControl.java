@@ -28,7 +28,7 @@ public class CommonControl {
      */
     @RequestMapping("/")
     public String index() {
-        return "version_validation";
+        return "login";
     }
 
     /**

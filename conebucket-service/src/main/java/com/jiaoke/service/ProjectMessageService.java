@@ -64,12 +64,16 @@ public interface ProjectMessageService {
     List<ProjectMessage> getProMessageByCondition(String proName, String proSchedule, String proType, String proStatus);
 
     /**
-     * 根据BusinessKey查询
+     * 根据businessKey查询
      *
-     * @param id 主键
-     * @return projectMessage
+     * @param ids         idList
+     * @param proName     proName
+     * @param proSchedule proSchedule
+     * @param proType     proType
+     * @param proStatus   proStatus
+     * @return list
      */
-    ProjectMessage selectByBusinessKey(Integer id);
+    List<ProjectMessage> selectByBusinessKey(List<Integer> ids, String proName, String proSchedule, String proType, String proStatus);
 
     /**
      * 更新工程状态
