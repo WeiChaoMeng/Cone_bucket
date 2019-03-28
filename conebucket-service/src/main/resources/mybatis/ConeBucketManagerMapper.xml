@@ -59,4 +59,15 @@
         </choose>
 
     </select>
+
+    <select id="selectGoogleConeBucketById" resultType="java.util.Map">
+        SELECT
+            cone_bucket_type,
+            cone_bucket_num,
+            create_time
+        FROM
+            cone_bucket_message
+        WHERE
+            cone_bucket_num = #{deviceId};
+    </select>
 </mapper>

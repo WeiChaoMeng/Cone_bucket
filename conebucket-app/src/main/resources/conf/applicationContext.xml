@@ -117,7 +117,7 @@
 
   <bean id="Taskaa" class="com.jiaoke.logcontrol.ConeBucketLog" />
   <task:scheduled-tasks>
-    <task:scheduled ref="Taskaa" method="addConeBucketLog" cron="5 * *  * * ? " />
+    <task:scheduled ref="Taskaa" method="addGoogleConeBucketLog" cron="5 * *  * * ? " />
   </task:scheduled-tasks>
   <!--定时任务注解-->
   <task:annotation-driven/>

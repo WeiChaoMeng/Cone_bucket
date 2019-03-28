@@ -28,4 +28,6 @@ public interface ConeBucketManagerServiceInf {
     int removeConeBucketById(String[] idArray);
 
     List<Map<String, Object>> getConeBucketByCondition(String cbn, String cbt);
+
+    Map<String, String> getGoogleConeBucketById(String deviceId);
 }

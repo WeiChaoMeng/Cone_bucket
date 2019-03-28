@@ -23,4 +23,6 @@ public interface SyetemLogInf {
     Map<String,String> getConeBucketLastTimeBydeviceId(String deviceId);
 
     int addConeBucketTime(String deviceId, String s, String eventDesc, String locRoadName, String startDataTime, String endDataTime);
+
+    void editConeBucketBydeviceId(String id, String endTime);
 }
