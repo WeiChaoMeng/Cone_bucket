@@ -915,24 +915,25 @@
 
                 var ProjectMessages = map.pageInfo;
 
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("8");
-
-                //基本数据
-
-                //结果集
-                var ProjectMessageList = ProjectMessages.list;
-                //当前页
-                var pageNum = ProjectMessages.pageNum;
-                //插入tbody
                 var ProjectMessage = '';
-                if (ProjectMessageList.length === 0) {
+                if (ProjectMessages == "") {
                     ProjectMessage += '<tr>';
                     ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
+                    $("#PageCount").val(0);
+                    //每页显示条数
+                    $("#PageSize").val("8");
                 } else {
+                    //总数
+                    $("#PageCount").val(ProjectMessages.total);
+                    //每页显示条数
+                    $("#PageSize").val("8");
+
+                    //结果集
+                    var ProjectMessageList = ProjectMessages.list;
+                    //当前页
+                    var pageNum = ProjectMessages.pageNum;
+
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
