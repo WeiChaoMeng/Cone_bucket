@@ -196,6 +196,8 @@
                 and pm.pro_status = #{proStatus}
             </if>
         </where>
+        ORDER BY
+        pm.id DESC
     </select>
 
     <select id="selectNotReported" resultMap="projectMessageMap">

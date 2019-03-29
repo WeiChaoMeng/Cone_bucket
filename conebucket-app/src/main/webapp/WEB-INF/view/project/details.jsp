@@ -32,7 +32,7 @@
         <tbody>
         <tr>
             <td style="width: 10%">工程名称</td>
-            <td class="table-td-content" id="proName" >
+            <td class="table-td-content" id="proName">
                 <input type="hidden" id="id" value="${id}">
             </td>
 

@@ -21,10 +21,20 @@
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" href="../../../static/plugin/date_pickers/date_picker.css">
+    <script src="../../../static/js/jquery.js"></script>
+    <script src="../../../static/plugin/layer/layer.js"></script>
     <style>
-        #container{
+        #container {
             width: 100%;
             height: 90%;
+        }
+
+        .content_textarea_style {
+            resize: none;
+            width: 100%;
+            border: 1px #bdbdbd solid;
+            padding: 5px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -38,7 +48,8 @@
             <tr>
                 <td style="width: 10%">工程名称</td>
                 <td style="width: 40%">
-                    <input class="form-control" type="text" id="proName" name="proName" value="" autocomplete="off">
+                    <input class="form-control" type="text" id="proName" name="proName" value="" autocomplete="off"
+                           onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </td>
 
                 <td style="width: 10%">工程类型</td>
@@ -54,8 +65,7 @@
             <tr>
                 <td style="width: 10%">工程概述</td>
                 <td colspan="3">
-                    <input class="form-control" type="text" id="proSummarize" name="proSummarize" value=""
-                           autocomplete="off">
+                    <textarea class="content_textarea_style" rows="3" name="proSummarize"></textarea>
                 </td>
             </tr>
 
@@ -143,12 +153,13 @@
 
                 <td style="">锥桶编号</td>
                 <td colspan="3">
-                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off" onkeyup="this.value=this.value.replace(/，/g,',')">
+                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off"
+                           onkeyup="this.value=this.value.replace(/，/g,',')">
                 </td>
             </tr>
 
             <tr>
-                <td colspan="4" style="width: 10%">施工范围</td>
+                <td colspan="4" style="font-size: 14px;padding: 10px 0;" class="table-td-content">施工范围</td>
             </tr>
 
             <tr>
@@ -169,13 +180,13 @@
 </div>
 
 </body>
-<script src="../../../static/js/jquery.js"></script>
 <script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
 <%--引入腾讯地图--%>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
     //腾讯地图
     var path = [];
+
     function newMap() {
         //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
         var map = new qq.maps.Map(document.getElementById("container"), {
@@ -186,7 +197,7 @@
 
         //绑定单击事件添加参数
         qq.maps.event.addListener(map, 'click', function (event) {
-            path.push(new qq.maps.LatLng(event.latLng.getLat(),event.latLng.getLng()));
+            path.push(new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()));
             //创建marker
             var marker = new qq.maps.Marker({
                 position: new qq.maps.LatLng(event.latLng.getLat(), event.latLng.getLng()),
@@ -231,27 +242,35 @@
 
     //提交form
     function commit() {
-        if (path.length > 0) {
-            var proScopeJson = JSON.stringify(path);
-            $('#proScope').val(proScopeJson);
-        }
+        var proName = $("#proName").val();
+        if (proName !== "") {
+            if (path.length > 0) {
+                var proScopeJson = JSON.stringify(path);
+                $('#proScope').val(proScopeJson);
 
-        $.ajax({
-            type: "POST",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/add.do',
-            data: $('#projectMessage').serialize(),
-            error: function (request) {
-                alert("Connection error");
-            },
-            success: function (data) {
-                if (data === "success") {
-                    alert('添加成功');
-                    window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toIndex.do";
-                } else {
-                    alert('添加失败');
-                }
+                $.ajax({
+                    type: "POST",
+                    url: localStorage.getItem("ajaxUrl") + '/projectMessage/add.do',
+                    data: $('#projectMessage').serialize(),
+                    error: function (request) {
+                        alert("Connection error");
+                    },
+                    success: function (data) {
+                        if (data === "success") {
+                            layer.msg('添加成功');
+                            window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toIndex.do";
+                        } else {
+                            layer.msg('添加失败');
+                        }
+                    }
+                });
+
+            } else {
+                layer.msg("请绘制施工范围！");
             }
-        });
+        } else {
+            layer.msg("工程名称必填！");
+        }
     }
 
     //是否有锥桶

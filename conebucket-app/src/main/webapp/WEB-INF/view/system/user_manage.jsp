@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../../../static/css/system.css">
     <%--分页--%>
     <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
+    <script src="../../../static/plugin/layer/layer.js"></script>
 </head>
 <body>
 
@@ -315,23 +316,27 @@
         for (var i = 0; i < list.length; i++) {
             array.push(list[i].value);
         }
-        $.ajax({
-            type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/userInfo/add.do',
-            data: {'username': username, 'password': password, 'phone': phone, 'array': array},
-            traditional: true,
-            success: function (data) {
-                if (data === "success") {
-                    alert("添加成功！");
-                    window.location.reload();
-                } else {
-                    alert("添加失败！")
+        if (array.length < 1) {
+            alert("请绑定角色")
+        }else {
+            $.ajax({
+                type: "post",
+                url: localStorage.getItem("ajaxUrl") + '/userInfo/add.do',
+                data: {'username': username, 'password': password, 'phone': phone, 'array': array},
+                traditional: true,
+                success: function (data) {
+                    if (data === "success") {
+                        alert("添加成功！");
+                        window.location.reload();
+                    } else {
+                        alert("添加失败！")
+                    }
+                },
+                error: function (result) {
+                    alert("出错！");
                 }
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
+            })
+        }
     }
 
     //删除

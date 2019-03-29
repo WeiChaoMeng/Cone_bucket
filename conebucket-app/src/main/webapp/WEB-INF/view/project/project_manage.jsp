@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
+    <script src="../../../static/js/jquery.js"></script>
+    <script src="../../../static/plugin/layer/layer.js"></script>
 </head>
 
 <body class="nav-md">
@@ -233,15 +235,6 @@
                     </select>
                 </div>
 
-                <%--<span class="condition-name">工程状态:</span>
-                <div class="manage-condition-select">
-                    <select class="form-control" id="proStatus">
-                        <option value="">--请选择--</option>
-                        <c:forEach items="${projectStatusList}" var="projectStatus">
-                            <option value="${projectStatus.id}">${projectStatus.statusName}</option>
-                        </c:forEach>
-                    </select>
-                </div>--%>
                 <div id="proScheduleSelect">
                     <span class="condition-name">工程进度:</span>
                     <div class="manage-condition-select">
@@ -279,7 +272,7 @@
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                             </button>
 
-                            <button id="btn_delete" type="button" class="btn btn-default btn-delete" onclick="del()">
+                            <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                             </button>
 
@@ -389,15 +382,9 @@
 </div>
 </body>
 
-<script src="../../../static/js/jquery.js"></script>
 <%--分页--%>
 <script src="../../../static/plugin/paging/jqPaginator.js" type="text/javascript"></script>
 <script>
-
-    //重新加载页面
-    function reload() {
-        window.location.reload();
-    }
 
     //流程图按钮颜色切换
     function rectButton(parameter) {
@@ -431,7 +418,7 @@
     //施工上报页面
     function constructionReport(page, parameter) {
         //删除按钮
-        $('#btn_delete').css('display', 'block');
+        $('#toolbar').css('display', 'block');
         //工程进度筛选
         $('#proScheduleSelect').css('display', 'none');
 
@@ -454,7 +441,16 @@
             success: function (data) {
                 $('#tbodyTab').show();
                 $('#implementTab').hide();
-                var ProjectMessages = JSON.parse(data);
+
+                var map = JSON.parse(data);
+                $('#constructionSvg').text('施工上报(' + map.notReported + ')条');
+                $('#industrySvg').text('行业审批(' + map.industryApprovalNumber + ')条');
+                $('#policeSvg').text('交警确认(' + map.policeConfirmationNumber + ')条');
+                $('#implementationSvg').text('工程实施(' + map.projectImplementNumber + ')条');
+                $('#completionSvg').text('竣工完成(' + map.completed + ')条');
+
+                var ProjectMessages = map.pageInfo;
+
                 //总数
                 $("#PageCount").val(ProjectMessages.total);
                 //每页显示条数
@@ -475,7 +471,7 @@
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
                         ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
@@ -497,7 +493,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
@@ -515,10 +511,10 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('上报成功');
+                    layer.msg('上报成功');
                     constructionReport(1, 0);
                 } else {
-                    alert('上报失败');
+                    layer.msg('上报失败');
                 }
             }
         })
@@ -529,7 +525,7 @@
     //行业审批页面
     function industryApproval(page, parameter) {
         //删除
-        $('#btn_delete').css('display', 'none');
+        $('#toolbar').css('display', 'none');
         //工程进度筛选
         $('#proScheduleSelect').css('display', 'none');
 
@@ -554,27 +550,39 @@
             success: function (data) {
                 $('#tbodyTab').show();
                 $('#implementTab').hide();
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("8");
 
-                //基本数据
-                var ProjectMessageList = ProjectMessages.list;
-                //当前页
-                var pageNum = ProjectMessages.pageNum;
-                //插入tbody
+                var map = JSON.parse(data);
+                $('#constructionSvg').text('施工上报(' + map.notReported + ')条');
+                $('#industrySvg').text('行业审批(' + map.industryApprovalNumber + ')条');
+                $('#policeSvg').text('交警确认(' + map.policeConfirmationNumber + ')条');
+                $('#implementationSvg').text('工程实施(' + map.projectImplementNumber + ')条');
+                $('#completionSvg').text('竣工完成(' + map.completed + ')条');
+
+                var ProjectMessages = map.pageInfo;
+
                 var pro = '';
-                if (ProjectMessageList.length === 0) {
+                if (ProjectMessages == "") {
                     pro += '<tr>';
                     pro += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     pro += '</tr>';
+                    $("#PageCount").val(0);
+                    //每页显示条数
+                    $("#PageSize").val("8");
                 } else {
+                    //总数
+                    $("#PageCount").val(ProjectMessages.total);
+                    //每页显示条数
+                    $("#PageSize").val("8");
+
+                    //基本数据
+                    var ProjectMessageList = ProjectMessages.list;
+                    //当前页
+                    var pageNum = ProjectMessages.pageNum;
+
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         pro += '<tr>';
                         pro += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        pro += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        pro += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
                         pro += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                         pro += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         pro += '<td>' + ProjectMessageList[i].proNum + '</td>';
@@ -595,7 +603,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
@@ -612,10 +620,10 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('处理成功');
+                    layer.msg('处理成功');
                     industryApproval(1, 1);
                 } else {
-                    alert('处理失败');
+                    layer.msg('处理失败');
                 }
             }
         })
@@ -625,7 +633,7 @@
     //交警确认页面
     function policeConfirm(page, parameter) {
         //删除
-        $('#btn_delete').css('display', 'none');
+        $('#toolbar').css('display', 'none');
         //工程进度筛选
         $('#proScheduleSelect').css('display', 'none');
 
@@ -650,28 +658,41 @@
             success: function (data) {
                 $('#tbodyTab').show();
                 $('#implementTab').hide();
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("8");
 
-                //审批处理
-                //基本数据
-                var ProjectMessageList = ProjectMessages.list;
-                //当前页
-                var pageNum = ProjectMessages.pageNum;
+                var map = JSON.parse(data);
+                $('#constructionSvg').text('施工上报(' + map.notReported + ')条');
+                $('#industrySvg').text('行业审批(' + map.industryApprovalNumber + ')条');
+                $('#policeSvg').text('交警确认(' + map.policeConfirmationNumber + ')条');
+                $('#implementationSvg').text('工程实施(' + map.projectImplementNumber + ')条');
+                $('#completionSvg').text('竣工完成(' + map.completed + ')条');
+
+                var ProjectMessages = map.pageInfo;
+
                 //插入tbody
                 var ProjectMessage = '';
-                if (ProjectMessageList.length === 0) {
+                if (ProjectMessages == "") {
                     ProjectMessage += '<tr>';
                     ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
+                    $("#PageCount").val(0);
+                    //每页显示条数
+                    $("#PageSize").val("8");
                 } else {
+                    //总数
+                    $("#PageCount").val(ProjectMessages.total);
+                    //每页显示条数
+                    $("#PageSize").val("8");
+
+                    //审批处理
+                    //基本数据
+                    var ProjectMessageList = ProjectMessages.list;
+                    //当前页
+                    var pageNum = ProjectMessages.pageNum;
+
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
                         ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
@@ -692,7 +713,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
@@ -710,10 +731,10 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('处理成功');
+                    layer.msg('处理成功');
                     policeConfirm(1, 2);
                 } else {
-                    alert('处理失败');
+                    layer.msg('处理失败');
                 }
             }
         })
@@ -722,7 +743,7 @@
     /*-----------------工程实施------------------*/
     function projectImplement(page, parameter) {
         //删除
-        $('#btn_delete').css('display', 'none');
+        $('#toolbar').css('display', 'none');
         //工程进度筛选
         $('#proScheduleSelect').css('display', 'block');
 
@@ -747,28 +768,40 @@
             success: function (data) {
                 $('#implementTab').show();
                 $('#tbodyTab').hide();
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("8");
 
-                //审批处理
-                //基本数据
-                var ProjectMessageList = ProjectMessages.list;
-                //当前页
-                var pageNum = ProjectMessages.pageNum;
+                var map = JSON.parse(data);
+                $('#constructionSvg').text('施工上报(' + map.notReported + ')条');
+                $('#industrySvg').text('行业审批(' + map.industryApprovalNumber + ')条');
+                $('#policeSvg').text('交警确认(' + map.policeConfirmationNumber + ')条');
+                $('#implementationSvg').text('工程实施(' + map.projectImplementNumber + ')条');
+                $('#completionSvg').text('竣工完成(' + map.completed + ')条');
+
+                var ProjectMessages = map.pageInfo;
+
                 //插入tbody
                 var ProjectMessage = '';
-                if (ProjectMessageList.length === 0) {
+                if (ProjectMessages == "") {
                     ProjectMessage += '<tr>';
                     ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
+                    $("#PageCount").val(0);
+                    //每页显示条数
+                    $("#PageSize").val("8");
                 } else {
+                    //总数
+                    $("#PageCount").val(ProjectMessages.total);
+                    //每页显示条数
+                    $("#PageSize").val("8");
+
+                    //基本数据
+                    var ProjectMessageList = ProjectMessages.list;
+                    //当前页
+                    var pageNum = ProjectMessages.pageNum;
+
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
                         ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
@@ -795,7 +828,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
@@ -813,10 +846,10 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('处理成功');
+                    layer.msg('处理成功');
                     projectImplement(1, 3);
                 } else {
-                    alert('处理失败');
+                    layer.msg('处理失败');
                 }
             }
         })
@@ -835,10 +868,10 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('处理成功');
+                    layer.msg('处理成功');
                     projectImplement(1, 3);
                 } else {
-                    alert('处理失败');
+                    layer.msg('处理失败');
                 }
             }
         })
@@ -849,7 +882,7 @@
     //竣工完成 页面
     function completion(page, parameter) {
         //删除按钮
-        $('#btn_delete').css('display', 'none');
+        $('#toolbar').css('display', 'none');
         //工程进度筛选
         $('#proScheduleSelect').css('display', 'none');
 
@@ -872,7 +905,16 @@
             success: function (data) {
                 $('#implementTab').show();
                 $('#tbodyTab').hide();
-                var ProjectMessages = JSON.parse(data);
+
+                var map = JSON.parse(data);
+                $('#constructionSvg').text('施工上报(' + map.notReported + ')条');
+                $('#industrySvg').text('行业审批(' + map.industryApprovalNumber + ')条');
+                $('#policeSvg').text('交警确认(' + map.policeConfirmationNumber + ')条');
+                $('#implementationSvg').text('工程实施(' + map.projectImplementNumber + ')条');
+                $('#completionSvg').text('竣工完成(' + map.completed + ')条');
+
+                var ProjectMessages = map.pageInfo;
+
                 //总数
                 $("#PageCount").val(ProjectMessages.total);
                 //每页显示条数
@@ -894,7 +936,7 @@
                     for (var i = 0; i < ProjectMessageList.length; i++) {
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
                         ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
@@ -915,7 +957,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
@@ -969,11 +1011,6 @@
         });
     }
 
-    //工程详情
-    function details(id) {
-        window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toDetails.do?id=" + id;
-    }
-
     //添加
     function add() {
         window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toAdd.do";
@@ -983,7 +1020,7 @@
     function del() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
-            alert("一次只能选择一条数据");
+            layer.msg('请选择数据!');
             return false;
         } else {
             var id = $("tbody input:checked").val();
@@ -992,14 +1029,14 @@
                 url: localStorage.getItem("ajaxUrl") + '/projectMessage/remove.do',
                 data: {'id': id},
                 error: function () {
-                    alert("Connection error");
+                    layer.msg("Connection error");
                 },
                 success: function (result) {
                     if (result == 'success') {
-                        alert("删除成功");
-                        window.location.reload();
+                        layer.msg('删除成功!');
+                        constructionReport(1, 0);
                     } else {
-                        alert("删除失败");
+                        layer.msg('删除失败!');
                     }
                 }
             });
@@ -1010,7 +1047,7 @@
     function edit() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
-            alert("一次只能选择一条数据");
+            layer.msg('请选择数据!');
             return false;
         } else {
             var id = $("tbody input:checked").val();
@@ -1044,6 +1081,56 @@
             completion(1, 4);
         }
     }
+
+    //工程详情信息
+    function details(id) {
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/details.do',
+            data: {'id': id},
+            async: false,
+            success: function (data) {
+                var mapObject = JSON.parse(data);
+                parent.projectDetailed(mapObject);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
+    }
+
+    //重新加载页面
+    function reload() {
+        $('#tbody').html("");
+        $('#implement').html("");
+        setTimeout(function () {
+            var proStatus = $("#proStatus").val();
+
+            if (proStatus == 0) {
+
+                //施工上报
+                constructionReport(1, 0);
+            } else if (proStatus == 1) {
+
+                //行业审批
+                industryApproval(1, 1);
+            } else if (proStatus == 2) {
+
+                //交警确认
+                policeConfirm(1, 2);
+            } else if (proStatus == 3) {
+
+                //工程实施
+                projectImplement(1, 3);
+            } else if (proStatus == 4) {
+
+                //竣工完成
+                completion(1, 4);
+            }
+        }, 100)
+    }
+
+    /*function reload() {}*/
 
     //初始化工程管理页面
     $(function () {

@@ -299,11 +299,22 @@
         $('#tbody').html(ProjectMessage);
     }
 
-    //工程详情
+    //工程详情信息
     function details(id) {
-        window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toDetails.do?id=" + id;
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/details.do',
+            data: {'id': id},
+            async: false,
+            success: function (data) {
+                var mapObject = JSON.parse(data);
+                parent.projectDetailed(mapObject);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
     }
-
 
     //条件查询方法
     function getProMessageByCondition(page, parameter) {

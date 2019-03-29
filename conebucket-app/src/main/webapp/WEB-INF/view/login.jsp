@@ -14,6 +14,7 @@
     <![endif]-->
     <meta charset="UTF-8">
     <title>登录页面</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
     <link rel="stylesheet" href="../../static/css/login.css" type="text/css">
 </head>
 

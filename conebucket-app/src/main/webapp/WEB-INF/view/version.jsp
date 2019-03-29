@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <title>浏览器版本过低-请升级</title>
     <meta name="renderer" content="webkit">
-    <link rel="shortcut icon" href=""/>
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
     <style>
         * {
             margin: 0;

@@ -63,9 +63,9 @@
 </div>
 
 <%--模态窗（锥桶）--%>
-<div class="content"  id="addFrom" style="padding: 20px;background: #fff;display:none">
+<div class="content" id="addFrom" style="padding: 20px;background: #fff;display:none">
 
-    <form id="streetlightDiseaseForm"  >
+    <form id="streetlightDiseaseForm">
         <table class="table table-condensed table-bordered table-hover">
             <tbody>
             <tr>
@@ -93,6 +93,16 @@
     </form>
 </div>
 
+<%--模态窗（工程详情）--%>
+<div id="projectDetailed" style="display:none">
+    <div class="content">
+        <table class="table table-condensed table-bordered table-hover"
+               style="text-align: center;font-size: 13px;margin: 0">
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 
 
@@ -101,5 +111,7 @@
 <!-- bootstrap JS-->
 <script src="../../static/js/bootstrap.min.js"></script>
 <script src="../../static/js/main.js"></script>
-<script src="../../../static/plugin/layer/layer.js"></script>
+<script src="../../static/plugin/layer/layer.js"></script>
+<%--引入腾讯地图--%>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 </html>

@@ -284,10 +284,29 @@ public class ProjectMessageController {
                               @RequestParam("proSchedule") String proSchedule,
                               @RequestParam("proType") String proType,
                               @RequestParam("proStatus") String proStatus) {
+        HashMap<String, Object> map = new HashMap<>(16);
         PageHelper.startPage(page, 8);
         List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
-        return JsonHelper.toJSONString(pageInfo);
+
+        //流程节点数量
+        //未上报数量
+        int notReported = projectMessageService.count(0);
+        map.put("notReported", notReported);
+        //未审批数量
+        int industryApprovalNumber = activiti.getTaskNumber("industryApproval");
+        map.put("industryApprovalNumber", industryApprovalNumber);
+        //未确认数量
+        int policeConfirmationNumber = activiti.getTaskNumber("policeConfirmation");
+        map.put("policeConfirmationNumber", policeConfirmationNumber);
+        //工程实施数量
+        int projectImplementNumber = activiti.getTaskNumber("projectImplementation");
+        map.put("projectImplementNumber", projectImplementNumber);
+        //已完成数量
+        List<HistoricProcessInstance> completed = activiti.queryHistoricProcessInstance();
+        map.put("completed", completed.size());
+        map.put("pageInfo", pageInfo);
+        return JsonHelper.toJSONString(map);
     }
 
     /**
@@ -328,20 +347,42 @@ public class ProjectMessageController {
                                     @RequestParam("proStatus") String proStatus) {
 
         List<Integer> list = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>(16);
+        HashMap<String, String> hashMap = new HashMap<>(16);
+        HashMap<String, Object> map = new HashMap<>(16);
+
+        //流程节点数量
+        //未上报数量
+        int notReported = projectMessageService.count(0);
+        map.put("notReported", notReported);
+        //未审批数量
+        int industryApprovalNumber = activiti.getTaskNumber("industryApproval");
+        map.put("industryApprovalNumber", industryApprovalNumber);
+        //未确认数量
+        int policeConfirmationNumber = activiti.getTaskNumber("policeConfirmation");
+        map.put("policeConfirmationNumber", policeConfirmationNumber);
+        //工程实施数量
+        int projectImplementNumber = activiti.getTaskNumber("projectImplementation");
+        map.put("projectImplementNumber", projectImplementNumber);
+        //已完成数量
+        List<HistoricProcessInstance> completed = activiti.queryHistoricProcessInstance();
+        map.put("completed", completed.size());
 
         List<Task> taskList = activiti.queryTask(assignee);
+        if (taskList.size() < 1) {
+            map.put("pageInfo", "");
+            return JsonHelper.toJSONString(map);
+        }
         for (Task task : taskList) {
             //根据taskId查询businessKey
             String businessKey = activiti.queryBusinessKey(task.getProcessInstanceId());
             list.add(Integer.valueOf(businessKey));
-            map.put(task.getId(), businessKey);
+            hashMap.put(task.getId(), businessKey);
         }
 
         PageHelper.startPage(page, 8);
         List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
             for (ProjectMessage projectMessage : projectMessageList) {
                 if (projectMessage.getId().equals(Integer.valueOf(entry.getValue()))) {
                     projectMessage.setTaskId(entry.getKey());
@@ -350,7 +391,8 @@ public class ProjectMessageController {
         }
 
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
-        return JsonHelper.toJSONString(pageInfo);
+        map.put("pageInfo", pageInfo);
+        return JsonHelper.toJSONString(map);
     }
 
     /**
@@ -368,6 +410,7 @@ public class ProjectMessageController {
                              @RequestParam("proStatus") String proStatus) {
 
         List<Integer> list = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>(16);
         //查询已审批完成的工程
         List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
         for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
@@ -378,7 +421,24 @@ public class ProjectMessageController {
         //根据业务主键查询已完成工程
         List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
         PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
-        return JsonHelper.toJSONString(pageInfo);
+        //流程节点数量
+        //未上报数量
+        int notReported = projectMessageService.count(0);
+        map.put("notReported", notReported);
+        //未审批数量
+        int industryApprovalNumber = activiti.getTaskNumber("industryApproval");
+        map.put("industryApprovalNumber", industryApprovalNumber);
+        //未确认数量
+        int policeConfirmationNumber = activiti.getTaskNumber("policeConfirmation");
+        map.put("policeConfirmationNumber", policeConfirmationNumber);
+        //工程实施数量
+        int projectImplementNumber = activiti.getTaskNumber("projectImplementation");
+        map.put("projectImplementNumber", projectImplementNumber);
+        //已完成数量
+        List<HistoricProcessInstance> completed = activiti.queryHistoricProcessInstance();
+        map.put("completed", completed.size());
+        map.put("pageInfo", pageInfo);
+        return JsonHelper.toJSONString(map);
     }
 
     /**
