@@ -49,4 +49,14 @@ public class ConeBucketManagerServiceImp implements ConeBucketManagerServiceInf 
     public List<Map<String, Object>> getConeBucketByCondition(String cbn, String cbt) {
         return coneBucketManagerDao.selectConeBucketByCondition(cbn,cbt);
     }
+
+    @Override
+    public Map<String, String> getGoogleConeBucketById(String deviceId) {
+        return coneBucketManagerDao.selectGoogleConeBucketById(deviceId);
+    }
+
+    @Override
+    public List<Map<String, String>> getConeBucketLogByConeBucketNum(String coneBucketNum) {
+        return coneBucketManagerDao.selectConeBucketLogByConeBucketNum(coneBucketNum);
+    }
 }

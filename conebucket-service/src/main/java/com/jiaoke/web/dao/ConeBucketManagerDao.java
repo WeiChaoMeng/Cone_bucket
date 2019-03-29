@@ -30,4 +30,8 @@ public interface ConeBucketManagerDao {
     int delectConeBucketById(@Param("idArray") String[] idArray);
 
     List<Map<String, Object>> selectConeBucketByCondition(@Param("cbn")String cbn, @Param("cbt")String cbt);
+
+    Map<String, String> selectGoogleConeBucketById(@Param("deviceId")String deviceId);
+
+    List<Map<String, String>> selectConeBucketLogByConeBucketNum(@Param("coneBucketNum") String coneBucketNum);
 }

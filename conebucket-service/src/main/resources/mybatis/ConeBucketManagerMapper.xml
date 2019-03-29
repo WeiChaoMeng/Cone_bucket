@@ -59,4 +59,33 @@
         </choose>
 
     </select>
+
+    <select id="selectGoogleConeBucketById" resultType="java.util.Map">
+        SELECT
+            cone_bucket_type,
+            cone_bucket_num,
+            create_time
+        FROM
+            cone_bucket_message
+        WHERE
+            cone_bucket_num = #{deviceId};
+    </select>
+
+    <select id="selectConeBucketLogByConeBucketNum" resultType="java.util.Map">
+        SELECT
+            cbl.cone_bucket_num,
+            cbt.type_name,
+            cbl.cone_bucket_status,
+            cbl.road_name,
+            cbl.start_time,
+            cbl.end_time
+        FROM
+            cone_bucket_log AS cbl
+        INNER JOIN
+            cone_bucket_type AS cbt
+        ON
+            cbl.cone_bucket_type = cbt.id
+        WHERE
+            cbl.cone_bucket_num = #{coneBucketNum}
+    </select>
 </mapper>

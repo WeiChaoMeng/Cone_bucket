@@ -38,4 +38,9 @@ public class SyetemLogImpl implements SyetemLogInf {
     public int addConeBucketTime(String deviceId, String s, String eventDesc, String locRoadName, String startDataTime, String endDataTime) {
         return syetemLogDao.insertConeBucketTime(deviceId,s,eventDesc,locRoadName,startDataTime,endDataTime);
     }
+
+    @Override
+    public void editConeBucketBydeviceId(String id, String endTime) {
+        syetemLogDao.updataConeBucketBydeviceId(id,endTime);
+    }
 }

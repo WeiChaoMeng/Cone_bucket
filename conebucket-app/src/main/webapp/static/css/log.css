@@ -26,12 +26,6 @@ html, body {
     padding: 0
 }
 
-.query-criteria {
-    height: 16%;
-    margin: 0;
-    border: 0;
-}
-
 .panel-heading {
     font-size: 14px
 }
@@ -40,7 +34,7 @@ html, body {
     width: 100%;
     background: #fff;
     border: 1px solid #ddd;
-    height: 83%;
+    height: 100%;
 }
 
 .table-style-padding {

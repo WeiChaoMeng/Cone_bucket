@@ -109,7 +109,7 @@ function engineeringLog(o) {
 //锥桶日志
 function coneBucketLog(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "coneBucketLog.do");
+    $('#inlineFrame').attr("src", "getAllConeBucketLog.do");
 }
 
 //预警日志

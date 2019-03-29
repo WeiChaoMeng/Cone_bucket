@@ -114,11 +114,11 @@
       </array>
     </property>
   </bean>
-
-  <bean id="Taskaa" class="com.jiaoke.logcontrol.ConeBucketLog" />
-  <task:scheduled-tasks>
-    <task:scheduled ref="Taskaa" method="addConeBucketLog" cron="5 * *  * * ? " />
-  </task:scheduled-tasks>
+  <!-- 如果注解与bean都配置，那么定时任务会执行两次，所以如果使用只能配置其中之一 -->
+  <!--<bean id="Taskaa" class="com.jiaoke.logcontrol.ConeBucketLog" />-->
+  <!--<task:scheduled-tasks>-->
+    <!--<task:scheduled ref="Taskaa" method="addGoogleConeBucketLog" cron="50 * *  * * ? " />-->
+  <!--</task:scheduled-tasks>-->
   <!--定时任务注解-->
   <task:annotation-driven/>
 

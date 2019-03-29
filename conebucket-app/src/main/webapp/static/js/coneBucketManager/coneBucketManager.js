@@ -35,7 +35,7 @@ function getAllConeBucket() {
                         "                        <td style=\" text-align:center;\" >" + type_name+"</td>\n" +
                         "                        <td style=\" text-align:center;\" >" + create_time+"</td>\n" +
                         "                        <td style=\"text-align: center; width: 110px;padding: 0;line-height: 50px; \">\n" +
-                        "                            <button onclick='getConeBucketMessage(this.id)' id="+ id +" style=\" text-align:right;\" class=\"btn btn-primary btn-sm\">详细\n" +
+                        "                            <button onclick='getConeBucketlog(this.id)' id="+ cone_bucket_num +" style=\" text-align:right;\" class=\"btn btn-primary btn-sm\">详细\n" +
                         "                            </button>\n" +
                         "                        </td>\n" +
                         "                    </tr>";
@@ -157,7 +157,7 @@ function getConeBucketByCondition() {
                         "                        <td style=\" text-align:center;\" >" + type_name+"</td>\n" +
                         "                        <td style=\" text-align:center;\" >" + create_time+"</td>\n" +
                         "                        <td style=\"text-align: center; width: 110px;padding: 0;line-height: 50px; \">\n" +
-                        "                            <button onclick='getConeBucketMessage(this.id)' id="+ id +" style=\" text-align:right;\" class=\"btn btn-primary btn-sm\">详细\n" +
+                        "                            <button onclick='getConeBucketMessage(this.id)' id="+ cone_bucket_num +" style=\" text-align:right;\" class=\"btn btn-primary btn-sm\">详细\n" +
                         "                            </button>\n" +
                         "                        </td>\n" +
                         "                    </tr>";
@@ -175,6 +175,18 @@ function getConeBucketByCondition() {
         }
     });
 
+}
+
+function  getConeBucketlog(cone_bucket_num){
+    layer.open({
+        type: 2,
+        title: '日志信息',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['893px', '500px'],
+        content: localStorage.getItem("ajaxUrl") + '/getConeBucketLog.do?coneBucketNum=' + cone_bucket_num
+    });
 }
 
 

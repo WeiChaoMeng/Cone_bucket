@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.web.dao;
 
+import com.hazelcast.spi.annotation.PrivateApi;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
@@ -23,5 +24,7 @@ public interface SyetemLogDao {
 
     Map<String, String> selectConeBucketLastTimeBydeviceId(@Param("deviceId") String deviceId);
 
-    int insertConeBucketTime(String deviceId, String s, String eventDesc, String locRoadName, String startDataTime, String endDataTime);
+    int insertConeBucketTime(@Param("deviceId") String deviceId, @Param("type") String type,@Param("eventDesc") String eventDesc,@Param("locRoadName") String locRoadName,@Param("startDataTime") String startDataTime,@Param("endDataTime") String endDataTime);
+
+    void updataConeBucketBydeviceId(@Param("id") String id,@Param("endTime") String endTime);
 }

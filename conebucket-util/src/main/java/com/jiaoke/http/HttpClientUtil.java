@@ -19,10 +19,9 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -124,19 +123,27 @@ public class HttpClientUtil {
 
         if(str.equals(arrayName)){
 
-            //展示数据
+                //测试展示数据
                 Map<String,Object> map = new HashMap<>();
 
                 map.put("id","1");
-                map.put("lastLocation","116.324615,39.935276");
-                map.put("roadName","Test1");
-                map.put("id","2");
-                map.put("lastLocation","116.352881,39.928717");
-                map.put("roadName","Test2");
-                map.put("id","3");
-                map.put("lastLocation","116.360423,39.918734");
-                map.put("roadName","Test3");
+                map.put("lastLocation","116.3101959229,39.9234289527");
+                map.put("roadName","西三环修复工程");
+
+                Map<String,Object> map2 = new HashMap<>();
+                map2.put("id","2");
+                map2.put("lastLocation","116.3102227449,39.9228694481");
+                map2.put("roadName","西三环修复工程");
+                Map<String,Object> map3 = new HashMap<>();
+                map3.put("id","3");
+                map3.put("lastLocation","116.4897751808,39.9223428514");
+                map3.put("roadName","东四环修复工程");
+                Map<String,Object> map4 = new HashMap<>();
+                map4.put("id","4");
+                map4.put("lastLocation","116.4897322655,39.9205820144");
+                map4.put("roadName","东四环修复工程");
                 list.add(map);
+                list.add(map2);
 //            for (int i = 0; i < online.size();i++){
 //
 //                Map<String,Object> map = new HashMap<>();
@@ -194,5 +201,22 @@ public class HttpClientUtil {
         return JSON.toJSONString(map);
 
     }
-
+    /**
+     * 时间戳转date字符串
+     * @param time
+     * @return
+     */
+    public static String timeStamp2Date(String time) {
+        Long timeLong = Long.parseLong(time);
+        //要转换的时间格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date;
+        try {
+            date = sdf.parse(sdf.format(timeLong));
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

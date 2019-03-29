@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.web.dao.SyetemLogDao">
+
     <select id="selectConeBucketLastTimeBydeviceId" resultType="java.util.Map">
         SELECT
+            id,
             cone_bucket_num,
             cone_bucket_type,
             cone_bucket_status,
@@ -15,7 +17,34 @@
         ORDER BY id desc
         LIMIT 1
     </select>
-    <insert id="addConeBucketTime" >
+
+    <insert id="insertConeBucketTime"  >
+        <selectKey resultType="_long" keyProperty="id" order="AFTER">
+            select @@IDENTITY as id
+        </selectKey>
+
+                INSERT INTO cone_bucket_log (
+                    cone_bucket_num,
+                    cone_bucket_type,
+                    cone_bucket_status,
+                    road_name,
+                    start_time,
+                    end_time
+                    )
+                VALUES
+                    (
+                    #{deviceId},
+                    #{type},
+                    #{eventDesc},
+                    #{locRoadName},
+                    #{startDataTime},
+                    #{endDataTime}
+                    )
 
     </insert>
+
+    <update id="updataConeBucketBydeviceId" parameterType="java.lang.String" >
+        UPDATE cone_bucket_log
+        SET end_time = #{endTime} WHERE id = #{id}
+    </update>
 </mapper>
