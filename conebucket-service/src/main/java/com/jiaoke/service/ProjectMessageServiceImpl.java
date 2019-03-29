@@ -13,7 +13,6 @@ import com.jiaoke.web.dao.ConeBucketMessageMapper;
 import com.jiaoke.web.dao.ProjectConeBucketMapper;
 import com.jiaoke.web.dao.ProjectLocationMapper;
 import com.jiaoke.web.dao.ProjectMessageMapper;
-import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,23 +57,24 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
             return 0;
         }
 
+        if (!"".equals(projectMessage.getProScope())) {
+            //插入工程经纬度表
+            List<ProjectLocation> list = new ArrayList<ProjectLocation>();
+            JSONArray jsonArray = JSON.parseArray(projectMessage.getProScope());
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JSONObject parseObject = JSON.parseObject(jsonArray.get(i).toString());
 
-        //插入工程经纬度表
-        List<ProjectLocation> list = new ArrayList<ProjectLocation>();
-        JSONArray jsonArray = JSON.parseArray(projectMessage.getProScope());
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject parseObject = JSON.parseObject(jsonArray.get(i).toString());
+                ProjectLocation projectLocation = new ProjectLocation();
+                projectLocation.setProId(projectMessage.getId());
+                projectLocation.setLatitude(parseObject.getString("lat"));
+                projectLocation.setLongitude(parseObject.getString("lng"));
+                list.add(projectLocation);
+            }
 
-            ProjectLocation projectLocation = new ProjectLocation();
-            projectLocation.setProId(projectMessage.getId());
-            projectLocation.setLatitude(parseObject.getString("lat"));
-            projectLocation.setLongitude(parseObject.getString("lng"));
-            list.add(projectLocation);
-        }
-
-        int projectLocationInsert = projectLocationMapper.insertByBatch(list);
-        if (projectLocationInsert < 0) {
-            return 0;
+            int projectLocationInsert = projectLocationMapper.insertByBatch(list);
+            if (projectLocationInsert < 0) {
+                return 0;
+            }
         }
 
         //插入工程锥桶信息表，2表示有锥桶
@@ -225,11 +225,15 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     }
 
     @Override
-    public ProjectMessage selectByBusinessKey(Integer id) {
-        ProjectMessage projectMessage = projectMessageMapper.selectByBusinessKey(id);
-        projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
-        projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
-        return projectMessage;
+    public List<ProjectMessage> selectByBusinessKey(List<Integer> ids, String proName, String proSchedule, String proType, String proStatus) {
+        List<ProjectMessage> projectMessageList = projectMessageMapper.selectByBusinessKey(ids, proName, proSchedule, proType, proStatus);
+        if (projectMessageList != null) {
+            for (ProjectMessage projectMessage : projectMessageList) {
+                projectMessage.setProStartTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProStartTime()));
+                projectMessage.setProEndTimeStr(DateUtil.dateConvertYYYYMMDD(projectMessage.getProEndTime()));
+            }
+        }
+        return projectMessageList;
     }
 
     @Override

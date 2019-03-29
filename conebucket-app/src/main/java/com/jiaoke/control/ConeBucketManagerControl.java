@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.jiaoke.serviceInf.ConeBucketManagerServiceInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -131,5 +132,15 @@ public class ConeBucketManagerControl {
         }
 
         return JSON.toJSONString(resMap);
+    }
+
+    @RequestMapping("/getConeBucketLog.do")
+    public String getConeLog(String coneBucketNum, Model model){
+
+        List<Map<String,String>> list = coneBucketManagerServiceInf.getConeBucketLogByConeBucketNum(coneBucketNum);
+
+        model.addAttribute("logList",list);
+
+        return "bucket/cone_bucket_log";
     }
 }

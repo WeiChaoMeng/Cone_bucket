@@ -1,15 +1,11 @@
-* {
+html, body {
     font-size: 13px;
     padding: 0;
     margin: 0;
     border: 0;
     font-family: '微软雅黑';
-}
-
-body {
     background: #e7e8eb;
-    width: 80%;
-    margin: 0 auto;
+    height: 100%;
 }
 
 .table {
@@ -38,11 +34,12 @@ body {
     width: 100%;
     background: #fff;
     border: 1px solid #ddd;
+    height: 100%;
 }
 
 .table-style-padding {
-    padding: 10px;
-    min-height: 500px
+    padding: 2%;
+    height: 100%;
 }
 
 .fixed-table-toolbar {
@@ -54,7 +51,7 @@ body {
 }
 
 .search-btn {
-    margin: 0 20px 0 0;
+    margin-right: 35px;
     float: right
 }
 

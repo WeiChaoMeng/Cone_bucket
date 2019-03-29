@@ -57,7 +57,7 @@
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
 
-                        <button id="btn_delete" type="button" class="btn btn-default" onclick="remove()">
+                        <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
 
@@ -318,7 +318,7 @@
     }
 
     //删除
-    function remove() {
+    function del() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
             alert("请选择一条数据！");

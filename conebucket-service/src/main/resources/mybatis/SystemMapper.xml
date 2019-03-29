@@ -4,6 +4,7 @@
 
     <select id="selectConeBucketLastTimeBydeviceId" resultType="java.util.Map">
         SELECT
+            id,
             cone_bucket_num,
             cone_bucket_type,
             cone_bucket_status,
@@ -17,7 +18,7 @@
         LIMIT 1
     </select>
 
-    <insert id="insertConeBucketTime" parameterType="java.lang.String" >
+    <insert id="insertConeBucketTime"  >
         <selectKey resultType="_long" keyProperty="id" order="AFTER">
             select @@IDENTITY as id
         </selectKey>
@@ -42,7 +43,7 @@
 
     </insert>
 
-    <update id="editConeBucketBydeviceId" >
+    <update id="updataConeBucketBydeviceId" parameterType="java.lang.String" >
         UPDATE cone_bucket_log
         SET end_time = #{endTime} WHERE id = #{id}
     </update>

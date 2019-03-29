@@ -30,4 +30,6 @@ public interface ConeBucketManagerServiceInf {
     List<Map<String, Object>> getConeBucketByCondition(String cbn, String cbt);
 
     Map<String, String> getGoogleConeBucketById(String deviceId);
+
+    List<Map<String, String>> getConeBucketLogByConeBucketNum(String coneBucketNum);
 }

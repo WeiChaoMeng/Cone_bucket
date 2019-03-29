@@ -1,12 +1,30 @@
-html,body{
+html, body {
     height: 100%;
+    min-width: 1200px;
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 13px;
-    background: #fff;
+    background: #e0e0e0;
     font-family: '微软雅黑';
-    overflow: hidden;
+}
+
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
 }
 
 .header-top-area {
@@ -14,6 +32,7 @@ html,body{
     width: 100%;
     height: 13%;
     margin-bottom: 1%;
+    min-width: 1200px;
 }
 
 .row {
@@ -83,14 +102,6 @@ html,body{
     color: #00acee;
 }
 
-body {
-    background-color: #e7e8eb;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 13px;
-}
-
 .secondary-menu-system {
     width: 25%;
     position: relative;
@@ -148,5 +159,6 @@ body {
     width: 100%;
     margin: 0 auto;
     height: 85%;
+    min-width: 1200px;
 }
 

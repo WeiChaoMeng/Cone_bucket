@@ -21,421 +21,371 @@
     <link rel="stylesheet" href="../../../static/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../../static/css/project.css">
     <link rel="stylesheet" type="text/css" href="../../../static/plugin/paging/htmleaf-demo.css">
-    <style>
-        .but-color {
-            fill: #ff7d2f;
-        }
-
-        .form-control {
-            border-radius: 0;
-            width: 100%;
-            display: inline-block;
-        }
-
-        .title-tr th {
-            padding: 8px;
-            line-height: 24px;
-            vertical-align: top;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            text-align: center;
-        }
-
-        /*overflow滚动条样式*/
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #E5E8EC;
-            background-clip: padding-box;
-            border: 1px solid #E6E5E6;
-            min-height: 28px;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-track-piece {
-            background-color: #fff;
-        }
-    </style>
 </head>
 
 <body class="nav-md">
-<div class="container body" style="margin: 0;padding: 0;width: 100%">
-    <div class="main_container">
-        <!-- page content -->
-        <div class="right_col" style="margin: 0;padding: 0;height: 99%" role="main">
+<div class="main_container">
 
-            <!--流程图-->
-            <div class="flow" style="float: left;width: 20%;margin-right: 2%;">
-                <div class="" id="all_LC" style="margin: 0;background: #fff">
-                    <!---------------->
-                    <div id="myflow">
-                        <svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="2023.5" height="100%"
-                             style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);width: 100%">
+    <!--流程图-->
+    <div class="flow">
+        <div class="flow-content">
+            <svg id="svg" class="flow-svg" xmlns="http://www.w3.org/2000/svg" version="1.1">
 
-                            <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                <linearGradient id="r-071577f81fc6441ea882f877fea2a77e" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                          stop-opacity="1"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-a3859e75978b45db9fc0865483ada749" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-f7d2586300d24737bd1d5605a6fd09d3" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#f9ac72"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#d97f38"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#f9ac72"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-51d84c516dba443da3220ac969411c41" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-bc6f349ea00b4837ae906284eb32feae" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-ba0ca264cb2643fa92e60eee13f4641b" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-4b17320cec264f688332b87a826d9aff" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                                <linearGradient id="r-44ee27b9bee64da982b18cb712e8c95e" x1="0.2493280028431808" y1="0"
-                                                x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <stop offset="0%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="50%" stop-color="#4992e7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                    <stop offset="100%" stop-color="#81b7f7"
-                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
-                                </linearGradient>
-                            </defs>
+                <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                    <linearGradient id="r-071577f81fc6441ea882f877fea2a77e" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                              stop-opacity="1"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-a3859e75978b45db9fc0865483ada749" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-f7d2586300d24737bd1d5605a6fd09d3" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#f9ac72"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#d97f38"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#f9ac72"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-51d84c516dba443da3220ac969411c41" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-bc6f349ea00b4837ae906284eb32feae" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-ba0ca264cb2643fa92e60eee13f4641b" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-4b17320cec264f688332b87a826d9aff" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                    <linearGradient id="r-44ee27b9bee64da982b18cb712e8c95e" x1="0.2493280028431808" y1="0"
+                                    x2="0" y2="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                        <stop offset="0%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="50%" stop-color="#4992e7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                        <stop offset="100%" stop-color="#81b7f7"
+                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></stop>
+                    </linearGradient>
+                </defs>
 
-                            <rect onclick="rectButton(1)" x="90" y="20" width="100" height="50" r="10"
-                                  rx="10" ry="10"
-                                  fill="#ff7d2f" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="1"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
-                            ></rect>
+                <rect onclick="rectButton(0)" x="90" y="20" width="100" height="50" r="10"
+                      rx="10" ry="10"
+                      fill="#ff7d2f" stroke="#ffffff" opacity="1"
+                      fill-opacity="1" stroke-width="1" id="0"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
+                ></rect>
 
-                            <text x="140" y="50" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
-                                  fill="#000000"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
-                                  font-size="13px">
-                                <tspan id="goRepair" onclick="rectButton(1)"
-                                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">施工上报(${notReported})条
-                                </tspan>
-                            </text>
+                <text x="140" y="50" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                      fill="#000000"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
+                      font-size="13px">
+                    <tspan id="constructionSvg" onclick="rectButton(0)"
+                           style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">施工上报(${notReported})条
+                    </tspan>
+                </text>
 
-                            <rect x="90" y="150" width="100" height="50" r="10" rx="10" ry="10"
-                                  fill="#3eaefd" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="2" onclick="rectButton(2)"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
-                            ></rect>
+                <rect x="90" y="150" width="100" height="50" r="10" rx="10" ry="10"
+                      fill="#3eaefd" stroke="#ffffff" opacity="1"
+                      fill-opacity="1" stroke-width="1" id="1" onclick="rectButton(1)"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
+                ></rect>
 
-                            <text x="140" y="180" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
-                                  fill="#000000"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
-                                  font-size="13px">
-                                <tspan id="received" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(2)">行业审批(${industryApprovalNumber})条
-                                </tspan>
-                            </text>
+                <text x="140" y="180" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                      fill="#000000"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
+                      font-size="13px">
+                    <tspan id="industrySvg" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                           onclick="rectButton(1)">行业审批(${industryApprovalNumber})条
+                    </tspan>
+                </text>
 
-                            <rect x="90" y="280" width="100" height="50" r="10" rx="10" ry="10"
-                                  fill="#3eaefd" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="3" onclick="rectButton(3)"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
-                            ></rect>
+                <rect x="90" y="280" width="100" height="50" r="10" rx="10" ry="10"
+                      fill="#3eaefd" stroke="#ffffff" opacity="1"
+                      fill-opacity="1" stroke-width="1" id="2" onclick="rectButton(2)"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
+                ></rect>
 
-                            <text x="140" y="310" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
-                                  fill="#000000"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
-                                  font-size="13px">
-                                <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(3)">交警确认(${policeConfirmationNumber})条
-                                </tspan>
-                            </text>
+                <text x="140" y="310" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                      fill="#000000"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
+                      font-size="13px">
+                    <tspan id="policeSvg" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                           onclick="rectButton(2)">交警确认(${policeConfirmationNumber})条
+                    </tspan>
+                </text>
 
-                            <rect x="90" y="410" width="100" height="50" r="10" rx="10" ry="10"
-                                  fill="#3eaefd" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="4" onclick="rectButton(4)"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
-                            ></rect>
+                <rect x="90" y="410" width="100" height="50" r="10" rx="10" ry="10"
+                      fill="#3eaefd" stroke="#ffffff" opacity="1"
+                      fill-opacity="1" stroke-width="1" id="3" onclick="rectButton(3)"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
+                ></rect>
 
-                            <text x="140" y="440" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
-                                  fill="#000000"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
-                                  font-size="13px">
-                                <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(4)">工程实施(${projectImplementNumber})条
-                                </tspan>
-                            </text>
+                <text x="140" y="440" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                      fill="#000000"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
+                      font-size="13px">
+                    <tspan id="implementationSvg" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                           onclick="rectButton(3)">工程实施(${projectImplementNumber})条
+                    </tspan>
+                </text>
 
-                            <rect x="90" y="540" width="100" height="50" r="10" rx="10" ry="10"
-                                  fill="#3eaefd" stroke="#ffffff" opacity="1"
-                                  fill-opacity="1" stroke-width="1" id="5" onclick="rectButton(5)"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
-                            ></rect>
+                <rect x="90" y="540" width="100" height="50" r="10" rx="10" ry="10"
+                      fill="#3eaefd" stroke="#ffffff" opacity="1"
+                      fill-opacity="1" stroke-width="1" id="4" onclick="rectButton(4)"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
+                ></rect>
 
-                            <text x="140" y="570" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
-                                  fill="#000000"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
-                                  font-size="13px">
-                                <tspan id="repair" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
-                                       onclick="rectButton(5)">竣工完成(${completed})条
-                                </tspan>
-                            </text>
+                <text x="140" y="570" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                      fill="#000000"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
+                      font-size="13px">
+                    <tspan id="completionSvg" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+                           onclick="rectButton(4)">竣工完成(${completed})条
+                    </tspan>
+                </text>
 
-                            <path fill="none" stroke="#808080" d="M140,75L140,125L140,145" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
-                            <path fill="#808080" stroke="#808080"
-                                  d="M140,145L143.46410161513776,139L136.53589838486224,139Z" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="none" stroke="#808080" d="M140,75L140,125L140,145" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="#808080" stroke="#808080"
+                      d="M140,145L143.46410161513776,139L136.53589838486224,139Z" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                            <path fill="none" stroke="#808080" d="M140,270L140,270L140,205" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
-                            <path fill="#808080" stroke="#808080"
-                                  d="M140,275L143.46410161513776,269L136.53589838486224,269Z" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="none" stroke="#808080" d="M140,270L140,270L140,205" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="#808080" stroke="#808080"
+                      d="M140,275L143.46410161513776,269L136.53589838486224,269Z" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                            <path fill="none" stroke="#808080" d="M140,395L140,400L140,335" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
-                            <path fill="#808080" stroke="#808080"
-                                  d="M140,405L143.46410161513776,399L136.53589838486224,399Z" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="none" stroke="#808080" d="M140,395L140,400L140,335" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="#808080" stroke="#808080"
+                      d="M140,405L143.46410161513776,399L136.53589838486224,399Z" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                            <path fill="none" stroke="#808080" d="M140,520L140,530L140,465" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
-                            <path fill="#808080" stroke="#808080"
-                                  d="M140,535L143.46410161513776,529L136.53589838486224,529Z" stroke-width="2"
-                                  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
-                        </svg>
-                    </div>
-                    <!---------------->
-                </div>
-            </div>
-
-            <!--表单-->
-            <div class=""
-                 style="float:left;width:78%; overflow-y: auto;overflow-x: hidden">
-
-                <div class="panel panel-default query-criteria">
-                    <div class="panel-heading">查询条件</div>
-
-                    <div class="manage-query-field">
-                        <span class="condition-name">工程名称:</span>
-                        <div class="manage-condition-input">
-                            <input type="text" class="form-control" id="proName" autocomplete="off">
-                        </div>
-
-                        <span class="condition-name">工程类型:</span>
-                        <div class="manage-condition-select">
-                            <select class="form-control" id="proType">
-                                <option value="">--请选择--</option>
-                                <c:forEach items="${projectTypeList}" var="projectType">
-                                    <option value="${projectType.id}">${projectType.typeName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <span class="condition-name">工程状态:</span>
-                        <div class="manage-condition-select">
-                            <select class="form-control" id="proStatus">
-                                <option value="">--请选择--</option>
-                                <c:forEach items="${projectStatusList}" var="projectStatus">
-                                    <option value="${projectStatus.id}">${projectStatus.statusName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <span class="condition-name">工程进度:</span>
-                        <div class="manage-condition-select">
-                            <select class="form-control" id="proSchedule">
-                                <option value="">--请选择--</option>
-                                <c:forEach items="${projectScheduleList}" var="projectSchedule">
-                                    <option value="${projectSchedule.id}">${projectSchedule.scheduleName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <div class="manage-condition-btn">
-                            <button type="button" id="btn_query" onclick="getProMessageByCondition(1)"
-                                    class="btn btn-primary btn-sm">查询
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!--table-->
-                <div class="manage-table-style">
-                    <div class="table-style-padding">
-
-                        <div class="fixed-table-toolbar">
-                            <div class="bs-bars pull-left">
-                                <div id="toolbar" class="btn-group">
-
-                                    <button id="btn_add" type="button" class="btn btn-default" onclick="add()">
-                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                                    </button>
-
-                                    <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
-                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                                    </button>
-
-
-                                    <button id="btn_delete" type="button" class="btn btn-default" onclick="remove()">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                                    </button>
-
-                                </div>
-                            </div>
-                            <div class="columns columns-right btn-group pull-right">
-                                <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
-                                        onclick="reload()"
-                                        title="刷新"><i class="fa fa-refresh"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="x_content">
-
-                            <table id="tbodyTab" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th style="width: 5%;"><input type="checkbox"></th>
-                                    <th style="width: 5%;">序号</th>
-                                    <th style="width: 27%;">工程名称</th>
-                                    <th style="width: 10%;">工程类型</th>
-                                    <th style="width: 15%;">工程编号</th>
-                                    <th style="width: 10%;">开始时间</th>
-                                    <th style="width: 10%;">结束时间</th>
-                                    <th style="width: 8%;">工程状态</th>
-                                    <th style="width: 10%;">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td scope="row">1</td>
-                                    <td>892管道工程</td>
-                                    <td>大中修工程</td>
-                                    <td>2018031101</td>
-                                    <td>2019-03-12</td>
-                                    <td>2019-06-12</td>
-                                    <td>未上报</td>
-                                    <td>未进场</td>
-                                    <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                                        </button>
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">上报
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-
-                            <%--实施--%>
-                            <table id="implementTab" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th style="width: 5%;"><input type="checkbox"></th>
-                                    <th style="width: 5%;">序号</th>
-                                    <th style="width: 21%;">工程名称</th>
-                                    <th style="width: 8%;">工程类型</th>
-                                    <th style="width: 15%;">工程编号</th>
-                                    <th style="width: 10%;">开始时间</th>
-                                    <th style="width: 10%;">结束时间</th>
-                                    <th style="width: 8%;">工程状态</th>
-                                    <th style="width: 8%;">工程进度</th>
-                                    <th style="width: 10%;">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody id="implement">
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td scope="row">1</td>
-                                    <td>892管道工程</td>
-                                    <td>大中修工程</td>
-                                    <td>2018031101</td>
-                                    <td>2019-03-12</td>
-                                    <td>2019-06-12</td>
-                                    <td>未上报</td>
-                                    <td>未进场</td>
-                                    <td>施工中</td>
-                                    <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
-                                        </button>
-                                        <button style=" text-align:right;" class="btn btn-primary btn-sm">上报
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            <%--分页--%>
-                            <div id="paging" class="paging-table-div">
-                                <div class="">
-                                    <div class="" style="float: right;">
-                                        <ul class="pagination" id="pagination" style="margin: 0"></ul>
-                                        <input type="hidden" id="PageCount" runat="server"/>
-                                        <input type="hidden" id="PageSize" runat="server"/>
-                                        <input type="hidden" id="countindex" runat="server"/>
-                                        <!--设置最多显示的页码数 可以手动设置 默认为10-->
-                                        <input type="hidden" id="visiblePages" runat="server" value="10"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                <path fill="none" stroke="#808080" d="M140,520L140,530L140,465" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+                <path fill="#808080" stroke="#808080"
+                      d="M140,535L143.46410161513776,529L136.53589838486224,529Z" stroke-width="2"
+                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
+            </svg>
         </div>
-        <!-- /page content -->
     </div>
+
+    <!--表单-->
+    <div class="table-content-style">
+
+        <div class="panel panel-default query-criteria">
+            <div class="panel-heading">查询条件</div>
+
+            <div class="manage-query-field">
+                <span class="condition-name">工程名称:</span>
+                <div class="manage-condition-input">
+                    <input type="hidden" id="proStatus" value="0">
+                    <input type="text" class="form-control" id="proName" autocomplete="off">
+                </div>
+
+                <span class="condition-name">工程类型:</span>
+                <div class="manage-condition-select">
+                    <select class="form-control" id="proType">
+                        <option value="">--请选择--</option>
+                        <c:forEach items="${projectTypeList}" var="projectType">
+                            <option value="${projectType.id}">${projectType.typeName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <%--<span class="condition-name">工程状态:</span>
+                <div class="manage-condition-select">
+                    <select class="form-control" id="proStatus">
+                        <option value="">--请选择--</option>
+                        <c:forEach items="${projectStatusList}" var="projectStatus">
+                            <option value="${projectStatus.id}">${projectStatus.statusName}</option>
+                        </c:forEach>
+                    </select>
+                </div>--%>
+                <div id="proScheduleSelect">
+                    <span class="condition-name">工程进度:</span>
+                    <div class="manage-condition-select">
+                        <select class="form-control" id="proSchedule">
+                            <option value="">--请选择--</option>
+                            <c:forEach items="${projectScheduleList}" var="projectSchedule">
+                                <option value="${projectSchedule.id}">${projectSchedule.scheduleName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="manage-condition-btn">
+                    <button type="button" id="btn_query" onclick="getProMessageByCondition()"
+                            class="btn btn-primary btn-sm">查询
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!--table-->
+        <div class="manage-table-style">
+            <div class="table-style-padding">
+
+                <div class="fixed-table-toolbar">
+                    <div class="bs-bars pull-left">
+                        <div id="toolbar" class="btn-group">
+
+                            <button id="btn_add" type="button" class="btn btn-default" onclick="add()">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                            </button>
+
+                            <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                            </button>
+
+                            <button id="btn_delete" type="button" class="btn btn-default btn-delete" onclick="del()">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="columns columns-right btn-group pull-right">
+                        <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
+                                onclick="reload()"
+                                title="刷新"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+
+                <div class="x_content">
+
+                    <table id="tbodyTab" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 5%;"><input type="checkbox"></th>
+                            <th style="width: 5%;">序号</th>
+                            <th style="width: 27%;">工程名称</th>
+                            <th style="width: 10%;">工程类型</th>
+                            <th style="width: 15%;">工程编号</th>
+                            <th style="width: 10%;">开始时间</th>
+                            <th style="width: 10%;">结束时间</th>
+                            <th style="width: 8%;">工程状态</th>
+                            <th style="width: 10%;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td scope="row">1</td>
+                            <td>892管道工程</td>
+                            <td>大中修工程</td>
+                            <td>2018031101</td>
+                            <td>2019-03-12</td>
+                            <td>2019-06-12</td>
+                            <td>未上报</td>
+                            <td>未进场</td>
+                            <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
+                                <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
+                                </button>
+                                <button style=" text-align:right;" class="btn btn-primary btn-sm">上报
+                                </button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <%--实施--%>
+                    <table id="implementTab" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 5%;"><input type="checkbox"></th>
+                            <th style="width: 5%;">序号</th>
+                            <th style="width: 21%;">工程名称</th>
+                            <th style="width: 8%;">工程类型</th>
+                            <th style="width: 15%;">工程编号</th>
+                            <th style="width: 10%;">开始时间</th>
+                            <th style="width: 10%;">结束时间</th>
+                            <th style="width: 8%;">工程状态</th>
+                            <th style="width: 8%;">工程进度</th>
+                            <th style="width: 10%;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="implement">
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td scope="row">1</td>
+                            <td>892管道工程</td>
+                            <td>大中修工程</td>
+                            <td>2018031101</td>
+                            <td>2019-03-12</td>
+                            <td>2019-06-12</td>
+                            <td>未上报</td>
+                            <td>未进场</td>
+                            <td>施工中</td>
+                            <td style="text-align: center; width: 110px;padding: 0;line-height: 50px; ">
+                                <button style=" text-align:right;" class="btn btn-primary btn-sm">详细
+                                </button>
+                                <button style=" text-align:right;" class="btn btn-primary btn-sm">上报
+                                </button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <%--分页--%>
+                    <div id="paging" class="paging-table-div">
+                        <div class="">
+                            <div class="" style="float: right;">
+                                <ul class="pagination" id="pagination" style="margin: 0"></ul>
+                                <input type="hidden" id="PageCount" runat="server"/>
+                                <input type="hidden" id="PageSize" runat="server"/>
+                                <input type="hidden" id="countindex" runat="server"/>
+                                <!--设置最多显示的页码数 可以手动设置 默认为10-->
+                                <input type="hidden" id="visiblePages" runat="server" value="10"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 
@@ -454,19 +404,24 @@
         var page = 1;
         $("#svg rect").attr("fill", "#3eaefd");
         $('#' + parameter).attr("fill", "#ff7d2f");
-        if (parameter === 1) {
+        if (parameter === 0) {
+            $('#proStatus').val(parameter);
             //施工上报
             constructionReport(page, parameter);
-        } else if (parameter === 2) {
+        } else if (parameter === 1) {
+            $('#proStatus').val(parameter);
             //行业审批
             industryApproval(page, parameter);
-        } else if (parameter === 3) {
+        } else if (parameter === 2) {
+            $('#proStatus').val(parameter);
             //交警确认
             policeConfirm(page, parameter);
-        } else if (parameter === 4) {
+        } else if (parameter === 3) {
+            $('#proStatus').val(parameter);
             //工程实施
             projectImplement(page, parameter);
-        } else if (parameter === 5) {
+        } else if (parameter === 4) {
+            $('#proStatus').val(parameter);
             //竣工完成
             completion(page, parameter);
         }
@@ -475,10 +430,26 @@
     /*------------施工上报---------------*/
     //施工上报页面
     function constructionReport(page, parameter) {
+        //删除按钮
+        $('#btn_delete').css('display', 'block');
+        //工程进度筛选
+        $('#proScheduleSelect').css('display', 'none');
+
+        var proName = $("#proName").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
+        var proSchedule = '';
+
         $.ajax({
             type: "post",
             url: localStorage.getItem("ajaxUrl") + '/projectMessage/notReported.do',
-            data: {'page': page},
+            data: {
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
             async: false,
             success: function (data) {
                 $('#tbodyTab').show();
@@ -490,49 +461,45 @@
                 $("#PageSize").val("8");
 
                 //基本数据
-                parseResult(ProjectMessages);
+                //结果集
+                var ProjectMessageList = ProjectMessages.list;
+                //当前页
+                var pageNum = ProjectMessages.pageNum;
+                //插入tbody
+                var ProjectMessage = '';
+                if (ProjectMessageList.length === 0) {
+                    ProjectMessage += '<tr>';
+                    ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
+                    ProjectMessage += '</tr>';
+                } else {
+                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                        ProjectMessage += '<tr>';
+                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
+                        ProjectMessage += '</button>';
+                        ProjectMessage += '</td>';
+                        ProjectMessage += '</tr>';
+                    }
+                }
+
+                $('#tbody').html(ProjectMessage);
+
                 loadPage(parameter);
             },
             error: function (result) {
                 alert("出错！");
             }
         })
-    }
-
-    //解析list
-    function parseResult(ProjectMessages) {
-        //结果集
-        var ProjectMessageList = ProjectMessages.list;
-        //当前页
-        var pageNum = ProjectMessages.pageNum;
-        //插入tbody
-        var ProjectMessage = '';
-        if (ProjectMessageList.length === 0) {
-            ProjectMessage += '<tr>';
-            ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无数据' + '</td>';
-            ProjectMessage += '</tr>';
-        } else {
-            for (var i = 0; i < ProjectMessageList.length; i++) {
-                ProjectMessage += '<tr>';
-                ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                ProjectMessage += '</button>';
-                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
-                ProjectMessage += '</button>';
-                ProjectMessage += '</td>';
-                ProjectMessage += '</tr>';
-            }
-        }
-
-        $('#tbody').html(ProjectMessage);
     }
 
     //流程-施工上报
@@ -549,7 +516,7 @@
             success: function (data) {
                 if (data === "success") {
                     alert('上报成功');
-                    window.location.reload();
+                    constructionReport(1, 0);
                 } else {
                     alert('上报失败');
                 }
@@ -561,10 +528,28 @@
 
     //行业审批页面
     function industryApproval(page, parameter) {
+        //删除
+        $('#btn_delete').css('display', 'none');
+        //工程进度筛选
+        $('#proScheduleSelect').css('display', 'none');
+
+        var proName = $("#proName").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
+        var proSchedule = '';
+        var assignee = 'industryApproval';
+
         $.ajax({
             type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/industryApproval.do',
-            data: {'page': page},
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getTaskByAssignee.do',
+            data: {
+                'assignee': assignee,
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
             async: false,
             success: function (data) {
                 $('#tbodyTab').show();
@@ -575,39 +560,38 @@
                 //每页显示条数
                 $("#PageSize").val("8");
 
-                //审批处理
                 //基本数据
                 var ProjectMessageList = ProjectMessages.list;
                 //当前页
                 var pageNum = ProjectMessages.pageNum;
                 //插入tbody
-                var ProjectMessage = '';
+                var pro = '';
                 if (ProjectMessageList.length === 0) {
-                    ProjectMessage += '<tr>';
-                    ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无数据' + '</td>';
-                    ProjectMessage += '</tr>';
+                    pro += '<tr>';
+                    pro += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
+                    pro += '</tr>';
                 } else {
                     for (var i = 0; i < ProjectMessageList.length; i++) {
-                        ProjectMessage += '<tr>';
-                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '<input type="hidden" id="id" value="' + ProjectMessageList[i].id + '"></td>';
-                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ')">通过';
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '</td>';
-                        ProjectMessage += '</tr>';
+                        pro += '<tr>';
+                        pro += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                        pro += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
+                        pro += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
+                        pro += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                        pro += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                        pro += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                        pro += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                        pro += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                        pro += '<td style="text-align: center; width: 110px;">';
+                        pro += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                        pro += '</button>';
+                        pro += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过';
+                        pro += '</button>';
+                        pro += '</td>';
+                        pro += '</tr>';
                     }
                 }
 
-                $('#tbody').html(ProjectMessage);
+                $('#tbody').html(pro);
                 loadPage(parameter);
             },
             error: function (result) {
@@ -617,21 +601,21 @@
     }
 
     //流程-行业审批通过处理
-    function industryPerform(taskId) {
-        var id = $('#id').val();
+    function industryPerform(taskId, id) {
         var status = 2;
         $.ajax({
             type: "post",
             url: localStorage.getItem("ajaxUrl") + '/projectMessage/policePerform.do',
             data: {'taskId': taskId, 'id': id, 'status': status},
-            async: false,
             error: function (request) {
                 alert("Connection error");
             },
             success: function (data) {
                 if (data === "success") {
                     alert('处理成功');
-                    window.location.reload();
+                    industryApproval(1, 1);
+                } else {
+                    alert('处理失败');
                 }
             }
         })
@@ -640,10 +624,28 @@
     /*---------------交警确认--------------------*/
     //交警确认页面
     function policeConfirm(page, parameter) {
+        //删除
+        $('#btn_delete').css('display', 'none');
+        //工程进度筛选
+        $('#proScheduleSelect').css('display', 'none');
+
+        var proName = $("#proName").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
+        var proSchedule = '';
+        var assignee = 'policeConfirmation';
+
         $.ajax({
             type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/policeConfirm.do',
-            data: {'page': page},
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getTaskByAssignee.do',
+            data: {
+                'assignee': assignee,
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
             async: false,
             success: function (data) {
                 $('#tbodyTab').show();
@@ -663,7 +665,7 @@
                 var ProjectMessage = '';
                 if (ProjectMessageList.length === 0) {
                     ProjectMessage += '<tr>';
-                    ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
                 } else {
                     for (var i = 0; i < ProjectMessageList.length; i++) {
@@ -675,11 +677,11 @@
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '<input type="hidden" id="id" value="' + ProjectMessageList[i].id + '"></td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
                         ProjectMessage += '<td style="text-align: center; width: 110px;">';
                         ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
                         ProjectMessage += '</button>';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ')">通过';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过';
                         ProjectMessage += '</button>';
                         ProjectMessage += '</td>';
                         ProjectMessage += '</tr>';
@@ -696,8 +698,7 @@
     }
 
     //流程-交警审批通过处理
-    function policePerform(taskId) {
-        var id = $('#id').val();
+    function policePerform(taskId, id) {
         var status = 3;
         $.ajax({
             type: "post",
@@ -710,7 +711,9 @@
             success: function (data) {
                 if (data === "success") {
                     alert('处理成功');
-                    window.location.reload();
+                    policeConfirm(1, 2);
+                } else {
+                    alert('处理失败');
                 }
             }
         })
@@ -718,10 +721,28 @@
 
     /*-----------------工程实施------------------*/
     function projectImplement(page, parameter) {
+        //删除
+        $('#btn_delete').css('display', 'none');
+        //工程进度筛选
+        $('#proScheduleSelect').css('display', 'block');
+
+        var proName = $("#proName").val();
+        var proSchedule = $("#proSchedule").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
+        var assignee = 'projectImplementation';
+
         $.ajax({
             type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/projectImplement.do',
-            data: {'page': page},
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getTaskByAssignee.do',
+            data: {
+                'assignee': assignee,
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
             async: false,
             success: function (data) {
                 $('#implementTab').show();
@@ -741,7 +762,7 @@
                 var ProjectMessage = '';
                 if (ProjectMessageList.length === 0) {
                     ProjectMessage += '<tr>';
-                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
                 } else {
                     for (var i = 0; i < ProjectMessageList.length; i++) {
@@ -753,7 +774,7 @@
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '<input type="hidden" id="id" value="' + ProjectMessageList[i].id + '"></td>';
+                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
                         ProjectMessage += '<td style="text-align: center; width: 110px;">';
                         ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
@@ -762,7 +783,7 @@
                             ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场';
                             ProjectMessage += '</button>';
                         } else {
-                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ')">完工';
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工';
                         }
                         ProjectMessage += '</button>';
                         ProjectMessage += '</td>';
@@ -793,15 +814,16 @@
             success: function (data) {
                 if (data === "success") {
                     alert('处理成功');
-                    window.location.reload();
+                    projectImplement(1, 3);
+                } else {
+                    alert('处理失败');
                 }
             }
         })
     }
 
     //流程-工程实施完工
-    function implementPerform(taskId) {
-        var id = $('#id').val();
+    function implementPerform(taskId, id) {
         var schedule = 2;
         $.ajax({
             type: "post",
@@ -814,7 +836,9 @@
             success: function (data) {
                 if (data === "success") {
                     alert('处理成功');
-                    window.location.reload();
+                    projectImplement(1, 3);
+                } else {
+                    alert('处理失败');
                 }
             }
         })
@@ -824,10 +848,26 @@
 
     //竣工完成 页面
     function completion(page, parameter) {
+        //删除按钮
+        $('#btn_delete').css('display', 'none');
+        //工程进度筛选
+        $('#proScheduleSelect').css('display', 'none');
+
+        var proName = $("#proName").val();
+        var proType = $("#proType").val();
+        var proSchedule = 2;
+        var proStatus = 3;
+
         $.ajax({
             type: "post",
             url: localStorage.getItem("ajaxUrl") + '/projectMessage/completion.do',
-            data: {'page': page},
+            data: {
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
             async: false,
             success: function (data) {
                 $('#implementTab').show();
@@ -848,7 +888,7 @@
                 var ProjectMessage = '';
                 if (ProjectMessageList.length === 0) {
                     ProjectMessage += '<tr>';
-                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无数据' + '</td>';
+                    ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                     ProjectMessage += '</tr>';
                 } else {
                     for (var i = 0; i < ProjectMessageList.length; i++) {
@@ -871,6 +911,7 @@
                 }
 
                 $('#implement').html(ProjectMessage);
+
                 loadPage(parameter);
             },
             error: function (result) {
@@ -882,23 +923,23 @@
     //分页
     function exeData(page, type, parameter) {
         //施工上报
-        if (parameter === 1) {
+        if (parameter === 0) {
             constructionReport(page);
 
             //行业审批
-        } else if (parameter === 2) {
+        } else if (parameter === 1) {
             industryApproval(page);
 
             //交警确认
-        } else if (parameter === 3) {
+        } else if (parameter === 2) {
             policeConfirm(page);
 
             //工程实施
-        } else if (parameter === 4) {
+        } else if (parameter === 3) {
             projectImplement(page);
 
             //竣工完成
-        } else if (parameter === 5) {
+        } else if (parameter === 4) {
             completion(page);
         }
 
@@ -939,7 +980,7 @@
     }
 
     //删除
-    function remove() {
+    function del() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
             alert("一次只能选择一条数据");
@@ -978,73 +1019,35 @@
     }
 
     //条件查询方法
-    function getProMessageByCondition(page) {
-        var proName = $("#proName").val();
-        var proSchedule = $("#proSchedule").val();
-        var proType = $("#proType").val();
+    function getProMessageByCondition() {
         var proStatus = $("#proStatus").val();
 
-        $.ajax({
-            type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
-            data: {
-                'page': page,
-                'proName': proName,
-                'proSchedule': proSchedule,
-                'proType': proType,
-                'proStatus': proStatus
-            },
-            success: function (data) {
-                $('#tbodyTab').show();
-                $('#implementTab').hide();
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("10");
+        if (proStatus == 0) {
 
+            //施工上报
+            constructionReport(1, 0);
+        } else if (proStatus == 1) {
 
-                //结果集
-                var ProjectMessageList = ProjectMessages.list;
-                //当前页
-                var pageNum = ProjectMessages.pageNum;
-                //插入tbody
-                var ProjectMessage = '';
-                if (ProjectMessageList.length === 0) {
-                    ProjectMessage += '<tr>';
-                    ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无数据' + '</td>';
-                    ProjectMessage += '</tr>';
-                } else {
-                    for (var i = 0; i < ProjectMessageList.length; i++) {
-                        ProjectMessage += '<tr>';
-                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 10 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '</td>';
-                        ProjectMessage += '</tr>';
-                    }
-                }
+            //行业审批
+            industryApproval(1, 1);
+        } else if (proStatus == 2) {
 
-                $('#tbody').html(ProjectMessage);
+            //交警确认
+            policeConfirm(1, 2);
+        } else if (proStatus == 3) {
 
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
+            //工程实施
+            projectImplement(1, 3);
+        } else if (proStatus == 4) {
+
+            //竣工完成
+            completion(1, 4);
+        }
     }
 
     //初始化工程管理页面
     $(function () {
-        constructionReport(1, 1);
+        constructionReport(1, 0);
     });
 </script>
 </html>

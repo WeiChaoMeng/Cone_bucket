@@ -6,7 +6,7 @@
  * <author>    <time>     <version>   <desc>
  * 作者姓名     修改时间    版本号        描述
  **/
-package com.jiaoke.wechatapp;
+package com.jiaoke.control;
 
 
 import com.alibaba.fastjson.JSON;

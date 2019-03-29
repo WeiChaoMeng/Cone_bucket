@@ -1,12 +1,8 @@
-
-
-
-
 //工程查询
 $('#engineeringQuery').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "/projectQuery.do");
+    $('#inlineFrame').attr("src", "projectMessage/toProjectQueryIndex.do");
 });
 
 //工程管理
@@ -32,7 +28,7 @@ $('#system').on('click', function () {
         '<div class="secondary-menu-system">' +
         '<div onclick="parameterConfigure(this)">参数管理</div>' +
         '</div>');
-    $('#inlineFrame').attr("src", "userManage.do");
+    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
 });
 
 //设备管理
@@ -71,13 +67,13 @@ function mainMuneColor(o) {
 //用户管理
 function user(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "userManage.do");
+    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
 }
 
 //角色管理
 function role(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "roleManage.do");
+    $('#inlineFrame').attr("src", "roleInfo/toIndex.do");
 }
 
 //权限管理
@@ -110,7 +106,7 @@ function engineeringLog(o) {
 //锥桶日志
 function coneBucketLog(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "coneBucketLog.do");
+    $('#inlineFrame').attr("src", "getAllConeBucketLog.do");
 }
 
 //预警日志
