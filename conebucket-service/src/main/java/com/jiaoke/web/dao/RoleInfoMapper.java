@@ -24,10 +24,10 @@ public interface RoleInfoMapper extends Mapper<RoleInfo> {
     List<RoleInfo> fuzzyQueryByRoleName(String roleName);
 
     /**
-     * 插入数据返回主键
+     * 根据用户id查询
      *
-     * @param roleInfo roleInfo
-     * @return 影响行数
+     * @param userId 用户id
+     * @return list
      */
-    int insertReturnPrimaryKey(RoleInfo roleInfo);
+    List<RoleInfo> selectByUserId(Integer userId);
 }

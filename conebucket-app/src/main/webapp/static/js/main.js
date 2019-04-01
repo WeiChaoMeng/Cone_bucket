@@ -2,14 +2,14 @@
 $('#engineeringQuery').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "projectMessage/toProjectQueryIndex.do");
+    $('#inlineFrame').attr("src", "/projectMessage/toProjectQueryIndex.do");
 });
 
 //工程管理
 $('#engineeringManage').on('click', function () {
     mainMuneColor(this);
     $('#secondaryMenu').html('');
-    $('#inlineFrame').attr("src", "projectMessage/toIndex.do");
+    $('#inlineFrame').attr("src", "/projectMessage/toIndex.do");
 });
 
 //系统管理
@@ -28,7 +28,7 @@ $('#system').on('click', function () {
         '<div class="secondary-menu-system">' +
         '<div onclick="parameterConfigure(this)">参数管理</div>' +
         '</div>');
-    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
+    $('#inlineFrame').attr("src", "/userInfo/toIndex.do");
 });
 
 //设备管理
@@ -38,7 +38,7 @@ $('#device').on('click', function () {
         '<div class="secondary-menu-device">' +
         '<div onclick="coneBucketManagement(this)" class="secondary-menu-style-color">锥桶管理</div>' +
         '</div>')
-    $('#inlineFrame').attr("src", "coneBucketManage.do");
+    $('#inlineFrame').attr("src", "/coneBucketManage.do");
 });
 
 //日志管理
@@ -54,7 +54,7 @@ $('#log').on('click', function () {
         '<div class="secondary-menu-log">' +
         '<div onclick="alertLog(this)">预警日志</div>' +
         '</div>')
-    $('#inlineFrame').attr("src", "engineeringLog.do");
+    $('#inlineFrame').attr("src", "/engineeringLog.do");
 });
 
 //主菜单选中颜色
@@ -68,25 +68,25 @@ function mainMuneColor(o) {
 //用户管理
 function user(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "userInfo/toIndex.do");
+    $('#inlineFrame').attr("src", "/userInfo/toIndex.do");
 }
 
 //角色管理
 function role(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "roleInfo/toIndex.do");
+    $('#inlineFrame').attr("src", "/roleInfo/toIndex.do");
 }
 
 //权限管理
 function permissions(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "permission/toIndex.do");
+    $('#inlineFrame').attr("src", "/permission/toIndex.do");
 }
 
 //参数配置
 function parameterConfigure(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "parameterConfigure.do");
+    $('#inlineFrame').attr("src", "/parameterConfigure.do");
 }
 
 
@@ -95,7 +95,7 @@ function parameterConfigure(o) {
 //锥桶管理
 function coneBucketManagement(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "coneBucketManage.do");
+    $('#inlineFrame').attr("src", "/coneBucketManage.do");
 }
 
 /*--------------------------日志管理-----------------------------*/
@@ -103,19 +103,19 @@ function coneBucketManagement(o) {
 //工程日志
 function engineeringLog(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "engineeringLog.do");
+    $('#inlineFrame').attr("src", "/engineeringLog.do");
 }
 
 //锥桶日志
 function coneBucketLog(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "getAllConeBucketLog.do");
+    $('#inlineFrame').attr("src", "/getAllConeBucketLog.do");
 }
 
 //预警日志
 function alertLog(o) {
     secondaryMenuColor(o);
-    $('#inlineFrame').attr("src", "alertLog.do");
+    $('#inlineFrame').attr("src", "/alertLog.do");
 }
 
 
@@ -123,11 +123,6 @@ function alertLog(o) {
 function secondaryMenuColor(o) {
     $('#secondaryMenu').children('div').children('div').removeClass('secondary-menu-style-color');
     $(o).addClass('secondary-menu-style-color');
-}
-
-//退出
-function exit() {
-    window.location.href = "http://localhost:8080/"
 }
 
 /**********************锥桶添加函数********************************/
@@ -182,6 +177,7 @@ function addSubmit() {
 //工程详细信息
 function projectDetailed(mapObject) {
     window.lar = layer.open({
+        title: '工程详情信息',
         type: 1,
         area: ['80%', '90%'],
         shadeClose: true, //点击遮罩关闭
@@ -317,6 +313,452 @@ function projectDetailed(mapObject) {
     });
 }
 
+//添加用户
+function addUser() {
+    window.lar = layer.open({
+        title: '添加用户',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addUser"),
+        offset: "25%"
+    });
+
+    var userInfo = '';
+    userInfo += '<div class="model-style">';
+    userInfo += '<form id="userInfo">';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">用户名</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<input type="text" id="username" name="username" class="form-control" autocomplete="off" placeholder="支持英文、数字的组合,4-16个字符" maxlength="16">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">密码</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<input type="text" id="password" name="password" class="form-control" autocomplete="off" placeholder="支持英文、数字的组合,4-16个字符" maxlength="16">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">手机号</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<input type="text" id="phone" name="phone" class="form-control" autocomplete="off" maxlength="11">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-but-div">';
+    userInfo += '<input class="btn btn-primary btn-sm" type="button" onclick="commitUser()" value="提交">';
+    userInfo += '</div>';
+    userInfo += '</form>';
+    userInfo += '</div>';
+
+    $('#addUser').html(userInfo);
+}
+
+//提交添加
+function commitUser() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    if (username !== '') {
+        if (password !== '') {
+            var userInfo = $('#userInfo');
+            frame.window.commitAdd(userInfo);
+        } else {
+            layer.msg("密码不可以为空！");
+        }
+    } else {
+        layer.msg("用户名不可以为空！");
+    }
+}
+
+//用户详情
+function userDetails(map) {
+    window.lar = layer.open({
+        title: '用户详情',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#userDetails"),
+        offset: "25%"
+    });
+
+    var user = '';
+
+    user += '<div style="padding: 30px 15px;font-size: 14px;">';
+    user += '<div style="margin-bottom: 15px;">';
+    user += '                <label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">用户名:</label>';
+    user += '                <div style="width: 75%;display: inline-block;">' + map.userInfo.username + '</div>';
+    user += '</div>';
+    user += '<div style="margin-bottom: 15px;">';
+    user += '                <label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">密码:</label>';
+    user += '                <div style="width: 75%;display: inline-block;">' + map.userInfo.password + '</div>';
+    user += '</div>';
+    user += '<div style="margin-bottom: 15px;">';
+    user += '                <label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">手机号:</label>';
+    user += '                <div style="width: 75%;display: inline-block;">' + map.userInfo.phone + '</div>';
+    user += '</div>';
+    user += '<div style="margin-bottom: 15px;">';
+    user += '<label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">角色信息:</label>';
+    if (map.roleInfoList < 1) {
+        user += '<div style="width: 75%;display: inline-block;">无</div>';
+    } else {
+        for (var i = 0; i < map.roleInfoList.length; i++) {
+            user += '<div style="display: inline-block;">' + map.roleInfoList[i].roleName + '</div>';
+            if (i !== map.roleInfoList.length - 1) {
+                user += ' , ';
+            }
+        }
+    }
+    user += '</div>';
+    user += '</div>';
+    $('#userDetails').html(user);
+}
+
+//关闭弹窗
+function closeWin() {
+    layer.close(window.lar);
+}
+
+//编辑用户
+function userEdit(userInfo) {
+    window.lar = layer.open({
+        title: '编辑用户',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#editUser"),
+        offset: "25%"
+    });
+    var user = '';
+    user += '<div class="model-style">';
+    user += '<form id="userInfoEdit">';
+    user += '    <div class="user-add-div">';
+    user += '<label class="user-add-label">用户名</label>';
+    user += '<div class="user-add-div-div">';
+    user += '    <input type="hidden" name="id" value="' + userInfo.id + '">';
+    user += '    <input type="text" id="username" name="username" value="' + userInfo.username + '" class="form-control" autocomplete="off" maxlength="16">';
+    user += '</div>';
+    user += '    </div>';
+    user += '    <div class="user-add-div">';
+    user += '<label class="user-add-label">密码</label>';
+    user += '<div class="user-add-div-div">';
+    user += '    <input type="text" id="password" name="password" class="form-control" autocomplete="off" value="' + userInfo.password + '"  maxlength="16">';
+    user += '</div>';
+    user += '    </div>';
+    user += '    <div class="user-add-div">';
+    user += '<label class="user-add-label">手机号</label>';
+    user += '<div class="user-add-div-div">';
+    user += '    <input type="text" id="phone" name="phone" class="form-control" value="' + userInfo.phone + '" autocomplete="off" maxlength="11">';
+    user += '</div>';
+    user += '    </div>';
+    user += '    <div class="user-add-but-div">';
+    user += '<input class="btn btn-primary btn-sm" type="button" onclick="commitUserEdit()" value="提交">';
+    user += '    </div>';
+    user += '</form>';
+    user += '</div>';
+
+    $('#editUser').html(user);
+}
+
+//提交编辑后的用户
+function commitUserEdit() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    if (username !== '') {
+        if (password !== '') {
+            var userInfo = $('#userInfoEdit');
+            console.log(userInfo);
+            frame.window.commitEdit(userInfo);
+        } else {
+            layer.msg("密码不可以为空！");
+        }
+    } else {
+        layer.msg("用户名不可以为空！");
+    }
+}
+
+//绑定角色
+function bindingRoles(id, roleInfoList) {
+    window.lar = layer.open({
+        title: '绑定角色',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#bindingRoles"),
+        offset: "25%"
+    });
+
+    //所有角色
+    var roleList = roleInfoList.roleInfoList;
+    //已绑定角色
+    var possessRoleList = roleInfoList.possessRoleInfoList;
+
+    var role = '';
+    role += '<input type="hidden" id="userId" value="' + id + '">';
+    for (var i = 0; i < roleList.length; i++) {
+        role += '<tr onclick="checkboxEvent(this)" style="margin-bottom: 5px;height:18px;display: table;">';
+        role += '<td class="table-list-td-checkbox" style="padding-right: 20px;">';
+        role += '<input type="checkbox" value="' + roleList[i].id + '" onclick="window.event.cancelBubble=true;">';
+        role += '</td>';
+        role += '<td class="td-border-bottom" style="cursor: pointer;">' + roleList[i].roleName + '</td>';
+        role += '</tr>';
+    }
+    $('#roleBody').html(role);
+
+    for (var j = 0; j < possessRoleList.length; j++) {
+        $('#roleBody').children('tr').find('input').each(function () {
+            if ($(this).val() == possessRoleList[j].id) {
+                this.checked = true;
+            }
+        });
+    }
+}
+
+//提交绑定的角色
+function commitBindingRoles() {
+    var array = [];
+    var list = $("#roleBody input:checked");
+    for (var i = 0; i < list.length; i++) {
+        array.push(list[i].value);
+    }
+
+    if (array.length < 1) {
+        layer.msg("最少选择一个角色！");
+    } else {
+        var id = $('#userId').val();
+
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/userInfo/bindingRoles.do',
+            data: {'id': id, 'array': array},
+            traditional: true,
+            success: function (data) {
+                if (data === "success") {
+                    layer.msg("绑定成功！");
+                    layer.close(window.lar);
+                } else {
+                    layer.msg("绑定失败！")
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+}
+
+//checkbox选中事件
+function checkboxEvent(own) {
+    var checkbox = $(own).children('td').children('input').prop('checked');
+    if (checkbox) {
+        $(own).children('td').children('input').prop("checked", false);
+    } else {
+        $(own).children('td').children('input').prop("checked", true);
+    }
+}
+
+/**---------------角色管理-------------------*/
+//添加角色
+function addRole() {
+    window.lar = layer.open({
+        title: '添加角色',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addRole"),
+        offset: "25%"
+    });
+
+    var roleInfo = '';
+    roleInfo += '<div class="model-style">';
+    roleInfo += '<form id="roleInfo">';
+    roleInfo += '<div class="user-add-div">';
+    roleInfo += '<label class="user-add-label">角色名称</label>';
+    roleInfo += '<div class="user-add-div-div">';
+    roleInfo += '<input type="text" id="roleName" name="roleName" class="form-control" autocomplete="off">';
+    roleInfo += '</div>';
+    roleInfo += '</div>';
+    roleInfo += '<div class="user-add-div">';
+    roleInfo += '<label class="user-add-label">角色描述</label>';
+    roleInfo += '<div class="user-add-div-div">';
+    roleInfo += '<input type="text" id="description" name="description" class="form-control" autocomplete="off">';
+    roleInfo += '</div>';
+    roleInfo += '</div>';
+    roleInfo += '<div class="user-add-but-div">';
+    roleInfo += '<input class="btn btn-primary btn-sm" type="button" onclick="commitRole()" value="提交">';
+    roleInfo += '</div>';
+    roleInfo += '</form>';
+    roleInfo += '</div>';
+
+    $('#addRole').html(roleInfo);
+}
+
+//提交添加
+function commitRole() {
+    var roleName = $('#roleName').val();
+    if (roleName !== '') {
+        var roleInfo = $('#roleInfo');
+        frame.window.commitRoleAdd(roleInfo);
+    } else {
+        layer.msg("角色名称不可以为空！");
+    }
+}
+
+//编辑角色
+function roleEdit(roleInfo) {
+    window.lar = layer.open({
+        title: '编辑角色',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#editRole"),
+        offset: "25%"
+    });
+    var role = '';
+    role += '<div class="model-style">';
+    role += '<form id="roleInfoEdit">';
+    role += '    <div class="user-add-div">';
+    role += '<label class="user-add-label">角色名称</label>';
+    role += '<div class="user-add-div-div">';
+    role += '    <input type="hidden" name="id" value="' + roleInfo.id + '">';
+    role += '    <input type="text" id="roleName" name="roleName" value="' + roleInfo.roleName + '" class="form-control" autocomplete="off">';
+    role += '</div>';
+    role += '    </div>';
+    role += '    <div class="user-add-div">';
+    role += '<label class="user-add-label">角色描述</label>';
+    role += '<div class="user-add-div-div">';
+    role += '    <input type="text" id="description" name="description" value="' + roleInfo.description + '" class="form-control" autocomplete="off">';
+    role += '</div>';
+    role += '    </div>';
+    role += '    <div class="user-add-but-div">';
+    role += '<input class="btn btn-primary btn-sm" type="button" onclick="commitRoleInfoEdit()" value="提交">';
+    role += '    </div>';
+    role += '</form>';
+    role += '</div>';
+
+    $('#editRole').html(role);
+}
+
+//提交编辑后的角色
+function commitRoleInfoEdit() {
+    var roleName = $('#roleName').val();
+    if (roleName !== '') {
+        var roleInfo = $('#roleInfoEdit');
+        frame.window.commitRoleEdit(roleInfo);
+    } else {
+        layer.msg("角色名不可以为空！");
+    }
+}
+
+//角色详情
+function roleDetails(map) {
+    window.lar = layer.open({
+        title: '角色详情',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#roleDetails"),
+        offset: "25%"
+    });
+
+    var role = '';
+
+    role += '<div style="padding: 30px 15px;font-size: 14px;">';
+    role += '<div style="margin-bottom: 15px;">';
+    role += '                <label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">角色名称:</label>';
+    role += '                <div style="width: 75%;display: inline-block;">' + map.roleInfo.roleName + '</div>';
+    role += '</div>';
+    role += '<div style="margin-bottom: 15px;">';
+    role += '                <label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">角色描述:</label>';
+    role += '                <div style="width: 75%;display: inline-block;">' + map.roleInfo.description + '</div>';
+    role += '</div>';
+    role += '<div style="margin-bottom: 15px;">';
+    role += '<label style="line-height: 34px;padding-right: 2%;width: 23%;text-align: right;margin: 0;font-weight: 600;">权限信息:</label>';
+    if (map.permissionList < 1) {
+        role += '<div style="width: 75%;display: inline-block;">无</div>';
+    } else {
+        for (var i = 0; i < map.permissionList.length; i++) {
+            role += '<div style="display: inline-block;">' + map.permissionList[i].url + '</div>';
+            if (i !== map.permissionList.length - 1) {
+                role += ' , ';
+            }
+        }
+    }
+    role += '</div>';
+    role += '</div>';
+    $('#roleDetails').html(role);
+}
+
+
+//绑定权限
+function bindingPermission(id, permissionList) {
+    window.lar = layer.open({
+        title: '绑定权限',
+        type: 1,
+        area: ['25%', '42%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#bindingPermission"),
+        offset: "25%"
+    });
+
+    //所有角色
+    var perList = permissionList.permissionList;
+    //已绑定角色
+    var possessPerList = permissionList.possessPermissionList;
+
+    var permission = '';
+    permission += '<input type="hidden" id="roleId" value="' + id + '">';
+    for (var i = 0; i < perList.length; i++) {
+        permission += '<tr onclick="checkboxEvent(this)" style="margin-bottom: 5px;height:18px;display: table;">';
+        permission += '<td class="table-list-td-checkbox" style="padding-right: 20px;">';
+        permission += '<input type="checkbox" value="' + perList[i].id + '" onclick="window.event.cancelBubble=true;">';
+        permission += '</td>';
+        permission += '<td class="td-border-bottom" style="cursor: pointer;" title="' + perList[i].description + '">' + perList[i].url + '</td>';
+        permission += '</tr>';
+    }
+    $('#permissionBody').html(permission);
+
+    for (var j = 0; j < possessPerList.length; j++) {
+        $('#permissionBody').children('tr').find('input').each(function () {
+            if ($(this).val() == possessPerList[j].id) {
+                this.checked = true;
+            }
+        });
+    }
+}
+
+//提交绑定的角色
+function commitBindingPermission() {
+    var array = [];
+    var list = $("#permissionBody input:checked");
+    for (var i = 0; i < list.length; i++) {
+        array.push(list[i].value);
+    }
+
+    if (array.length < 1) {
+        layer.msg("最少选择一个权限！");
+    } else {
+        var id = $('#roleId').val();
+
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/roleInfo/bindingPermission.do',
+            data: {'id': id, 'array': array},
+            traditional: true,
+            success: function (data) {
+                if (data === "success") {
+                    layer.msg("绑定成功！");
+                    layer.close(window.lar);
+                } else {
+                    layer.msg("绑定失败！")
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+}
+
 /****************js判空方法********************/
 
 function isNull(str) {
@@ -327,3 +769,18 @@ function isNull(str) {
         return false
     }
 }
+
+//主菜单宽度
+$(function () {
+    var mainMenuLenght = $('#mainMenu').children('div').length;
+    if (mainMenuLenght == 5) {
+        $('#mainMenu').children('div').each(function () {
+            $(this).width('20%');
+        });
+    } else if (mainMenuLenght == 4) {
+        $('#mainMenu').children('div').each(function () {
+            $(this).width('25%');
+        });
+    }
+
+});

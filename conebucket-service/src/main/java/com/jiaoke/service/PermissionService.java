@@ -21,6 +21,14 @@ public interface PermissionService {
     List<Permission> selectAll();
 
     /**
+     * 查询绑定的权限
+     *
+     * @param roleId roleId
+     * @return list
+     */
+    List<Permission> queryPossessPermission(Integer roleId);
+
+    /**
      * 根据权限描述模糊查询
      *
      * @param description 权限描述

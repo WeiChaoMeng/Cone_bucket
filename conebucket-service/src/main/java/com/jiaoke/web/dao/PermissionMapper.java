@@ -22,4 +22,20 @@ public interface PermissionMapper extends Mapper<Permission> {
      * @return list
      */
     List<Permission> fuzzyQueryByDescription(String description);
+
+    /**
+     * 根据角色id查询
+     *
+     * @param roleId roleId
+     * @return list
+     */
+    List<Permission> selectByRoleId(Integer roleId);
+
+    /**
+     * 获取权限根据用户id
+     *
+     * @param userInfoId userInfoId
+     * @return permission
+     */
+    List<Permission> getPermissionsByUserInfoId(Integer userInfoId);
 }

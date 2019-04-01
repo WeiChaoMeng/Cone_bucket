@@ -23,6 +23,7 @@ public class ProjectTest {
 
     @Test
     public void testUser() {
-
+        String projectName = projectMessageMapper.selectProjectName(21);
+        System.out.println(projectName);
     }
 }

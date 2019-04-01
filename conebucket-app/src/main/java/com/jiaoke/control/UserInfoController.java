@@ -4,16 +4,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiaoke.bean.RoleInfo;
 import com.jiaoke.bean.UserInfo;
+import com.jiaoke.bean.UserRole;
 import com.jiaoke.service.RoleInfoService;
 import com.jiaoke.service.UserInfoService;
 import com.jiaoke.util.JsonHelper;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户
@@ -24,6 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/userInfo")
+@RequiresPermissions("systemManage")
 public class UserInfoController {
 
     @Resource
@@ -76,21 +81,51 @@ public class UserInfoController {
     }
 
     /**
-     * 添加用户并绑定角色
+     * 添加用户
      *
-     * @param username 用户名
-     * @param password 密码
-     * @param phone    手机号
-     * @param array    角色List
+     * @param userInfo userInfo
      * @return s/e
      */
     @RequestMapping("/add.do")
     @ResponseBody
-    public String add(String username, String password, String phone, String[] array) {
-        if (userInfoService.addUserInfo(username, password, phone, array) < 0) {
+    public String add(UserInfo userInfo) {
+        if (userInfoService.addUserInfo(userInfo) < 0) {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 用户绑定角色
+     *
+     * @param id    用户id
+     * @param array 角色List
+     * @return s/e
+     */
+    @RequestMapping("/bindingRoles.do")
+    @ResponseBody
+    public String bindingRoles(Integer id, String[] array) {
+        if (userInfoService.bindingRoles(id, array) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**
+     * 获取所有角色接已绑定的角色
+     *
+     * @param id 用户id
+     * @return list
+     */
+    @RequestMapping("/possessRole.do")
+    @ResponseBody
+    public String queryPossessRole(Integer id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        List<RoleInfo> possessRoleInfoList = roleInfoService.queryPossessRole(id);
+        List<RoleInfo> roleInfoList = roleInfoService.selectAll();
+        map.put("possessRoleInfoList", possessRoleInfoList);
+        map.put("roleInfoList", roleInfoList);
+        return JsonHelper.toJSONString(map);
     }
 
     /**
@@ -107,4 +142,47 @@ public class UserInfoController {
         }
         return "success";
     }
+
+    /**
+     * 详情
+     *
+     * @param id id
+     * @return 用户详情及角色信息
+     */
+    @RequestMapping("/details.do")
+    @ResponseBody
+    public String details(Integer id) {
+        Map<String, Object> map = userInfoService.details(id);
+        return JsonHelper.toJSONString(map);
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param id 主键
+     * @return userInfo
+     */
+    @RequestMapping("/toEdit.do")
+    @ResponseBody
+    public String toEdit(Integer id) {
+        UserInfo userInfo = userInfoService.selectByPrimaryKey(id);
+        return JsonHelper.toJSONString(userInfo);
+    }
+
+    /**
+     * 提交修改用户信息
+     *
+     * @param userInfo userInfo
+     * @return userInfo
+     */
+    @RequestMapping("/edit.do")
+    @ResponseBody
+    public String edit(UserInfo userInfo) {
+        if (userInfoService.update(userInfo) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+
 }

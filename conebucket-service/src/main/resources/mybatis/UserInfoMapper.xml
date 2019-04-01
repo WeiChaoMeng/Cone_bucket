@@ -9,9 +9,15 @@
         where username LIKE "%"#{userName}"%"
     </select>
 
-    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"
-            parameterType="com.jiaoke.bean.UserInfo">
-        insert into user_info(username, password, phone,register_time)
-        values(#{username}, #{password}, #{phone}, #{registerTime})
-    </insert>
+    <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="com.jiaoke.bean.UserInfo">
+        SELECT
+            id,
+            username,
+            `password`,
+            phone
+        FROM
+            user_info
+        WHERE username = #{username}
+    </select>
+
 </mapper>

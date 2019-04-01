@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -261,23 +262,27 @@
             <div class="table-style-padding">
 
                 <div class="fixed-table-toolbar">
-                    <div class="bs-bars pull-left">
-                        <div id="toolbar" class="btn-group">
 
-                            <button id="btn_add" type="button" class="btn btn-default" onclick="add()">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                            </button>
+                    <shiro:hasPermission name="projectEntry">
+                        <div class="bs-bars pull-left">
+                            <div id="toolbar" class="btn-group">
 
-                            <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                            </button>
+                                <button id="btn_add" type="button" class="btn btn-default" onclick="add()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                                </button>
 
-                            <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                            </button>
+                                <button id="btn_edit" type="button" class="btn btn-default" onclick="edit()">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                                </button>
 
+                                <button id="btn_delete" type="button" class="btn btn-default" onclick="del()">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                                </button>
+
+                            </div>
                         </div>
-                    </div>
+                    </shiro:hasPermission>
+
                     <div class="columns columns-right btn-group pull-right">
                         <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
                                 onclick="reload()"
@@ -481,8 +486,10 @@
                         ProjectMessage += '<td style="text-align: center; width: 110px;">';
                         ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
                         ProjectMessage += '</button>';
+                        <shiro:hasPermission name="projectEntry">
                         ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="report(' + ProjectMessageList[i].id + ')">上报';
                         ProjectMessage += '</button>';
+                        </shiro:hasPermission>
                         ProjectMessage += '</td>';
                         ProjectMessage += '</tr>';
                     }
@@ -590,10 +597,10 @@
                         pro += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
                         pro += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
                         pro += '<td style="text-align: center; width: 110px;">';
-                        pro += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        pro += '</button>';
-                        pro += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过';
-                        pro += '</button>';
+                        pro += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
+                        <shiro:hasPermission name="IndustryApproval">
+                        pro += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
+                        </shiro:hasPermission>
                         pro += '</td>';
                         pro += '</tr>';
                     }
@@ -613,7 +620,7 @@
         var status = 2;
         $.ajax({
             type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/policePerform.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/industryPerform.do',
             data: {'taskId': taskId, 'id': id, 'status': status},
             error: function (request) {
                 alert("Connection error");
@@ -700,10 +707,10 @@
                         ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
                         ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过';
-                        ProjectMessage += '</button>';
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
+                        <shiro:hasPermission name="policeConfirm">
+                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
+                        </shiro:hasPermission>
                         ProjectMessage += '</td>';
                         ProjectMessage += '</tr>';
                     }
@@ -723,7 +730,7 @@
         var status = 3;
         $.ajax({
             type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/industryPerform.do',
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/policePerform.do',
             data: {'taskId': taskId, 'id': id, 'status': status},
             async: false,
             error: function (request) {
@@ -813,10 +820,13 @@
                         ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
                         ProjectMessage += '</button>';
                         if (ProjectMessageList[i].proScheduleStr == "未进场") {
-                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场';
-                            ProjectMessage += '</button>';
+                            <shiro:hasPermission name="projectImplementation">
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场</button>';
+                            </shiro:hasPermission>
                         } else {
+                            <shiro:hasPermission name="projectImplementation">
                             ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工';
+                            </shiro:hasPermission>
                         }
                         ProjectMessage += '</button>';
                         ProjectMessage += '</td>';

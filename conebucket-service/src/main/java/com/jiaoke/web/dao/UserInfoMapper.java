@@ -28,10 +28,10 @@ public interface UserInfoMapper extends Mapper<UserInfo> {
     List<UserInfo> fuzzyQuery(String userName);
 
     /**
-     * 插入数据返回主键
+     * 获取用户信息根据用户名称
      *
-     * @param userInfo userInfo
-     * @return 影响行数
+     * @param username username
+     * @return UserInfo
      */
-    int insertReturnPrimaryKey(UserInfo userInfo);
+    UserInfo getUserInfoByUserName(String username);
 }

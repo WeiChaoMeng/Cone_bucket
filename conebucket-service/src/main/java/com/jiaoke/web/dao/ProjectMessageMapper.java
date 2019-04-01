@@ -110,4 +110,12 @@ public interface ProjectMessageMapper extends Mapper<ProjectMessage> {
      * @return int
      */
     int updateProSchedule(@Param("id") Integer id, @Param("schedule") Integer schedule);
+
+    /**
+     * 查询工程名称
+     *
+     * @param id 主键
+     * @return projectName
+     */
+    String selectProjectName(Integer id);
 }

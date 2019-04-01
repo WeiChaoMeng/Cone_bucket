@@ -9,13 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <!--[if lte IE9]>
-    <meta http-equiv="Refresh" content="0; url=/version.do"/>
-    <![endif]-->
     <meta charset="UTF-8">
     <title>登录页面</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
     <link rel="stylesheet" href="../../static/css/login.css" type="text/css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
 </head>
 
 <body>
@@ -60,5 +57,6 @@
 
 </body>
 <script src="../../static/js/jquery-1.12.4.min.js"></script>
+<script src="../../static/plugin/layer/layer.js"></script>
 <script src="../../static/js/login.js"></script>
 </html>

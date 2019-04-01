@@ -29,4 +29,9 @@ public class PermissionServiceImpl implements PermissionService {
     public List<Permission> selectAll() {
         return permissionMapper.selectAll();
     }
+
+    @Override
+    public List<Permission> queryPossessPermission(Integer roleId) {
+        return permissionMapper.selectByRoleId(roleId);
+    }
 }

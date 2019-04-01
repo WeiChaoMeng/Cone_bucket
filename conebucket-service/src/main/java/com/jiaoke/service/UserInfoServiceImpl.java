@@ -1,14 +1,21 @@
 package com.jiaoke.service;
 
+import com.jiaoke.bean.Permission;
+import com.jiaoke.bean.RoleInfo;
 import com.jiaoke.bean.UserInfo;
+import com.jiaoke.bean.UserRole;
 import com.jiaoke.util.DateUtil;
+import com.jiaoke.web.dao.PermissionMapper;
+import com.jiaoke.web.dao.RoleInfoMapper;
 import com.jiaoke.web.dao.UserInfoMapper;
 import com.jiaoke.web.dao.UserRoleMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户
@@ -26,6 +33,22 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource
     private UserRoleMapper userRoleMapper;
 
+    @Resource
+    private RoleInfoMapper roleInfoMapper;
+
+    @Resource
+    private PermissionMapper permissionMapper;
+
+    @Override
+    public List<Permission> getPermissionsByUserInfoId(Integer userInfoId) {
+        return permissionMapper.getPermissionsByUserInfoId(userInfoId);
+    }
+
+    @Override
+    public UserInfo getUserInfoByUserName(String username) {
+        return userInfoMapper.getUserInfoByUserName(username);
+    }
+
     @Override
     public List<UserInfo> fuzzyQuery(String userName) {
         List<UserInfo> userInfoList = userInfoMapper.fuzzyQuery(userName);
@@ -41,23 +64,21 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public int addUserInfo(String username, String password,String phone, String[] array) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername(username);
-        userInfo.setPassword(password);
-        userInfo.setPhone(phone);
+    public int addUserInfo(UserInfo userInfo) {
         userInfo.setRegisterTime(new Date());
+        return userInfoMapper.insertSelective(userInfo);
+    }
 
-        //添加用户
-        if (userInfoMapper.insertReturnPrimaryKey(userInfo) < 0) {
+    @Override
+    public int bindingRoles(Integer id, String[] array) {
+        //删除绑定的角色
+        if (userRoleMapper.deleteByUserId(id) < 0) {
             return -1;
+        } else {
+            if (userRoleMapper.userBindingRole(id, array) < 0) {
+                return -1;
+            }
         }
-
-        //新增用户绑定角色
-        if (userRoleMapper.userBindingRole(userInfo.getId(), array) < 0) {
-            return -1;
-        }
-
         return 1;
     }
 
@@ -73,5 +94,25 @@ public class UserInfoServiceImpl implements UserInfoService {
             }
         }
         return 1;
+    }
+
+    @Override
+    public Map<String, Object> details(Integer id) {
+        Map<String, Object> map = new HashMap<>();
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
+        List<RoleInfo> roleInfoList = roleInfoMapper.selectByUserId(id);
+        map.put("userInfo", userInfo);
+        map.put("roleInfoList", roleInfoList);
+        return map;
+    }
+
+    @Override
+    public UserInfo selectByPrimaryKey(Integer id) {
+        return userInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int update(UserInfo userInfo) {
+        return userInfoMapper.updateByPrimaryKeySelective(userInfo);
     }
 }

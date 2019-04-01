@@ -241,4 +241,13 @@
         set pro_schedule = #{schedule}
         where id = #{id}
     </update>
+
+    <select id="selectProjectName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT
+            pro_name as proName
+        FROM
+            `project_message`
+        WHERE
+            id = #{id}
+    </select>
 </mapper>

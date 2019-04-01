@@ -6,6 +6,7 @@ import com.jiaoke.bean.Permission;
 import com.jiaoke.bean.ProjectMessage;
 import com.jiaoke.service.PermissionService;
 import com.jiaoke.util.JsonHelper;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/permission")
+@RequiresPermissions("systemManage")
 public class PermissionController {
 
     @Resource
@@ -61,7 +63,7 @@ public class PermissionController {
     @RequestMapping("/search.do")
     @ResponseBody
     public String fuzzyQueryByDescription(int page, String description) {
-        PageHelper.startPage(page,9);
+        PageHelper.startPage(page, 9);
         List<Permission> permissionList = permissionService.fuzzyQueryByDescription(description);
         PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
         return JsonHelper.toJSONString(pageInfo);

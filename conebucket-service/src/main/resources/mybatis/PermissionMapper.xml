@@ -8,4 +8,32 @@
         from permission
         where description LIKE "%"#{description}"%"
     </select>
+
+    <select id="selectByRoleId" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.Permission">
+        SELECT
+            per.id,
+            per.url,
+            per.description
+        FROM
+            `permission` AS per
+            LEFT JOIN role_permission AS rp ON per.id = rp.permission_id
+            LEFT JOIN role_info AS ri ON ri.id = rp.role_id
+        WHERE
+            ri.id = #{roleId}
+    </select>
+
+    <select id="getPermissionsByUserInfoId" parameterType="java.lang.Integer" resultType="com.jiaoke.bean.Permission">
+        SELECT
+        per.id,
+        per.url,
+        per.description
+        FROM
+        permission AS per
+        LEFT JOIN role_permission AS rp ON per.id = rp.permission_id
+        LEFT JOIN role_info AS ri ON rp.role_id = ri.id
+        LEFT JOIN user_role AS ur ON ri.id = ur.role_info_id
+        LEFT JOIN user_info AS ui ON ur.user_info_id = ui.id
+        WHERE
+        ui.id = #{userInfoId}
+    </select>
 </mapper>

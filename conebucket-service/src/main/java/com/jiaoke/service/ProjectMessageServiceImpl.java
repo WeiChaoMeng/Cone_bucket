@@ -3,16 +3,11 @@ package com.jiaoke.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jiaoke.bean.ConeBucketMessage;
-import com.jiaoke.bean.ProjectConeBucket;
-import com.jiaoke.bean.ProjectLocation;
-import com.jiaoke.bean.ProjectMessage;
+import com.jiaoke.bean.*;
 import com.jiaoke.util.DateUtil;
 import com.jiaoke.util.RandomUtil;
-import com.jiaoke.web.dao.ConeBucketMessageMapper;
-import com.jiaoke.web.dao.ProjectConeBucketMapper;
-import com.jiaoke.web.dao.ProjectLocationMapper;
-import com.jiaoke.web.dao.ProjectMessageMapper;
+import com.jiaoke.web.dao.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,8 +37,20 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
     @Resource
     private ConeBucketMessageMapper coneBucketMessageMapper;
 
+    @Resource
+    private ProjectLogMapper projectLogMapper;
+
     @Override
     public int insertSelective(ProjectMessage projectMessage) {
+        //添加工程成功后工程日志记录
+        ProjectLog projectLog = new ProjectLog();
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        projectLog.setOperationUser(userInfo.getUsername());
+        projectLog.setLogType("新增工程");
+        projectLog.setLogContent(projectMessage.getProName());
+        projectLog.setOperationTime(new Date());
+
+
         //设置工程编号
         projectMessage.setProNum(RandomUtil.random());
         projectMessage.setProStartTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProStartTimeStr()));
@@ -54,8 +61,14 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         //插入工程并返回主键
         int projectMessageInsertReturn = projectMessageMapper.insertReturnPrimaryKey(projectMessage);
         if (projectMessageInsertReturn < 0) {
+            //插入工程日志
+            projectLog.setState("失败");
+            projectLogMapper.insertSelective(projectLog);
             return 0;
         }
+        //插入工程日志
+        projectLog.setState("成功");
+        projectLogMapper.insertSelective(projectLog);
 
         if (!"".equals(projectMessage.getProScope())) {
             //插入工程经纬度表
@@ -143,15 +156,29 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
 
     @Override
     public int remove(Integer id) {
+        //添加工程成功后工程日志记录
+        String projectName = projectMessageMapper.selectProjectName(id);
+        ProjectLog projectLog = new ProjectLog();
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        projectLog.setOperationUser(userInfo.getUsername());
+        projectLog.setLogType("删除工程");
+        projectLog.setLogContent(projectName);
+        projectLog.setOperationTime(new Date());
+
         //删除工程信息
-        int projectMessage = projectMessageMapper.deleteByPrimaryKey(id);
-        if (projectMessage >= 0) {
+        int deleteProject = projectMessageMapper.deleteByPrimaryKey(id);
+        if (deleteProject >= 0) {
+            projectLog.setState("成功");
+            projectLogMapper.insertSelective(projectLog);
+
             //删除工程锥桶关联表
             projectConeBucketMapper.deleteByProId(id);
             //删除工程经纬度表
             projectConeBucketMapper.deleteByProId(id);
             return 1;
         }
+        projectLog.setState("失败");
+        projectLogMapper.insertSelective(projectLog);
         return -1;
     }
 
@@ -238,6 +265,24 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
 
     @Override
     public int updateProStatus(Integer id, Integer status) {
+        //工程日志记录
+        ProjectLog projectLog = new ProjectLog();
+        //查询工程名称
+        String projectName = projectMessageMapper.selectProjectName(id);
+        projectLog.setLogContent(projectName);
+        //当前登录人
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        projectLog.setOperationUser(userInfo.getUsername());
+        if (status == 1) {
+            projectLog.setLogType("施工上报");
+        } else if (status == 2) {
+            projectLog.setLogType("行业审批");
+        } else if (status == 3) {
+            projectLog.setLogType("交警确认");
+        }
+        projectLog.setOperationTime(new Date());
+        projectLog.setState("成功");
+        projectLogMapper.insertSelective(projectLog);
         return projectMessageMapper.updateProStatus(id, status);
     }
 
@@ -258,6 +303,22 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
 
     @Override
     public int updateProSchedule(Integer id, Integer schedule) {
+        //工程日志记录
+        ProjectLog projectLog = new ProjectLog();
+        //查询工程名称
+        String projectName = projectMessageMapper.selectProjectName(id);
+        projectLog.setLogContent(projectName);
+        //当前登录人
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        projectLog.setOperationUser(userInfo.getUsername());
+        if (schedule == 1) {
+            projectLog.setLogType("工程进场");
+        } else if (schedule == 2) {
+            projectLog.setLogType("工程完工");
+        }
+        projectLog.setOperationTime(new Date());
+        projectLog.setState("成功");
+        projectLogMapper.insertSelective(projectLog);
         return projectMessageMapper.updateProSchedule(id, schedule);
     }
 }

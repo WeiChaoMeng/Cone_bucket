@@ -76,7 +76,7 @@ html, body {
 .action-div {
     width: 20%;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     float: left;
 }
@@ -169,13 +169,13 @@ html, body {
     text-indent: 20px;
 }
 
-.table-td-title{
+.table-td-title {
     padding: 10px 15px;
     text-align: left;
     font-size: 14px;
 }
 
-.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th{
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
     padding: 8px;
 }
 
@@ -184,7 +184,49 @@ html, body {
     height: 100%;
 }
 
-.content{
-    padding:10px 20px;background: #fff;
+.content {
+    padding: 10px 20px;
+    background: #fff;
 }
 
+.td-border-bottom:hover {
+    border-bottom: 1px #000 solid;
+}
+
+/**/
+.model-style {
+    padding: 30px 15px;
+}
+
+.user-add-div {
+    margin-bottom: 20px;
+}
+
+.user-add-label {
+    line-height: 34px;
+    padding-right: 2%;
+    width: 18%;
+    text-align: right;
+    margin: 0;
+    font-weight: 500;
+}
+
+.user-add-div-div {
+    width: 80%;
+    display: inline-block;
+}
+
+.user-add-but-div {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.roleList-table{
+    width: 100%;font-size: 13px;
+}
+.roleList-commit-div{
+    text-align: center;margin-top: 30px;
+}
+.model-dis{
+    display:none;height: 100%
+}

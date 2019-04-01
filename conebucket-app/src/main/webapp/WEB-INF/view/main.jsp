@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 
 <head>
@@ -30,7 +31,7 @@
         <!--logo-->
         <div class="logo-div">
             <img src="../../static/img/login-logo.jpg" alt="" style="width: 40px;">
-            <span style="padding-left: 10px;font-size: 16px">道路施工在线监管系统</span>
+            <span style="padding-left: 10px;font-size: 17px">道路施工在线监管系统</span>
         </div>
 
         <!--功能(主菜单)-->
@@ -38,13 +39,15 @@
             <div class="action-div action-div-border" id="engineeringQuery"><span>工程查询</span></div>
             <div class="action-div" id="engineeringManage"><span>工程管理</span></div>
             <div class="action-div" id="device"><span>设备管理</span></div>
-            <div class="action-div " id="system"><span>系统管理</span></div>
+            <shiro:hasPermission name="systemManage">
+                <div class="action-div " id="system"><span>系统管理</span></div>
+            </shiro:hasPermission>
             <div class="action-div" id="log"><span>日志管理</span></div>
         </div>
 
         <!--退出-->
         <div class="exit-div">
-            <span onclick="exit()">退出</span>
+            <a style="color: #000;text-decoration: none;" href="/logout">退出</a>
         </div>
     </div>
 
@@ -58,7 +61,8 @@
 
 <!--content-->
 <div class="content-iframe">
-    <iframe src="projectMessage/toProjectQueryIndex.do" id="inlineFrame" name="right" width="100%" style="height: 100%;"
+    <iframe src="/projectMessage/toProjectQueryIndex.do" id="inlineFrame" name="frame" width="100%"
+            style="height: 100%;"
             frameborder="0" scrolling="auto"></iframe>
 </div>
 
@@ -94,7 +98,7 @@
 </div>
 
 <%--模态窗（工程详情）--%>
-<div id="projectDetailed" style="display:none">
+<div id="projectDetailed" class="model-dis">
     <div class="content">
         <table class="table table-condensed table-bordered table-hover"
                style="text-align: center;font-size: 13px;margin: 0">
@@ -103,6 +107,47 @@
     </div>
 </div>
 
+<%--模态窗（添加用户）--%>
+<div id="addUser" class="model-dis"></div>
+
+<%--模态窗（用户绑定角色）--%>
+<div id="bindingRoles" class="model-dis">
+    <div class="model-style">
+        <table class="roleList-table">
+            <tbody id="roleBody"></tbody>
+        </table>
+        <div class="roleList-commit-div">
+            <input class="btn btn-primary btn-sm" type="button" onclick="commitBindingRoles()" value="提交">
+        </div>
+    </div>
+</div>
+
+<%--模态窗（用户详情）--%>
+<div id="userDetails" class="model-dis"></div>
+
+<%--模态窗（编辑用户）--%>
+<div id="editUser" class="model-dis"></div>
+
+<%--模态窗（添加角色）--%>
+<div id="addRole" class="model-dis"></div>
+
+<%--模态窗（编辑角色）--%>
+<div id="editRole" class="model-dis"></div>
+
+<%--模态窗（用户详情）--%>
+<div id="roleDetails" class="model-dis"></div>
+
+<%--模态窗（角色绑定权限）--%>
+<div id="bindingPermission" class="model-dis">
+    <div class="model-style">
+        <table class="roleList-table">
+            <tbody id="permissionBody"></tbody>
+        </table>
+        <div class="roleList-commit-div">
+            <input class="btn btn-primary btn-sm" type="button" onclick="commitBindingPermission()" value="提交">
+        </div>
+    </div>
+</div>
 </body>
 
 

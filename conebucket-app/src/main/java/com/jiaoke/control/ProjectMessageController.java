@@ -5,9 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.jiaoke.bean.*;
 import com.jiaoke.service.*;
 import com.jiaoke.util.JsonHelper;
-import com.jiaoke.web.dao.ProjectScheduleMapper;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Task;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,6 +99,7 @@ public class ProjectMessageController {
      *
      * @return add.jsp
      */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/toAdd.do")
     public String addEngineering(Model model) {
         //查询锥桶类型
@@ -116,6 +117,7 @@ public class ProjectMessageController {
      *
      * @return 影响行数
      */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/add.do")
     @ResponseBody
     public String insertSelective(ProjectMessage projectMessage) {
@@ -193,6 +195,7 @@ public class ProjectMessageController {
      * @param id 主键
      * @return s/e
      */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/remove.do")
     @ResponseBody
     public String remove(Integer id) {
@@ -202,6 +205,13 @@ public class ProjectMessageController {
         return "error";
     }
 
+    /**
+     *  修改
+     * @param id 主键
+     * @param model model
+     * @return edit.jsp
+     */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/toEdit.do")
     public String toEdit(Integer id, Model model) {
         System.out.println(id);
@@ -263,6 +273,7 @@ public class ProjectMessageController {
      * @param projectMessage projectMessage
      * @return e/s
      */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/edit.do")
     @ResponseBody
     public String edit(ProjectMessage projectMessage) {
@@ -316,6 +327,7 @@ public class ProjectMessageController {
      * @param status 状态
      * @return s
      */
+    @RequiresPermissions("projectEntry")
     @RequestMapping("/projectReport.do")
     @ResponseBody
     public String projectReport(Integer id, Integer status) {
@@ -411,16 +423,7 @@ public class ProjectMessageController {
 
         List<Integer> list = new ArrayList<>();
         HashMap<String, Object> map = new HashMap<>(16);
-        //查询已审批完成的工程
-        List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
-        for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
-            list.add(Integer.valueOf(historicProcessInstance.getBusinessKey()));
-        }
 
-        PageHelper.startPage(page, 8);
-        //根据业务主键查询已完成工程
-        List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         //流程节点数量
         //未上报数量
         int notReported = projectMessageService.count(0);
@@ -437,6 +440,23 @@ public class ProjectMessageController {
         //已完成数量
         List<HistoricProcessInstance> completed = activiti.queryHistoricProcessInstance();
         map.put("completed", completed.size());
+
+        //查询已审批完成的工程
+        List<HistoricProcessInstance> historicProcessInstanceList = activiti.queryHistoricProcessInstance();
+        if (historicProcessInstanceList.size() < 1){
+            map.put("pageInfo", "");
+            return JsonHelper.toJSONString(map);
+        }
+
+        for (HistoricProcessInstance historicProcessInstance : historicProcessInstanceList) {
+            list.add(Integer.valueOf(historicProcessInstance.getBusinessKey()));
+        }
+
+        PageHelper.startPage(page, 8);
+        //根据业务主键查询已完成工程
+        List<ProjectMessage> projectMessageList = projectMessageService.selectByBusinessKey(list, proName, proSchedule, proType, proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
+
         map.put("pageInfo", pageInfo);
         return JsonHelper.toJSONString(map);
     }
@@ -447,7 +467,8 @@ public class ProjectMessageController {
      * @param taskId taskId
      * @return s
      */
-    @RequestMapping("/policePerform.do")
+    @RequiresPermissions("IndustryApproval")
+    @RequestMapping("/industryPerform.do")
     @ResponseBody
     public String policePerform(String taskId, Integer id, Integer status) {
         activiti.finishCurrentTaskByTaskId(taskId);
@@ -464,7 +485,8 @@ public class ProjectMessageController {
      * @param taskId taskId
      * @return s
      */
-    @RequestMapping("/industryPerform.do")
+    @RequiresPermissions("policeConfirm")
+    @RequestMapping("/policePerform.do")
     @ResponseBody
     public String industryPerform(String taskId, Integer id, Integer status) {
         activiti.finishCurrentTaskByTaskId(taskId);
@@ -481,6 +503,7 @@ public class ProjectMessageController {
      * @param schedule schedule
      * @return s
      */
+    @RequiresPermissions("projectImplementation")
     @RequestMapping("/startWork.do")
     @ResponseBody
     public String startWork(Integer id, Integer schedule) {
@@ -496,6 +519,7 @@ public class ProjectMessageController {
      * @param taskId taskId
      * @return s
      */
+    @RequiresPermissions("projectImplementation")
     @RequestMapping("/implementationPerform.do")
     @ResponseBody
     public String implementationPerform(String taskId, Integer id, Integer schedule) {
