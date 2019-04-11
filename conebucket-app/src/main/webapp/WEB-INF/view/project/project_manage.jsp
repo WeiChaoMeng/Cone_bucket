@@ -126,13 +126,13 @@
                     </tspan>
                 </text>
 
-                <rect x="90" y="150" width="100" height="50" r="10" rx="10" ry="10"
+                <rect x="90" y="120" width="100" height="50" r="10" rx="10" ry="10"
                       fill="#3eaefd" stroke="#ffffff" opacity="1"
                       fill-opacity="1" stroke-width="1" id="1" onclick="rectButton(1)"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                 ></rect>
 
-                <text x="140" y="180" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                <text x="140" y="150" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
                       fill="#000000"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                       font-size="13px">
@@ -141,13 +141,13 @@
                     </tspan>
                 </text>
 
-                <rect x="90" y="280" width="100" height="50" r="10" rx="10" ry="10"
+                <rect x="90" y="220" width="100" height="50" r="10" rx="10" ry="10"
                       fill="#3eaefd" stroke="#ffffff" opacity="1"
                       fill-opacity="1" stroke-width="1" id="2" onclick="rectButton(2)"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                 ></rect>
 
-                <text x="140" y="310" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                <text x="140" y="250" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
                       fill="#000000"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                       font-size="13px">
@@ -156,13 +156,13 @@
                     </tspan>
                 </text>
 
-                <rect x="90" y="410" width="100" height="50" r="10" rx="10" ry="10"
+                <rect x="90" y="320" width="100" height="50" r="10" rx="10" ry="10"
                       fill="#3eaefd" stroke="#ffffff" opacity="1"
                       fill-opacity="1" stroke-width="1" id="3" onclick="rectButton(3)"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                 ></rect>
 
-                <text x="140" y="440" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                <text x="140" y="350" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
                       fill="#000000"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                       font-size="13px">
@@ -171,13 +171,13 @@
                     </tspan>
                 </text>
 
-                <rect x="90" y="540" width="100" height="50" r="10" rx="10" ry="10"
+                <rect x="90" y="420" width="100" height="50" r="10" rx="10" ry="10"
                       fill="#3eaefd" stroke="#ffffff" opacity="1"
                       fill-opacity="1" stroke-width="1" id="4" onclick="rectButton(4)"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1; fill-opacity: 1; stroke-width: 1px;"
                 ></rect>
 
-                <text x="140" y="570" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
+                <text x="140" y="450" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none"
                       fill="#000000"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 13px Arial;"
                       font-size="13px">
@@ -186,28 +186,28 @@
                     </tspan>
                 </text>
 
-                <path fill="none" stroke="#808080" d="M140,75L140,125L140,145" stroke-width="2"
+                <path fill="none" stroke="#808080" d="M140,75L140,110" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
                 <path fill="#808080" stroke="#808080"
-                      d="M140,145L143.46410161513776,139L136.53589838486224,139Z" stroke-width="2"
+                      d="M140,115L143.46410161513776,109L136.53589838486224,109Z" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                <path fill="none" stroke="#808080" d="M140,270L140,270L140,205" stroke-width="2"
+                <path fill="none" stroke="#808080" d="M140,210L140,175" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
                 <path fill="#808080" stroke="#808080"
-                      d="M140,275L143.46410161513776,269L136.53589838486224,269Z" stroke-width="2"
+                      d="M140,215L143.46410161513776,209L136.53589838486224,209Z" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                <path fill="none" stroke="#808080" d="M140,395L140,400L140,335" stroke-width="2"
+                <path fill="none" stroke="#808080" d="M140,310L140,275" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
                 <path fill="#808080" stroke="#808080"
-                      d="M140,405L143.46410161513776,399L136.53589838486224,399Z" stroke-width="2"
+                      d="M140,315L143.46410161513776,309L136.53589838486224,309Z" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
 
-                <path fill="none" stroke="#808080" d="M140,520L140,530L140,465" stroke-width="2"
+                <path fill="none" stroke="#808080" d="M140,375L140,410" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
                 <path fill="#808080" stroke="#808080"
-                      d="M140,535L143.46410161513776,529L136.53589838486224,529Z" stroke-width="2"
+                      d="M140,415L143.46410161513776,409L136.53589838486224,409Z" stroke-width="2"
                       style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-width: 2px;"></path>
             </svg>
         </div>
