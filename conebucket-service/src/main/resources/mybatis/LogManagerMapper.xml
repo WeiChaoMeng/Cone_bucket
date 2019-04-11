@@ -8,7 +8,7 @@
 
     <select id="selectLogDataByLimte" resultType="com.jiaoke.bean.LogMessage">
         SELECT
-            cbl.id,
+            CBL.id,
             CBL.cone_bucket_num AS coneBucketNum,
             CBT.type_name AS coneBucketName,
             CBL.cone_bucket_type AS coneBucketType,

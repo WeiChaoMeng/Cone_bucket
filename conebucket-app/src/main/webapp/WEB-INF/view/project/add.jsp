@@ -41,7 +41,7 @@
 <body>
 
 <div class="content" style="padding: 20px;background: #fff">
-    <div class="panel-heading" style="font-size: 16px;border: 1px #bfbfbf solid;border-bottom: none;">新增工程</div>
+    <div class="" style="padding:15px 0;font-size: 17px;font-weight:600;text-align: center">新增工程</div>
     <form id="projectMessage">
         <table class="table table-condensed table-bordered table-hover">
             <tbody>
@@ -154,7 +154,7 @@
                 <td style="">锥桶编号</td>
                 <td colspan="3">
                     <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off"
-                           onkeyup="this.value=this.value.replace(/，/g,',')">
+                           onkeyup="this.value=this.value.replace(/，/g,','),this.value=this.value.replace(/\s+/g,'')">
                 </td>
             </tr>
 
@@ -164,10 +164,10 @@
 
             <tr>
                 <td colspan="4" rowspan="5" style="height: 600px;">
-                    <input type="button" value="重绘地图" onclick="reloadMap()"
-                           style="background: #00acee;color: #fff;padding: 5px;float: right; margin: 0 10px 5px 0;">
+                    <input type="button" value="重绘地图" onclick="reloadMap()" class="btn btn-primary btn-sm"
+                           style="float: right;margin-bottom: 5px;">
                     <input type="hidden" id="proScope" name="proScope">
-                    <div id="container"></div>
+                    <div id="container" style="height: 95%"></div>
                 </td>
             </tr>
             </tbody>

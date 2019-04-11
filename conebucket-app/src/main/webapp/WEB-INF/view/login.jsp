@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>登录页面</title>
+    <title>道路施工作业点在线监管系统-登录页面</title>
     <link rel="stylesheet" href="../../static/css/login.css" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="../../static/img/favicon.ico">
 </head>

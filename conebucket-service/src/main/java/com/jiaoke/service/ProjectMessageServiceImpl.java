@@ -187,14 +187,30 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         projectMessage.setProStartTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProStartTimeStr()));
         projectMessage.setProEndTime(DateUtil.stringConvertYYYYMMDD(projectMessage.getProEndTimeStr()));
 
+        //工程日志
+        ProjectLog projectLog = new ProjectLog();
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        projectLog.setOperationUser(userInfo.getUsername());
+        projectLog.setLogType("修改工程");
+        projectLog.setLogContent(projectMessage.getProName());
+        projectLog.setOperationTime(new Date());
         //更新工程信息表
         if (projectMessageMapper.updateById(projectMessage) < 0) {
+            projectLog.setState("失败");
+            projectLogMapper.insertSelective(projectLog);
             return -1;
         }
+        projectLog.setState("成功");
+        projectLogMapper.insertSelective(projectLog);
 
         //删除工程关联的锥桶表
         if (projectConeBucketMapper.deleteByProId(projectMessage.getId()) < 0) {
             return -1;
+        }
+
+        //如果锥桶编号为空直接返回修改成功
+        if ("".equals(projectMessage.getConeBucketNum())){
+            return 1;
         }
 
         //拆分录入的锥桶编号
@@ -226,6 +242,9 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
                 }
 
             } else {
+                //更新锥桶信息
+                coneBucket.setConeBucketType(projectMessage.getConeBucketType());
+                coneBucketMessageMapper.updateByPrimaryKeySelective(coneBucket);
                 //如果存在直接插入工程锥桶表
                 ProjectConeBucket projectConeBucket = new ProjectConeBucket();
                 projectConeBucket.setProId(projectMessage.getId());

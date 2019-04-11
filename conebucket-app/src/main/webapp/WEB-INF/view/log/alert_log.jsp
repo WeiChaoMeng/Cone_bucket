@@ -18,36 +18,36 @@
 
 <div class="main_container">
     <!-- page content -->
-    <div class="panel panel-default query-criteria">
-        <div class="panel-heading">查询条件</div>
+    <%--<div class="panel panel-default query-criteria">--%>
+        <%--<div class="panel-heading">查询条件</div>--%>
 
-        <div class="panel-body">
-            <form id="formSearch" class="form-horizontal">
-                <div class="row">
+        <%--<div class="panel-body">--%>
+            <%--<form id="formSearch" class="form-horizontal">--%>
+                <%--<div class="row">--%>
 
-                    <label id="nickname" class="control-label col-sm-1" for="txt_search_road1">日志内容</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" id="txt_search_road1" autocomplete="off">
-                    </div>
+                    <%--<label id="nickname" class="control-label col-sm-1" for="txt_search_road1">日志内容</label>--%>
+                    <%--<div class="col-sm-3">--%>
+                        <%--<input type="text" class="form-control" id="txt_search_road1" autocomplete="off">--%>
+                    <%--</div>--%>
 
-                    <label id="name" class="control-label col-sm-1" for="txt_search_road1">操作时间</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="txt_search_road2" autocomplete="off">
-                    </div>
+                    <%--<label id="name" class="control-label col-sm-1" for="txt_search_road1">操作时间</label>--%>
+                    <%--<div class="col-sm-2">--%>
+                        <%--<input type="text" class="form-control" id="txt_search_road2" autocomplete="off">--%>
+                    <%--</div>--%>
 
-                    <label id="roadgrade" class="control-label col-sm-1" for="txt_search_road2">操作结果</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="txt_search_road3" autocomplete="off">
-                    </div>
+                    <%--<label id="roadgrade" class="control-label col-sm-1" for="txt_search_road2">操作结果</label>--%>
+                    <%--<div class="col-sm-2">--%>
+                        <%--<input type="text" class="form-control" id="txt_search_road3" autocomplete="off">--%>
+                    <%--</div>--%>
 
-                    <div>
-                        <button type="button" id="btn_query" class="btn btn-primary search-btn">查询
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+                    <%--<div>--%>
+                        <%--<button type="button" id="btn_query" class="btn btn-primary search-btn">查询--%>
+                        <%--</button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+        <%--</div>--%>
+    <%--</div>--%>
 
     <!--table-->
     <div class="table-style">
@@ -55,7 +55,7 @@
 
             <div class="x_content">
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="border-left: none;border-right: none;">
                     <thead>
                     <tr>
                         <th style="width: 5%">序号</th>

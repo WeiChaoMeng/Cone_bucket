@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,7 +27,7 @@
 
 
 <div class="content" style="padding: 20px;background: #fff">
-    <div class="panel-heading" style="font-size: 16px;border: 1px #bfbfbf solid;border-bottom: none;">新增工程</div>
+    <div class="" style="padding:15px 0;font-size: 17px;font-weight:600;text-align: center">修改工程</div>
     <form id="projectMessage">
         <table class="table table-condensed table-bordered table-hover">
             <tbody>
@@ -38,7 +39,8 @@
                     <input type="hidden" name="proStatus" value="${projectMessage.proStatus}">
                     <input type="hidden" name="proSchedule" value="${projectMessage.proSchedule}">
                     <input class="form-control" type="text" id="proName" name="proName"
-                           value="${projectMessage.proName}" autocomplete="off">
+                           value="${projectMessage.proName}" autocomplete="off"
+                           onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </td>
 
                 <td style="width: 10%">工程类型</td>
@@ -143,39 +145,50 @@
                 <td style="">锥桶类型</td>
                 <td style="width: 40%">
                     <select class="form-control" id="coneBucketType" name="coneBucketType">
-                        <c:forEach items="${projectMessage.coneBucketMessage}" var="coneBucketMessage" begin="0" end="0">
+                        <c:if test="${fn:length(projectMessage.coneBucketMessage) == 0}">
+                            <option value="">--请选择--</option>
                             <c:forEach items="${coneBucketTypeList}" var="coneBucketType">
-                                <c:choose>
-                                    <c:when test="${coneBucketType.id == coneBucketMessage.coneBucketType}">
-                                        <option value="${coneBucketType.id}" selected>${coneBucketType.typeName}</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${coneBucketType.id}">${coneBucketType.typeName}</option>
-                                    </c:otherwise>
-                                </c:choose>
+                                <option value="${coneBucketType.id}">${coneBucketType.typeName}</option>
                             </c:forEach>
-                        </c:forEach>
+                        </c:if>
+
+                        <c:if test="${fn:length(projectMessage.coneBucketMessage) > 0}">
+                            <c:forEach items="${projectMessage.coneBucketMessage}" var="coneBucketMessage" begin="0"
+                                       end="0">
+                                <c:forEach items="${coneBucketTypeList}" var="coneBucketType">
+                                    <c:choose>
+                                        <c:when test="${coneBucketType.id == coneBucketMessage.coneBucketType}">
+                                            <option value="${coneBucketType.id}"
+                                                    selected>${coneBucketType.typeName}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${coneBucketType.id}">${coneBucketType.typeName}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:forEach>
+                        </c:if>
                     </select>
                 </td>
 
                 <td style="">锥桶编号</td>
-                <td colspan="3">
+                <td>
                     <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off"
                            value="${coneBucketNum}"
-                           onkeyup="this.value=this.value.replace(/，/g,',')">
+                           onkeyup="this.value=this.value.replace(/，/g,','),this.value=this.value.replace(/\s+/g,'')">
                 </td>
             </tr>
 
             <tr>
-                <td colspan="4" style="width: 10%">施工范围</td>
+                <td colspan="4" style="text-align: left;font-size: 14px;text-indent: 20px;padding: 10px 0;">施工范围</td>
             </tr>
 
             <tr>
                 <td colspan="4" rowspan="5" style="height: 600px;">
-                    <input type="button" value="重新加载地图" onclick="reloadMap()"
-                           style="background: #00acee;color: #fff;padding: 5px;float: right; margin: 0 10px 5px 0;">
+                    <input type="button" value="重绘地图" onclick="reloadMap()" class="btn btn-primary btn-sm"
+                           style="float: right;margin-bottom: 5px;">
                     <input type="hidden" id="proScope" name="proScope" value="">
-                    <div id="container"></div>
+                    <div id="container" style="height: 95%"></div>
                 </td>
             </tr>
             </tbody>

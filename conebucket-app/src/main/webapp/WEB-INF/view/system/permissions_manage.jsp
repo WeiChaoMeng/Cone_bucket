@@ -26,7 +26,7 @@
 
         <div class="panel-body">
                 <div class="row">
-                    <span id="nickname" class="query-criteria-name">权限管理</span>
+                    <span id="nickname" class="query-criteria-name">权限描述</span>
                     <div class="query-criteria-input">
                         <input type="text" class="form-control" id="description" autocomplete="off">
                     </div>
@@ -47,9 +47,9 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th style="width: 10%;">序号</th>
+                        <th style="width: 5%;">序号</th>
                         <th style="width: 45%;">权限控制地址</th>
-                        <th style="width: 45%;">权限描述</th>
+                        <th style="width: 50%;">权限描述</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">

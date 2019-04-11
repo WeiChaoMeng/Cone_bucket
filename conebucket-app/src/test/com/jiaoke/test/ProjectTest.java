@@ -1,9 +1,13 @@
 package com.jiaoke.test;
 
+import com.jiaoke.bean.ProjectLog;
 import com.jiaoke.util.SpringHelper;
+import com.jiaoke.web.dao.ProjectLogMapper;
 import com.jiaoke.web.dao.ProjectMessageMapper;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * @author lihui
@@ -12,18 +16,21 @@ import org.junit.Test;
  */
 public class ProjectTest {
 
-    private ProjectMessageMapper projectMessageMapper;
+//    private ProjectMessageMapper projectMessageMapper;
 //    private ConeBucketMessageMapper coneBucketMessageMapper;
 //    private ProjectLocationMapper projectLocationMapper;
+    private ProjectLogMapper projectLogMapper;
 
     @Before
     public void setUp() {
-        projectMessageMapper = SpringHelper.getBean("projectMessageMapper");
+        projectLogMapper = SpringHelper.getBean("projectLogMapper");
     }
 
     @Test
     public void testUser() {
-        String projectName = projectMessageMapper.selectProjectName(21);
-        System.out.println(projectName);
+        List<ProjectLog> projectLogList = projectLogMapper.selectAllData();
+        for (ProjectLog projectLog : projectLogList) {
+            System.out.println(projectLog.getLogType() + projectLog.getLogContent() + projectLog.getOperationUser() + projectLog.getId() + projectLog.getState());
+        }
     }
 }

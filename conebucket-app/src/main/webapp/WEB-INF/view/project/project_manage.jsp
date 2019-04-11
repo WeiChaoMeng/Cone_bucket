@@ -477,7 +477,7 @@
                         ProjectMessage += '<tr>';
                         ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                         ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
+                        ProjectMessage += '<td class="table-td-content" title="' + ProjectMessageList[i].proName + '">' + ProjectMessageList[i].proName + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
                         ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
@@ -586,23 +586,29 @@
                     //当前页
                     var pageNum = ProjectMessages.pageNum;
 
-                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                    if (ProjectMessageList.length < 1) {
                         pro += '<tr>';
-                        pro += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        pro += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
-                        pro += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        pro += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        pro += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        pro += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        pro += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        pro += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                        pro += '<td style="text-align: center; width: 110px;">';
-                        pro += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
-                        <shiro:hasPermission name="IndustryApproval">
-                        pro += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
-                        </shiro:hasPermission>
-                        pro += '</td>';
+                        pro += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                         pro += '</tr>';
+                    } else {
+                        for (var i = 0; i < ProjectMessageList.length; i++) {
+                            pro += '<tr>';
+                            pro += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                            pro += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
+                            pro += '<td class="table-td-content" title="' + ProjectMessageList[i].proName + '">' + ProjectMessageList[i].proName + '</td>';
+                            pro += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                            pro += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                            pro += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                            pro += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                            pro += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                            pro += '<td style="text-align: center; width: 110px;">';
+                            pro += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
+                            <shiro:hasPermission name="IndustryApproval">
+                            pro += '<button class="btn btn-primary btn-sm" onclick="industryPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
+                            </shiro:hasPermission>
+                            pro += '</td>';
+                            pro += '</tr>';
+                        }
                     }
                 }
 
@@ -696,23 +702,29 @@
                     //当前页
                     var pageNum = ProjectMessages.pageNum;
 
-                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                    if (ProjectMessageList.length < 1) {
                         ProjectMessage += '<tr>';
-                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
-                        <shiro:hasPermission name="policeConfirm">
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
-                        </shiro:hasPermission>
-                        ProjectMessage += '</td>';
+                        ProjectMessage += '<td colspan="9" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                         ProjectMessage += '</tr>';
+                    } else {
+                        for (var i = 0; i < ProjectMessageList.length; i++) {
+                            ProjectMessage += '<tr>';
+                            ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                            ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
+                            ProjectMessage += '<td class="table-td-content" title="' + ProjectMessageList[i].proName + '">' + ProjectMessageList[i].proName + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                            ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
+                            <shiro:hasPermission name="policeConfirm">
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="policePerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">通过</button>';
+                            </shiro:hasPermission>
+                            ProjectMessage += '</td>';
+                            ProjectMessage += '</tr>';
+                        }
                     }
                 }
 
@@ -805,32 +817,38 @@
                     //当前页
                     var pageNum = ProjectMessages.pageNum;
 
-                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                    if (ProjectMessageList.length < 1) {
                         ProjectMessage += '<tr>';
-                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
-                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        ProjectMessage += '</button>';
-                        if (ProjectMessageList[i].proScheduleStr == "未进场") {
-                            <shiro:hasPermission name="projectImplementation">
-                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场</button>';
-                            </shiro:hasPermission>
-                        } else {
-                            <shiro:hasPermission name="projectImplementation">
-                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工';
-                            </shiro:hasPermission>
-                        }
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '</td>';
+                        ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                         ProjectMessage += '</tr>';
+                    } else {
+                        for (var i = 0; i < ProjectMessageList.length; i++) {
+                            ProjectMessage += '<tr>';
+                            ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                            ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
+                            ProjectMessage += '<td class="table-td-content" title="' + ProjectMessageList[i].proName + '">' + ProjectMessageList[i].proName + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
+                            ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                            ProjectMessage += '</button>';
+                            if (ProjectMessageList[i].proScheduleStr == "未进场") {
+                                <shiro:hasPermission name="projectImplementation">
+                                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场</button>';
+                                </shiro:hasPermission>
+                            } else {
+                                <shiro:hasPermission name="projectImplementation">
+                                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工';
+                                </shiro:hasPermission>
+                            }
+                            ProjectMessage += '</button>';
+                            ProjectMessage += '</td>';
+                            ProjectMessage += '</tr>';
+                        }
                     }
                 }
 
@@ -944,22 +962,28 @@
                     //当前页
                     var pageNum = ProjectMessages.pageNum;
 
-                    for (var i = 0; i < ProjectMessageList.length; i++) {
+                    if (ProjectMessageList.length < 1) {
                         ProjectMessage += '<tr>';
-                        ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
-                        ProjectMessage += '<td class="table-td-content">' + ProjectMessageList[i].proName + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
-                        ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
-                        ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                        ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                        ProjectMessage += '</button>';
-                        ProjectMessage += '</td>';
+                        ProjectMessage += '<td colspan="10" style="text-align: center;">' + '暂无符合条件的数据' + '</td>';
                         ProjectMessage += '</tr>';
+                    } else {
+                        for (var i = 0; i < ProjectMessageList.length; i++) {
+                            ProjectMessage += '<tr>';
+                            ProjectMessage += '<td><input type="checkbox" value="' + ProjectMessageList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                            ProjectMessage += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 8 + i + 1) + '</td>';
+                            ProjectMessage += '<td class="table-td-content" title="' + ProjectMessageList[i].proName + '">' + ProjectMessageList[i].proName + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proTypeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proNum + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStartTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proEndTimeStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
+                            ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
+                            ProjectMessage += '<td style="text-align: center; width: 110px;">';
+                            ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="details(' + ProjectMessageList[i].id + ')">详细';
+                            ProjectMessage += '</button>';
+                            ProjectMessage += '</td>';
+                            ProjectMessage += '</tr>';
+                        }
                     }
                 }
 
@@ -1031,7 +1055,7 @@
     function del() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
-            layer.msg('请选择数据!');
+            layer.msg('请选择一条数据!');
             return false;
         } else {
             var id = $("tbody input:checked").val();
@@ -1058,7 +1082,7 @@
     function edit() {
         var length = $("tbody input:checked").length;
         if (length != 1) {
-            layer.msg('请选择数据!');
+            layer.msg('请选择一条数据!');
             return false;
         } else {
             var id = $("tbody input:checked").val();

@@ -48,7 +48,7 @@ public class WechatAppControl {
     /**
      * 中维URL
      */
-    @Value("${zonwi}")
+        @Value("${zonwi}")
     private String zonwiURI;
 
 

@@ -24,7 +24,7 @@ public class ProjectLogServiceImpl implements ProjectLogService {
 
     @Override
     public List<ProjectLog> selectAll() {
-        List<ProjectLog> projectLogList = projectLogMapper.selectAll();
+        List<ProjectLog> projectLogList = projectLogMapper.selectAllData();
         for (ProjectLog projectLog : projectLogList) {
             projectLog.setOperationTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(projectLog.getOperationTime()));
         }

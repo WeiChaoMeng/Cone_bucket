@@ -125,6 +125,14 @@
 
             <div id="mapShow" class="map-content">
                 <div id="container"></div>
+                <div style="height: 90px;position: absolute;bottom: 40px;right: 30px;background: #fff;width: 90px;text-align: center;padding: 0 7px;">
+                    <span style="float: right;line-height: 30px;text-indent: 7px;">:未进场</span>
+                    <hr style="background: #ff0000;border: 0;margin: 0;padding: 0;width: 20px;height: 5px;float: right;margin-top: 13px;">
+                    <span style="float: right;line-height: 30px;text-indent: 7px;">:施工中</span>
+                    <hr style="background: #e1ef00;border: 0;margin: 0;padding: 0;width: 20px;height: 5px;float: right;margin-top: 13px;">
+                    <span style="float: right;line-height: 30px;text-indent: 7px;">:已完工</span>
+                    <hr style="background: #00be8d;border: 0;margin: 0;padding: 0;width: 20px;height: 5px;float: right;margin-top: 13px;">
+                </div>
             </div>
         </div>
     </div>
@@ -136,57 +144,9 @@
 <%--引入腾讯地图--%>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
-    //地图与表单切换
-    function handover() {
-        if ($('#mapShow').css('display') === 'block') {
-            $('#mapShow').css('display', 'none');
-            $('#tableShow').css('display', 'block');
-        } else {
-            $('#mapShow').css('display', 'block');
-            $('#tableShow').css('display', 'none');
-        }
-    }
 
-    //重新加载页面
-    function reload() {
-        window.location.reload();
-    }
-
-    //分页
-    function exeData(page, type, parameter) {
-        //全部
-        if (parameter === 1) {
-            loadData(page);
-
-            //搜索
-        } else if (parameter === 2) {
-            getProMessageByCondition(page, parameter);
-        }
-
-    }
-
-    function loadPage(parameter) {
-        var myPageCount = parseInt($("#PageCount").val());
-        var myPageSize = parseInt($("#PageSize").val());
-        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
-        $("#countindex").val(countindex);
-
-        $.jqPaginator('#pagination', {
-            totalPages: parseInt($("#countindex").val()),
-            visiblePages: parseInt($("#visiblePages").val()),
-            currentPage: 1,
-            first: '<li class="first"><a href="javascript:;">首页</a></li>',
-            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
-            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
-            last: '<li class="last"><a href="javascript:;">末页</a></li>',
-            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-            onPageChange: function (page, type) {
-                if (type == "change") {
-                    exeData(page, type, parameter);
-                }
-            }
-        });
-    }
+    //变量
+    var projectMessagesList = "";
 
     //加载数据
     function loadData(page) {
@@ -205,25 +165,7 @@
                 //基本数据
                 parseResult(ProjectMessages);
 
-                //腾讯地图
-                var map = new qq.maps.Map(document.getElementById("container"), {
-                    center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
-                    zoom: 10                                                 // 地图的中心地理坐标。
-                });
-
-                //施工范围
-                var list = ProjectMessages.list;
-
-                //projectMessage
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].proScheduleStr === "未进场") {
-                        projectRange(map, list, i, '#FF0000DD');
-                    } else if (list[i].proScheduleStr === "施工中") {
-                        projectRange(map, list, i, '#e1ef00');
-                    } else if (list[i].proScheduleStr === "已完工") {
-                        projectRange(map, list, i, '#00be8d');
-                    }
-                }
+                projectMessagesList = ProjectMessages.list;
 
                 loadPage(1);
             },
@@ -233,36 +175,43 @@
         })
     }
 
-    //加载所有工程展示在地图
-    function projectRange(map, pro, index, color) {
+    //条件查询方法
+    function getProMessageByCondition(page, parameter) {
+        var proName = $("#proName").val();
+        var proSchedule = $("#proSchedule").val();
+        var proType = $("#proType").val();
+        var proStatus = $("#proStatus").val();
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
+            data: {
+                'page': page,
+                'proName': proName,
+                'proSchedule': proSchedule,
+                'proType': proType,
+                'proStatus': proStatus
+            },
+            async: false,
+            success: function (data) {
+                var ProjectMessages = JSON.parse(data);
+                //总数
+                $("#PageCount").val(ProjectMessages.total);
+                //每页显示条数
+                $("#PageSize").val("10");
 
-        if (pro[index].projectLocation.length == 0) {
-            return;
-        }
-        var path = [];
-        //projectLocation
-        for (var j = 0; j < pro[index].projectLocation.length; j++) {
-            //线
-            path.push(new qq.maps.LatLng(pro[index].projectLocation[j].latitude, pro[index].projectLocation[j].longitude));
-        }
+                //基本数据
+                parseResult(ProjectMessages);
 
-        //线
-        var polyline = new qq.maps.Polyline({
-            path: path,
-            strokeColor: color,
-            strokeWeight: 2,
-            editable: false,
-            map: map
-        });
+                projectMessagesList = ProjectMessages.list;
 
-        //添加到提示窗
-        var info = new qq.maps.InfoWindow({
-            visible: true,
-            content: pro[index].proName,
-            position: path[Math.ceil(path.length / 2 - 1)],
-            close: false,
-            map: map
-        });
+                projectLocationShow(projectMessagesList);
+
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
     }
 
     //解析list
@@ -299,6 +248,47 @@
         $('#tbody').html(ProjectMessage);
     }
 
+    //分页
+    function loadPage(parameter) {
+        var myPageCount = parseInt($("#PageCount").val());
+        var myPageSize = parseInt($("#PageSize").val());
+        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
+        $("#countindex").val(countindex);
+
+        $.jqPaginator('#pagination', {
+            totalPages: parseInt($("#countindex").val()),
+            visiblePages: parseInt($("#visiblePages").val()),
+            currentPage: 1,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (page, type) {
+                if (type == "change") {
+                    exeData(page, type, parameter);
+                }
+            }
+        });
+    }
+
+    //分页
+    function exeData(page, type, parameter) {
+        //全部
+        if (parameter === 1) {
+            loadData(page);
+
+            //搜索
+        } else if (parameter === 2) {
+            getProMessageByCondition(page, parameter);
+        }
+    }
+
+    //重新加载页面
+    function reload() {
+        window.location.reload();
+    }
+
     //工程详情信息
     function details(id) {
         $.ajax({
@@ -316,62 +306,128 @@
         });
     }
 
-    //条件查询方法
-    function getProMessageByCondition(page, parameter) {
-        var proName = $("#proName").val();
-        var proSchedule = $("#proSchedule").val();
-        var proType = $("#proType").val();
-        var proStatus = $("#proStatus").val();
-        $.ajax({
-            type: "post",
-            url: localStorage.getItem("ajaxUrl") + '/projectMessage/getProMessageByCondition.do',
-            data: {
-                'page': page,
-                'proName': proName,
-                'proSchedule': proSchedule,
-                'proType': proType,
-                'proStatus': proStatus
-            },
-            async: false,
-            success: function (data) {
-                var ProjectMessages = JSON.parse(data);
-                //总数
-                $("#PageCount").val(ProjectMessages.total);
-                //每页显示条数
-                $("#PageSize").val("10");
-
-                //基本数据
-                parseResult(ProjectMessages);
-
-                var map = new qq.maps.Map(document.getElementById("container"), {
-                    center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
-                    zoom: 10                                                 // 地图的中心地理坐标。
-                });
-
-                //施工范围
-                var list = ProjectMessages.list;
-
-                //projectMessage
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i].proScheduleStr === "未进场") {
-                        projectRange(map, list, i, '#FF0000DD');
-                    } else if (list[i].proScheduleStr === "施工中") {
-                        projectRange(map, list, i, '#e1ef00');
-                    } else if (list[i].proScheduleStr === "已完工") {
-                        projectRange(map, list, i, '#00be8d');
-                    }
-                }
-
-                loadPage(parameter);
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
+    //地图与表单切换
+    function handover() {
+        if ($('#mapShow').css('display') === 'block') {
+            $('#mapShow').css('display', 'none');
+            $('#tableShow').css('display', 'block');
+        } else {
+            $('#mapShow').css('display', 'block');
+            $('#tableShow').css('display', 'none');
+            projectLocationShow(projectMessagesList);
+        }
     }
 
-    //分页
+    //地图展示
+    function projectLocationShow(proMessageAllList) {
+        //腾讯地图
+        var map = new qq.maps.Map(document.getElementById("container"), {
+            center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
+            zoom: 10                                                 // 地图的中心地理坐标。
+        });
+
+        for (var i = 0; i < proMessageAllList.length; i++) {
+
+            var location = proMessageAllList[i].projectLocation;
+
+            var path = [];
+            //projectLocation
+            for (var j = 0; j < location.length; j++) {
+                //线
+                path.push(new qq.maps.LatLng(location[j].latitude, location[j].longitude));
+            }
+
+            var color;
+
+            if (proMessageAllList[i].proScheduleStr === "未进场") {
+                color = '#ff0000';
+            } else if (proMessageAllList[i].proScheduleStr === "施工中") {
+                color = '#e1ef00';
+            } else if (proMessageAllList[i].proScheduleStr === "已完工") {
+                color = '#00be8d';
+            }
+
+            //线
+            var polyline = new qq.maps.Polyline({
+                path: path,
+                strokeColor: color,
+                strokeWeight: 2,
+                editable: false,
+                map: map
+            });
+
+            if (path.length === 2) {
+                var lats = 0;
+                var lngs = 0;
+
+                for (var k = 0; k < path.length; k++) {
+                    lats += path[k].lat;
+                    lngs += path[k].lng;
+                }
+
+                var acd = new qq.maps.LatLng(lats / path.length, lngs / path.length);
+
+                //添加到提示窗
+                var info = new qq.maps.InfoWindow({
+                    visible: true,
+                    content: proMessageAllList[i].proName,
+                    position: acd,
+                    close: false,
+                    map: map
+                });
+            } else {
+                //添加到提示窗
+                var infos = new qq.maps.InfoWindow({
+                    visible: true,
+                    content: proMessageAllList[i].proName,
+                    position: path[Math.ceil(path.length / 2 - 1)],
+                    close: false,
+                    map: map
+                });
+            }
+        }
+
+        //锥桶位置
+        var coneBucketLocation = [
+            //骏业路
+            new qq.maps.LatLng(23.135964, 113.531507),
+            new qq.maps.LatLng(23.136044, 113.531761),
+
+            //西三环
+            new qq.maps.LatLng(39.9234289527, 116.3101959229),
+            new qq.maps.LatLng(39.9228694481, 116.3102227449),
+
+            //东四环
+            new qq.maps.LatLng(39.9223428514, 116.4897751808),
+            new qq.maps.LatLng(39.920582014, 116.4897322655)
+        ];
+
+        for (var i = 0; i < coneBucketLocation.length; i++) {
+            //点
+            var marker = new qq.maps.Marker({
+                position: coneBucketLocation[i],
+                map: map
+            });
+
+            //点
+            var anchor = new qq.maps.Point(10, 24),
+                size = new qq.maps.Size(20, 26),
+                origin = new qq.maps.Point(0, 0),
+                markerIcon = new qq.maps.MarkerImage(
+                    "../../../static/img/cone_bucket.png",
+                    size,
+                    origin,
+                    anchor
+                );
+            marker.setIcon(markerIcon);
+        }
+    }
+
+    //初始化
     $(function () {
+        var projectMessageAllList = '${projectMessageList}';
+        var projectMessageList = JSON.parse(projectMessageAllList);
+        projectLocationShow(projectMessageList);
         loadData(1);
     });
 

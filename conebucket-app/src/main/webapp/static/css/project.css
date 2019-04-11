@@ -10,6 +10,7 @@ html, body {
 
 .table {
     border: 1px solid #ccc;
+    table-layout: fixed;
 }
 
 .table.table-bordered > tbody > tr > td, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > td, .table.table-bordered > tfoot > tr > th, .table.table-bordered > thead > tr > td, .table.table-bordered > thead > tr > th {
@@ -185,6 +186,9 @@ th {
     padding: 5px 0;
     text-align: left;
     text-indent: 20px;
+     overflow: hidden;
+     white-space: nowrap;
+     text-overflow: ellipsis;
 }
 
 .paging-table-div {

@@ -133,7 +133,7 @@
                 //总数
                 $("#PageCount").val(objectInfo.total);
                 //每页显示条数
-                $("#PageSize").val("9");
+                $("#PageSize").val("10");
 
                 //基本数据
                 parseResult(objectInfo);

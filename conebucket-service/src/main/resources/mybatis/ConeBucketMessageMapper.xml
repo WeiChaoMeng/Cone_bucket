@@ -3,7 +3,12 @@
 <mapper namespace="com.jiaoke.web.dao.ConeBucketMessageMapper">
 
     <select id="selectByConeBucketNum" parameterType="java.lang.String" resultType="com.jiaoke.bean.ConeBucketMessage">
-        select id,cone_bucket_type,cone_bucket_num,create_time from cone_bucket_message where cone_bucket_num = #{coneBucketNum} limit 1
+        select
+            id,
+            cone_bucket_type as coneBucketType,
+            cone_bucket_num as coneBucketNum,
+            create_time as createTime
+        from cone_bucket_message where cone_bucket_num = #{coneBucketNum} limit 1
     </select>
 
     <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"

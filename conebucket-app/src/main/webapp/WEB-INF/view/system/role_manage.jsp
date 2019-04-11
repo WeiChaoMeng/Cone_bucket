@@ -54,10 +54,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="columns columns-right btn-group pull-right">
+                <%--<div class="columns columns-right btn-group pull-right">
                     <button class="btn btn-default" type="button" name="refresh" aria-label="refresh"
                             title="刷新"><i class="fa fa-refresh"></i></button>
-                </div>
+                </div>--%>
             </div>
 
             <div class="x_content">

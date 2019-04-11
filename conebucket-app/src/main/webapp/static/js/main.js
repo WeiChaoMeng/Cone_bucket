@@ -712,7 +712,7 @@ function bindingPermission(id, permissionList) {
         permission += '<td class="table-list-td-checkbox" style="padding-right: 20px;">';
         permission += '<input type="checkbox" value="' + perList[i].id + '" onclick="window.event.cancelBubble=true;">';
         permission += '</td>';
-        permission += '<td class="td-border-bottom" style="cursor: pointer;" title="' + perList[i].description + '">' + perList[i].url + '</td>';
+        permission += '<td class="td-border-bottom" style="cursor: pointer;">' + perList[i].description + '</td>';
         permission += '</tr>';
     }
     $('#permissionBody').html(permission);

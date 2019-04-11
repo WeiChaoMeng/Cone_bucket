@@ -25,7 +25,7 @@
 
             <div class="x_content">
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="border-left: none;border-right: none;">
                     <thead>
                     <tr>
                         <th style="width: 15%">锥桶编号</th>

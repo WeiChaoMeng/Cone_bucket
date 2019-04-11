@@ -140,9 +140,12 @@ public class ProjectMessageController {
         List<ProjectSchedule> projectScheduleList = projectScheduleService.selectAll();
         //工程类型
         List<ProjectType> projectTypeList = projectTypeService.selectAll();
+        //所有工程展示在地图
+        List<ProjectMessage> projectMessageList = projectMessageService.selectAllData();
         model.addAttribute("projectStatusList", projectStatusList);
         model.addAttribute("projectScheduleList", projectScheduleList);
         model.addAttribute("projectTypeList", projectTypeList);
+        model.addAttribute("projectMessageList", JsonHelper.toJSONString(projectMessageList));
         return "project/project_query";
     }
 
@@ -156,10 +159,33 @@ public class ProjectMessageController {
     public String selectAll(int page) {
         PageHelper.startPage(page, 10);
         List<ProjectMessage> projectMessageList = projectMessageService.selectAllData();
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<>(projectMessageList);
         return JsonHelper.toJSONString(pageInfo);
     }
 
+    /**
+     * 功能描述: <br>
+     * <根据条件查询工程>
+     * 条件查询
+     *
+     * @param proName proName
+     * @param proType proType
+     * @return json
+     * @auther Melone
+     * @date 2019/3/19 14:05
+     */
+    @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String getProMessageByCondition(@RequestParam("page") int page,
+                                           @RequestParam("proName") String proName,
+                                           @RequestParam("proSchedule") String proSchedule,
+                                           @RequestParam("proType") String proType,
+                                           @RequestParam("proStatus") String proStatus) {
+        PageHelper.startPage(page, 10);
+        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
+        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
 
     /**
      * 跳转工程详情页
@@ -240,31 +266,6 @@ public class ProjectMessageController {
         model.addAttribute("projectMessage", projectMessage);
         model.addAttribute("coneBucketNum", coneBucketNum);
         return "project/edit";
-    }
-
-    /**
-     * 功能描述: <br>
-     * <根据条件查询工程>
-     * 条件查询
-     *
-     * @param proName proName
-     * @param proType proType
-     * @return json
-     * @auther Melone
-     * @date 2019/3/19 14:05
-     */
-    @RequestMapping(value = "/getProMessageByCondition.do", method = RequestMethod.POST)
-    @ResponseBody
-    public String getProMessageByCondition(@RequestParam("page") int page,
-                                           @RequestParam("proName") String proName,
-                                           @RequestParam("proSchedule") String proSchedule,
-                                           @RequestParam("proType") String proType,
-                                           @RequestParam("proStatus") String proStatus) {
-        PageHelper.startPage(page, 10);
-        List<ProjectMessage> projectMessageList = projectMessageService.getProMessageByCondition(proName, proSchedule, proType, proStatus);
-        PageInfo<ProjectMessage> pageInfo = new PageInfo<ProjectMessage>(projectMessageList);
-        return JsonHelper.toJSONString(pageInfo);
-
     }
 
     /**

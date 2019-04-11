@@ -51,7 +51,7 @@ public class Activiti {
      * @return taskList
      */
     public List<Task> queryTask(String assignee) {
-        return taskService.createTaskQuery().taskAssignee(assignee).list();
+        return taskService.createTaskQuery().taskAssignee(assignee).orderByTaskCreateTime().desc().list();
     }
 
     /**
