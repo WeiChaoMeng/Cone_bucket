@@ -1,0 +1,60 @@
+.table-hover > tbody > tr:hover {
+    background-color: #da7e0b !important;
+}
+.table th{
+    height: 30px !important;
+    border:solid 1px #183f5e !important;
+    background-color: #084b74 !important;
+    vertical-align: middle !important;
+}
+
+.table tr:nth-child(odd) {
+    background-color:#052846;
+}
+
+.table-query{
+    width:100%;
+    border-collapse:collapse;
+    border: solid 1px #012038;
+}
+
+/*锥桶管理*/
+/*在线*/
+.cone-barrel-online{
+    background: #337ab7;
+    width: 40%;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/*离线*/
+.cone-barrel-Offline{
+    background: #555e65;
+    width: 40%;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.sub-li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sub-li li p {
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 0;
+}
+
+.menu_list {
+    height: 100%;
+    width: 100%;
+    background: #011f39;
+    overflow: hidden;
+}

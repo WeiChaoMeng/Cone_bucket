@@ -1,0 +1,234 @@
+html, body {
+    height: 100%;
+    min-width: 1200px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 13px;
+    background: #e0e0e0;
+    font-family: '微软雅黑';
+    overflow: hidden;
+}
+
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}
+
+.header-top-area {
+    background: #fdfdfd;
+    width: 100%;
+    height: 13%;
+    margin-bottom: 1%;
+    min-width: 1200px;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.logo-div {
+    float: left;
+    width: 25%;
+    height: 60px;
+    vertical-align: middle;
+    line-height: 60px;
+    color: #000;
+    text-indent: 5px;
+}
+
+.action {
+    width: 60%;
+    float: left;
+    line-height: 57px;
+    color: #000;
+    display: flex;
+}
+
+.exit-div {
+    width: 15%;
+    color: #000000;
+    line-height: 60px;
+    float: left;
+    text-align: center;
+}
+
+.action-div {
+    width: 20%;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
+}
+
+.action-div-border {
+    border-bottom: 2px #00acee solid;
+    color: #00acee;
+}
+
+.secondary-menu-outer {
+    background: #f8f8f8;
+}
+
+.secondary-menu-style {
+    width: 80%;
+    height: 40px;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+}
+
+.secondary-menu-style-color {
+    color: #00acee;
+}
+
+.secondary-menu-system {
+    width: 25%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-system > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.secondary-menu-engineering {
+    width: 50%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-engineering > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.secondary-menu-device {
+    width: 100%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-device > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+}
+
+.secondary-menu-log {
+    width: 100%;
+    position: relative;
+    cursor: default;
+}
+
+.secondary-menu-log > div {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 45%;
+}
+
+.content-iframe {
+    background: #e7e8eb;
+    width: 100%;
+    margin: 0 auto;
+    height: 85%;
+    min-width: 1200px;
+}
+
+.table > tbody > tr > td.table-td-content {
+    vertical-align: middle;
+    padding: 5px 0;
+    text-align: left;
+    text-indent: 20px;
+}
+
+.table-td-title {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+    padding: 8px;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    padding: 10px 20px;
+    background: #fff;
+}
+
+.td-border-bottom:hover {
+    border-bottom: 1px #000 solid;
+}
+
+/*user - add*/
+.model-style {
+    padding: 30px 15px;
+}
+
+.user-add-div {
+    margin-bottom: 20px;
+}
+
+.user-add-label {
+    line-height: 34px;
+    padding-right: 2%;
+    width: 18%;
+    text-align: right;
+    margin: 0;
+    font-weight: 500;
+}
+
+.user-add-div-div {
+    width: 80%;
+    display: inline-block;
+}
+
+.user-add-but-div {
+    text-align: center;
+    margin-top: 30px;
+}
+/*user- add*/
+
+.roleList-table{
+    width: 100%;font-size: 13px;
+}
+.roleList-commit-div{
+    text-align: center;margin-top: 30px;
+}
+.model-dis{
+    display:none;height: 100%
+}

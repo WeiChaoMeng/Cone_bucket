@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.ProjectMessageMapper">
+
+    <resultMap id="projectMessageMap" type="com.jiaoke.bean.ProjectMessage">
+        <result column="id" property="id"/>
+
+        <!--关联查询工程经纬度表-->
+        <collection property="projectLocation" ofType="com.jiaoke.bean.ProjectLocation" column="id"
+                    select="com.jiaoke.web.dao.ProjectLocationMapper.selectByProId"/>
+
+        <!--关联查询工程锥桶-->
+        <collection property="coneBarrelManages" ofType="com.jiaoke.bean.ConeBarrelManage" column="id"
+                    select="com.jiaoke.web.dao.ConeBarrelManageMapper.selectByProId"/>
+    </resultMap>
+
+    <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.jiaoke.bean.ProjectMessage">
+        insert into project_message(
+          pro_name,
+          pro_type,
+          pro_num,
+          supervisor_unit,
+          supervisor_unit_phone,
+          construction_unit,
+          construction_unit_phone,
+          governor_unit,
+          governor_unit_phone,
+          pro_schedule,
+          pro_status,
+          pro_location,
+          pro_summarize,
+          pro_start_time,
+          pro_end_time,
+          reported_time,
+          approval_time,
+          notarize_time)
+        values(
+          #{proName},
+          #{proType},
+          #{proNum},
+          #{supervisorUnit},
+          #{supervisorUnitPhone},
+          #{constructionUnit},
+          #{constructionUnitPhone},
+          #{governorUnit},
+          #{governorUnitPhone},
+          #{proSchedule},
+          #{proStatus},
+          #{proLocation},
+          #{proSummarize},
+          #{proStartTime},
+          #{proEndTime},
+          #{reportedTime},
+          #{approvalTime},
+          #{notarizeTime})
+    </insert>
+
+    <select id="selectAllData" resultMap="projectMessageMap">
+        SELECT
+            pm.id as id,
+            pm.pro_name as proName,
+            pm.pro_num as proNum,
+            pt.type_name as proTypeStr,
+            pm.pro_start_time as proStartTime,
+            pm.pro_end_time as proEndTime,
+            ps.status_name as proStatusStr,
+            psc.schedule_name as proScheduleStr
+        FROM
+            `project_message` AS pm
+            LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+            LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+            LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        ORDER BY
+            pm.id DESC
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="projectMessageMap">
+        SELECT
+            pm.id,
+            pm.pro_name as proName,
+            pm.pro_type as proType,
+            pm.pro_num as proNum,
+            pm.pro_status as proStatus,
+            pm.pro_schedule as proSchedule,
+            pm.supervisor_unit as supervisorUnit,
+            pm.supervisor_unit_phone as supervisorUnitPhone,
+            pm.construction_unit as constructionUnit,
+            pm.construction_unit_phone as constructionUnitPhone,
+            pm.governor_unit as governorUnit,
+            pm.governor_unit_phone as governorUnitPhone,
+            pm.pro_location as  proLocation,
+            pm.pro_summarize as  proSummarize,
+            pt.type_name as proTypeStr,
+            pm.pro_start_time as proStartTime,
+            pm.pro_end_time as proEndTime,
+            ps.status_name as proStatusStr,
+            psc.schedule_name as proScheduleStr
+        FROM
+            `project_message` AS pm
+            LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+            LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+            LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        WHERE pm.id = #{id}
+        ORDER BY
+            pm.id DESC
+    </select>
+
+    <update id="updateById" parameterType="com.jiaoke.bean.ProjectMessage">
+        update project_message
+        set
+          pro_name = #{proName},
+          pro_type =#{proType},
+          pro_num = #{proNum},
+          supervisor_unit = #{supervisorUnit},
+          supervisor_unit_phone = #{supervisorUnitPhone},
+          construction_unit = #{constructionUnit},
+          construction_unit_phone = #{constructionUnitPhone},
+          governor_unit = #{governorUnit},
+          governor_unit_phone = #{governorUnitPhone},
+          pro_schedule = #{proSchedule},
+          pro_status = #{proStatus},
+          pro_location = #{proLocation},
+          pro_summarize = #{proSummarize},
+          pro_start_time = #{proStartTime},
+          pro_end_time = #{proEndTime},
+          reported_time = #{reportedTime},
+          approval_time = #{approvalTime},
+          notarize_time = #{notarizeTime}
+        where id = #{id}
+    </update>
+
+    <select id="selectProMessageByCondition" parameterType="java.lang.String" resultMap="projectMessageMap">
+        SELECT
+        pm.id as id,
+        pm.pro_name as proName,
+        pm.pro_num as proNum,
+        pt.type_name as proTypeStr,
+        pm.pro_start_time as proStartTime,
+        pm.pro_end_time as proEndTime,
+        ps.status_name as proStatusStr,
+        psc.schedule_name as proScheduleStr
+        FROM
+        `project_message` AS pm
+        LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+        LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+        LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        <where>
+            <if test="proName != '' and proName != null">
+                and pm.pro_name LIKE "%"#{proName}"%"
+            </if>
+            <if test="proSchedule != '' and proSchedule != null">
+                and pm.pro_schedule = #{proSchedule}
+            </if>
+            <if test="proType != '' and proType != null">
+                and pm.pro_type = #{proType}
+            </if>
+            <if test="proStatus != '' and proStatus != null">
+                and pm.pro_status = #{proStatus}
+            </if>
+        </where>
+        ORDER BY
+        pm.id DESC
+    </select>
+
+    <select id="selectByBusinessKey" parameterType="java.util.Map" resultType="com.jiaoke.bean.ProjectMessage">
+        SELECT
+        pm.id as id,
+        pm.pro_name as proName,
+        pm.pro_num as proNum,
+        pt.type_name as proTypeStr,
+        pm.pro_start_time as proStartTime,
+        pm.pro_end_time as proEndTime,
+        ps.status_name as proStatusStr,
+        psc.schedule_name as proScheduleStr
+        FROM
+        `project_message` AS pm
+        LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+        LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+        LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        <where>
+            pm.id in
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+            <if test="proName != '' and proName != null">
+                and pm.pro_name LIKE "%"#{proName}"%"
+            </if>
+            <if test="proSchedule != '' and proSchedule != null">
+                and pm.pro_schedule = #{proSchedule}
+            </if>
+            <if test="proType != '' and proType != null">
+                and pm.pro_type = #{proType}
+            </if>
+            <if test="proStatus != '' and proStatus != null">
+                and pm.pro_status = #{proStatus}
+            </if>
+        </where>
+        ORDER BY
+        pm.id DESC
+    </select>
+
+    <select id="selectNotReported" resultMap="projectMessageMap">
+        SELECT
+            pm.id as id,
+            pm.pro_name as proName,
+            pm.pro_num as proNum,
+            pt.type_name as proTypeStr,
+            pm.pro_start_time as proStartTime,
+            pm.pro_end_time as proEndTime,
+            ps.status_name as proStatusStr,
+            psc.schedule_name as proScheduleStr
+        FROM
+            `project_message` AS pm
+            LEFT JOIN project_status AS ps ON pm.pro_status = ps.id
+            LEFT JOIN project_schedule AS psc ON pm.pro_schedule = psc.id
+            LEFT JOIN project_type AS pt ON pm.pro_type = pt.id
+        WHERE
+            pm.pro_status = 0 and pm.pro_schedule = 0
+                ORDER BY
+                    pm.id DESC
+    </select>
+
+    <update id="updateProStatus" parameterType="java.util.Map">
+        update project_message
+        set pro_status = #{status}
+        where id = #{id}
+    </update>
+
+    <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            count( * )
+        FROM
+            `project_message`
+        WHERE
+            pro_status = #{status}
+    </select>
+
+    <update id="updateProSchedule" parameterType="java.util.Map">
+        update project_message
+        set pro_schedule = #{schedule}
+        where id = #{id}
+    </update>
+
+    <select id="selectProjectName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT
+            pro_name as proName
+        FROM
+            `project_message`
+        WHERE
+            id = #{id}
+    </select>
+</mapper>

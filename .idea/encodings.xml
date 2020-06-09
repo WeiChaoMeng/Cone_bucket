@@ -2,9 +2,9 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/conebucket-app" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/conebucket-bean" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/conebucket-service" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/conebucket-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conebarrel-app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conebarrel-bean" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conebarrel-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/conebarrel-util" charset="UTF-8" />
   </component>
 </project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.ParameterMapper">
+
+    <select id="fuzzyQueryByName" parameterType="java.lang.String" resultType="com.jiaoke.bean.Parameter">
+        select
+            id, param_name as paramName, explanation,acquiesce,remarks, create_time as createTime
+        from parameter
+        where param_name LIKE "%"#{paramName}"%"
+    </select>
+</mapper>

@@ -1,0 +1,440 @@
+body,html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(3,23,43,1);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    /*IEæ»šåŠ¨æ¡css*/
+    SCROLLBAR-FACE-COLOR: rgba(0,16,31,0.5);
+    Scrollbar-Shadow-Color:rgba(152, 150, 150,.3); 
+    Scrollbar-Track-Color:rgba(0,16,31,1); 
+    Scrollbar-Arrow-Color:rgba(0,0,0,.2);
+}
+
+/*loading-end*/
+/*Header*/
+.jimu-main-header {
+    /*border:blue 1px solid;*/
+    position: absolute;
+    color: white;
+    /*border-radius: 3px;*/
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
+/*é‡å†™åœ°å›¾labelæ ·å¼*/
+.BMapLabel {
+    max-width:none !important;
+    border-radius:5px !important;
+}
+
+
+/*scrollbaré‡å†™æ»šåŠ¨æ¡æ ·å¼*/
+::-webkit-scrollbar {  
+  width: 14px;  
+  height: 14px;  
+}  
+  
+::-webkit-scrollbar-track,  
+::-webkit-scrollbar-thumb {  
+  border-radius: 999px;  
+  border: 5px solid transparent;  
+}  
+  
+::-webkit-scrollbar-track {  
+  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;  
+}  
+  
+::-webkit-scrollbar-thumb {  
+  min-height: 20px;  
+  background-clip: content-box;  
+  box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;  
+}  
+  
+::-webkit-scrollbar-corner {  
+  background: transparent;  
+}  
+
+.jimu-head {
+     width:100%;
+     height:100%;
+}
+
+.jimu-head .jimu-head-content {
+     position: relative;
+     width:100%;
+     height:100%;
+     background:url(../img/head_bg.png) no-repeat;
+     /*border-radius:3px;*/
+}
+
+
+.jimu-head .jimu-head-leftTopBg{
+    position:absolute;
+    top:0;
+    left:0;
+    background:url(../img/leftTopBg.png) no-repeat;
+    width:116px;
+    height:33px;
+}
+.jimu-head .jimu-head-rightBottomBg{
+    position:absolute;
+    bottom:1px;
+    right:1px;
+    /*background:url(../../static/img/rightBottomBg.png) no-repeat;*/
+    width:30px;
+    height:22px;
+}
+
+
+.jimu-head .jimu-head-logo {
+     float:left !important;
+     /*margin-top:3px;*/
+     margin-left:15px;
+}
+
+
+.jimu-head .jimu-head-title {
+    font-size:1.3em;
+    float:left !important;
+    font-weight:bold;
+    margin-left:8px;
+    color:#028dff;
+}
+
+
+.jimu-head .jimu-head-subtitle {
+     float:left !important;
+     margin-left: 0px;
+     font-size:14px;
+     color:#028dff;
+     cursor:pointer;
+}
+
+
+.jimu-head .jimu-head-subtitle:before {
+    content:url(../img/head_city.png);
+    width:5px;
+    height:9px;
+    margin: 0 5px 0 10px;
+}
+
+
+.jimu-head .jimu-head-title-light {
+      -webkit-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+}
+.jimu-head .jimu-head-title-light:hover{
+    -webkit-animation: light-shadow-animation 11.5s linear infinite alternate;
+    -ms-animation: light-shadow-animation 11.5s linear infinite alternate;
+    animation: light-shadow-animation 11.5s linear infinite alternate;
+
+    -webkit-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    transform: scale(1.08);
+}
+@-webkit-keyframes light-shadow-animation {
+  from {
+    text-shadow: 0 0 10px #fafad2,
+               0 0 20px  #fafad2,
+               0 0 30px  #fafad2,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fafad2,
+               0 0 10px #fafad2,
+               0 0 15px #fafad2,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
+@keyframes light-shadow-animation {
+  from {
+    text-shadow: 0 0 10px #fafad2,
+               0 0 20px  #fafad2,
+               0 0 30px  #fafad2,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fafad2,
+               0 0 10px #fafad2,
+               0 0 15px #fafad2,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
+
+/*maskÃ¦Â»â€˜Ã¨Â¿â€¡*/
+.jimu-head .jimu-head-masked {
+    
+    cursor: none;
+    left:-100%;
+    position: absolute;
+    top:0px;
+    width: 18px;
+    height: 100%;
+    background-image: -ms-linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    background-image: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    transform: skewx(-25deg);
+    -ms-transform: skewx(-25deg);
+    -webkit-transform: skewx(-25deg);
+
+    animation:masked-light-animation 6s infinite linear;
+    -webkit-animation: masked-light-animation 6s infinite linear;
+    -ms-animation: masked-light-animation 6s infinite linear;
+    border-top:3px solid rgba(255,165,0, 1);
+}
+
+@keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+@-webkit-keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+@-ms-keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+
+
+#ToolBar-Panel {
+   width:auto;
+   position:absolute;
+   left: 50% ;
+   transform: translateX(-50%); 
+}
+.jimu-main-absolute {
+    /*border:blue 1px solid;*/
+    position: absolute;
+    right: 0 !important;
+   
+   
+}
+.jimu-toolbar {
+     width:auto;
+     height:100%;
+     /*background-color:rgba(10,70,128, 0.9);*/
+     /*background-color:rgba(3,26,48,1);*/
+     position: relative;
+     border-radius:3px;
+     display: table;
+     font-size:16px;
+}
+.jimu-toolbar .jimu-toolbar-left {
+    width:59px;
+    height:66px;
+    background:url(../img/bg_left.png) no-repeat;
+    left:0;
+    top:0;
+}
+.jimu-toolbar .jimu-toolbar-right {
+     width:60px;
+     height:66px;
+     background:url(../img/bg_right.png) no-repeat;
+     right:0;
+     top:0;
+}
+.jimu-toolbar .jimu-toolbar-middle {
+    background:url(../img/bg_middle.png) repeat-x;
+}
+
+.jimu-toolbar .jimu-list {
+    width:auto;
+  text-align:center;
+    display: table-cell;  
+    vertical-align: top;  
+    color:#00a7ff;
+}
+
+.jimu-toolbar .jimu-list ul {
+    
+    margin-top:2%;
+    width:auto;
+    white-space:nowrap;
+    
+}
+
+.jimu-toolbar .jimu-list-ul li {
+    display: inline-block;
+    padding:0 10px;
+    text-align:center;
+    cursor:pointer;
+    /*border:1px solid red;*/
+}
+
+.jimu-toolbar .jimu-list-ul li:hover {
+     color:#FFFFFF;
+     text-shadow: 0 0 5px #fff,
+               0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+     -webkit-transition-duration: 500ms;
+     -ms-transition-duration: 500ms;
+     transition-duration:  500ms;
+}
+.jimu-toolbar .jimu-list-ul-li-select {
+     color:#FFFFFF;
+     text-shadow: 0 0 5px #fff,
+               0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+     -webkit-transition-duration: 500ms;
+     -ms-transition-duration: 500ms;
+     transition-duration:  500ms;
+}
+
+.jimu-toolbar .icon-area{
+    height:24px;
+    width:25px;
+    background-position:center center;
+    background-repeat:no-repeat;
+    float:left;
+}
+
+.jimu-toolbar .jimu-list a {
+    color:#00a7ff;
+     text-decoration:none;
+}
+
+.jimu-toolbar .jimu-list a:hover{
+    color: #FFFFFF;
+    text-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+    -webkit-transition-duration: 500ms;
+    -ms-transition-duration: 500ms;
+    transition-duration: 500ms;
+}
+
+/*时间日期*/
+.jimu-clock {
+     width:100%;
+     height:100%;
+     font-size:14px;
+     text-align:center;
+     color:#818E9B;
+     font-weight:bold;
+     /*border:1px solid green;*/
+}
+
+.jimu-clock .jimu-clock-content {
+     position: relative;
+     width:100%;
+     height:100%;
+     border-radius:3px;
+     font-family:sans-serif;
+     background:url(../img/bg.png) no-repeat;
+     background-size:100% 100%;
+}
+
+/*
+    年周
+*/
+.jimu-clock .jimu-clock-content ul{
+    list-style:none;
+    margin:auto;
+    padding:0;
+    float:left;
+    font-size:12px;
+    color:#5d656b;
+    margin-left:5px;
+}
+.jimu-clock .jimu-clock-content li{
+    line-height: 22px;
+    text-align: center;
+}
+/*
+    小时
+*/
+.jimu-clock .jimu-clock-hours {
+    color:#fe8c00;
+    font-size:24px;
+    float:left;
+    margin:0px 1px 0px 0px;
+    margin-left:5px;
+}
+
+/*浏览器宽度小于指定尺寸*/
+
+@media screen and (max-width:1024px ) {/*小于1024右移*/
+  #Clock-Panel {
+    right:110px !important;
+    display:none;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1185px) {
+  #Clock-Panel {
+    right:120px !important;
+  }
+}
+
+/*底部版权名称*/
+#afoot-Panel{
+	width: 27% !important;
+	left: 37% !important;
+}
+.jimu-foot-content {
+     width:100%;
+     height:100%;
+     font-size:14px;
+     text-align:center;
+     color:#818E9B;
+     font-weight:bold;
+     /*border:1px solid green;*/
+}
+
+.jimu-foot-content .jimu-foot-bg {
+    background: url(../img/foot_bg.png) no-repeat center center;
+    width: 100%; 
+    height: 30px;
+    line-height: 100%;
+    text-align:center;
+}
+.jimu-foot-content .jimu-foot-name {
+    background: url(../img/zte_itslogo.png) no-repeat center center;
+    height:100%;   
+}
+.jimu-clock-day{
+    font-size: 30px;
+    color:#fe8c00;
+    font-weight: bold;
+    width:160px;
+    text-align: center;
+    padding-top:10px;
+}

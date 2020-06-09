@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jiaoke</groupId>
-    <artifactId>cone-bucket</artifactId>
+    <artifactId>wisdomconebarrel</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>conebucket-bean</module>
-        <module>conebucket-service</module>
-        <module>conebucket-util</module>
-        <module>conebucket-app</module>
+        <module>conebarrel-bean</module>
+        <module>conebarrel-service</module>
+        <module>conebarrel-util</module>
+        <module>conebarrel-app</module>
     </modules>
 
     <properties>
