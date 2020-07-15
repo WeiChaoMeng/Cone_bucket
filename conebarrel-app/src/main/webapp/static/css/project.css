@@ -1,0 +1,244 @@
+html, body {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    /*font-family: '微软雅黑';*/
+    /*background: #e7e8eb;*/
+    height: 100%;
+}
+
+.table {
+    border: 1px solid #ccc;
+    table-layout: fixed;
+}
+
+.table.table-bordered > tbody > tr > td, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > td, .table.table-bordered > tfoot > tr > th, .table.table-bordered > thead > tr > td, .table.table-bordered > thead > tr > th {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btn {
+    font-size: 13px;
+}
+
+.main_container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    min-width: 1200px;
+}
+
+.panel-heading {
+    font-size: 14px
+}
+
+.table-style {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.manage-table-style {
+    width: 100%;
+    height: 78%;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.table-style-padding {
+    height: 100%;
+    padding: 1%;
+}
+
+.query-field {
+    height: 5%;
+    margin-bottom: 1%;
+}
+
+.pro-query-table {
+    height: 91%;
+    display: none;
+}
+
+.table > thead > tr > th {
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 8px 10px;
+}
+
+.condition-name {
+    float: left;
+    line-height: 34px;
+    width: 7%;
+    text-align: right;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.condition-input {
+    width: 15%;
+    float: left;
+}
+
+.condition-select {
+    width: 13%;
+    float: left;
+}
+
+.condition-btn {
+    text-align: center;
+    float: left;
+    margin-left: 50px;
+}
+
+.map-content {
+    height: 91%;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+.fixed-table-toolbar {
+    height: 7%;
+    margin-bottom: 1%;
+}
+
+.x_content {
+    height: 90%;
+}
+
+input[type=checkbox], input[type=radio] {
+    margin: 0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.search-btn {
+    margin-right: 35px;
+    float: right
+}
+
+th {
+    text-align: center;
+}
+
+.table-hover > tbody > tr:hover {
+    /*去除背景色*/
+    background-color: transparent;
+}
+
+#windowBackgroundColor {
+    width: 100%;
+    height: 100%;
+    z-index: 8888;
+    background-color: #000000;
+    position: absolute;
+    opacity: 0.3;
+    display: none;
+    left: 0;
+}
+
+.map-close-img:before {
+    color: #f06e57;
+}
+
+.form-control {
+    font-size: 13px;
+    border: 1px solid #224d6f;
+    background: #183f5e;
+    color: #fff;
+    /*height: 30px;*/
+}
+
+.query-criteria {
+    height: 20%;
+    margin-bottom: 1%;
+}
+
+.manage-query-field {
+    margin: 25px 0;
+    height: 35px;
+}
+
+.manage-condition-input {
+    width: 17%;
+    float: left;
+}
+
+.manage-condition-select {
+    width: 15%;
+    float: left;
+}
+
+.manage-condition-btn {
+    text-align: center;
+    float: right;
+    margin-right: 35px;
+}
+
+.table > tbody > tr > td.table-td-content {
+    vertical-align: middle;
+    padding: 5px 0;
+    text-align: left;
+    text-indent: 20px;
+     overflow: hidden;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+}
+
+.paging-table-div {
+    right: 10px;
+    height: 35px;
+    bottom: 30px;
+    margin-right: 20px;
+    position: absolute;
+}
+
+.flow {
+    float: left;
+    width: 100%;
+    margin-right: 2%;
+    height: 100%;
+}
+
+.flow-content {
+    margin: 0;
+    background: #062745;
+}
+
+.table-content-style{
+    float:left;width:78%; overflow-y: auto;overflow-x: hidden;
+    height: 99%;
+}
+
+.flow-svg{
+    width: 100%;
+    height: 100%;
+}
+
+/*project-add-style*/
+.td-title{
+    width: 10%;
+    background: #052846;
+}
+
+.td-value{
+    width: 40%;
+    padding: 8px 10px;
+    background: #011f39;
+}

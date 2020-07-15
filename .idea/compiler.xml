@@ -6,10 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="conebucket-app" />
-        <module name="conebucket-bean" />
-        <module name="conebucket-service" />
-        <module name="conebucket-util" />
+        <module name="conebarrel-app" />
+        <module name="conebarrel-bean" />
+        <module name="conebarrel-service" />
+        <module name="conebarrel-util" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.ConeBucketManagerDao">
+    <insert id="insertConeBucket" >
+
+        <selectKey resultType="_long" keyProperty="id" order="AFTER">
+            select @@IDENTITY as id
+        </selectKey>
+        INSERT INTO cone_bucket_message (
+        cone_bucket_type,
+        cone_bucket_num,
+        create_time
+        )
+        VALUES
+        (#{roadName},#{diseaseNumber},current_date())
+    </insert>
+    <select id="selectAllConeBucket" resultType="java.util.Map">
+        SELECT
+            CM.id,
+            CM.cone_bucket_num,
+           date_format(CM.create_time,'%Y-%m-%d') as create_time,
+            CT.type_name
+        FROM
+            cone_bucket_message AS CM
+        INNER JOIN cone_bucket_type AS CT ON CM.cone_bucket_type = CT.id;
+    </select>
+
+    <delete id="delectConeBucketById">
+        DELETE FROM cone_bucket_message
+        WHERE
+            id IN
+            <foreach collection="idArray" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+    </delete>
+
+    <select id="selectConeBucketByCondition" resultType="java.util.Map" >
+        SELECT
+            CM.id,
+            CM.cone_bucket_num,
+            date_format(CM.create_time,'%Y-%m-%d') as create_time,
+            CT.type_name
+        FROM
+            cone_bucket_message AS CM
+        INNER JOIN cone_bucket_type AS CT ON CM.cone_bucket_type = CT.id
+        <choose>
+            <when test="cbn != '' and cbt != ''  " >
+                WHERE
+                CM.cone_bucket_num = #{cbn} AND CT.id = #{cbt}
+            </when>
+            <when test="cbn != ''  " >
+                WHERE
+                CM.cone_bucket_num = #{cbn}
+            </when>
+            <when test="cbt != ''  " >
+                WHERE
+                CT.id = #{cbt}
+            </when>
+        </choose>
+
+    </select>
+
+    <select id="selectGoogleConeBucketById" resultType="java.util.Map">
+        SELECT
+            cone_bucket_type,
+            cone_bucket_num,
+            create_time
+        FROM
+            cone_bucket_message
+        WHERE
+            cone_bucket_num = #{deviceId};
+    </select>
+
+    <select id="selectConeBucketLogByConeBucketNum" resultType="java.util.Map">
+        SELECT
+            cbl.cone_bucket_num,
+            cbt.type_name,
+            cbl.cone_bucket_status,
+            cbl.road_name,
+            cbl.start_time,
+            cbl.end_time
+        FROM
+            cone_bucket_log AS cbl
+        INNER JOIN
+            cone_bucket_type AS cbt
+        ON
+            cbl.cone_bucket_type = cbt.id
+        WHERE
+            cbl.cone_bucket_num = #{coneBucketNum}
+    </select>
+</mapper>

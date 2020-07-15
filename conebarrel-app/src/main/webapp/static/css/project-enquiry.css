@@ -1,0 +1,197 @@
+html, body {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sub-con-right {
+    height: 100%;
+    width: 100%;
+    background: #011f39;
+    overflow: hidden;
+}
+
+.main-con-title {
+    height: 33px;
+    line-height: 33px;
+    border-bottom: 1px solid #173756;
+
+}
+
+.main-tit-name {
+    color: #fff;
+    font-size: 14px;
+    padding-left: 20px;
+
+}
+
+.search-condition-column {
+    width: 100%;
+    margin: 10px 0 20px;
+    border-collapse: collapse;
+    border: solid 1px #012038;
+}
+
+.condition-name {
+    float: left;
+    line-height: 30px;
+    width: 7%;
+    text-align: right;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.condition-input {
+    width: 15%;
+    float: left;
+}
+
+.form-control {
+    font-size: 13px;
+    border: 1px solid #224d6f;
+    background: #183f5e;
+    color: #fff;
+    height: 30px;
+    padding: 0;
+    text-indent: 6px;
+}
+
+.condition-select {
+    width: 13%;
+    float: left;
+}
+
+.condition-btn {
+    width: 6%;
+    text-align: right;
+    display: inline-block;
+    float: left;
+}
+
+.refresh-switch-btn {
+    width: 11%;
+    display: inline-block;
+    text-align: right;
+    float: left;
+}
+
+.btn {
+    font-size: 13px;
+}
+
+.map-content {
+    padding: 0 20px;
+    height: 84%;
+}
+
+.map-legend-con {
+    height: 90px;
+    position: absolute;
+    top: 115px;
+    right: 40px;
+    background: #012038;
+    width: 90px;
+    text-align: center;
+    padding: 0 7px;
+    color: #fff;
+}
+
+.map-legend-con-text {
+    float: right;
+    line-height: 30px;
+    text-indent: 7px;
+}
+
+.map-legend-con-pictured {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 5px;
+    float: right;
+    margin-top: 13px;
+}
+
+.pro-query-table{
+    height: 85%;
+    padding: 0 20px;
+    display: none;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 1px #183f5e !important;
+}
+
+.table tr:nth-child(even) {
+    background-color:#052846;
+}
+
+.table th{
+    height: 30px !important;
+    border:solid 1px #183f5e !important;
+    background-color: #084b74 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+.t-head {
+    background: #084b74;
+}
+
+.t-head tr th {
+    font-size: 14px;
+    color: #fff;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: solid 1px #183f5e !important;
+    color: #ffffff;
+}
+
+.table > tbody > tr:hover {
+    background: #052846;
+}
+
+.paging-table-div {
+    right: 10px;
+    height: 35px;
+    bottom: 15px;
+    margin-right: 25px;
+    position: absolute;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 5px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+}
+
+::-webkit-scrollbar-thumb {
+    min-height: 20px;
+    background-clip: content-box;
+    box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

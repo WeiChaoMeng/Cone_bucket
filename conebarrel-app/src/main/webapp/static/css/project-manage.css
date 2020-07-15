@@ -1,0 +1,254 @@
+html, body {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sub-con-right {
+    height: 100%;
+    width: 100%;
+    background: #011f39;
+    overflow: hidden;
+}
+
+.main-con-title {
+    height: 33px;
+    line-height: 33px;
+    border-bottom: 1px solid #173756;
+}
+
+.main-tit-name {
+    color: #fff;
+    font-size: 14px;
+    padding-left: 20px;
+
+}
+
+.qm_b{
+    text-align: center;
+    margin: 10px 20px 15px;
+    width: 100%;
+}
+
+.styc{
+    background-image:url(../img/styc.png);
+    color:#fff;
+}
+
+.styb{
+    background-image:url(../img/styb.png);
+    color:#333;
+}
+
+.styb:hover{
+    background-image:url(../img/styc.png);
+    color:#fff;
+}
+
+.lc_b{
+    width:80px;
+    height:50px;
+    text-align:center;
+    float:left;
+    cursor:pointer;
+    border-radius:10px 10px;
+}
+
+.r{
+    background-image:url(../img/r.png);
+    height:32px;
+    width:32px;
+    margin:0 2px;
+}
+
+.panel-body{
+    margin: 10px 20px 20px !important;
+    padding: 0;
+}
+
+.query-criteria-name{
+    float: left;
+    line-height: 30px;
+    color: #fff;
+    width: 60px;
+}
+
+.query-criteria-input{
+    width: 20%;
+    float: left;
+}
+
+.query-criteria-select{
+    width: 20%;float: left;
+}
+
+.form-control {
+    font-size: 13px !important;
+    border: 1px solid #224d6f !important;
+    background: #183f5e !important;
+    color: #fff !important;
+    padding: 0 10px !important;
+    height: 30px !important;
+}
+
+.btn {
+    font-size: 13px;
+    padding: 5px 12px;
+}
+
+.search-btn {
+    float: right;
+}
+
+.div_table{
+    padding: 0 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 1px #183f5e !important;
+}
+
+.table tr:nth-child(even) {
+    background-color:#052846;
+}
+
+.table th{
+    height: 30px !important;
+    border:solid 1px #183f5e !important;
+    background-color: #084b74 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+.t-head {
+    background: #084b74;
+}
+
+.t-head tr th {
+    font-size: 14px;
+    color: #fff;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: solid 1px #183f5e !important;
+    color: #ffffff;
+}
+
+.table > tbody > tr:hover {
+    background: #052846;
+}
+
+/*弹窗样式 - sta*/
+body .layer-ext-yourskin .layui-layer-title {
+    background-color: #062643;
+    color: #ffffff;
+    border-bottom: 1px solid #173756;
+}
+
+body .layer-ext-yourskin .layui-layer-content {
+    background-color: #062643;
+    color: #ffffff;
+}
+
+body .layer-ext-yourskin .layui-layer-btn {
+    background-color: #062643;
+}
+
+body .layer-ext-yourskin .layui-layer-btn0 {
+    background-color: #337ab7;
+}
+
+body .layer-ext-yourskin .layui-layer-ico {
+    background: url(../img/clo.png) no-repeat;
+}
+
+.model-dis {
+    display: none;
+    height: 100%
+}
+
+/*user - add - sta*/
+.model-style {
+    padding: 30px 15px 0;
+}
+
+.user-add-div {
+    margin-bottom: 20px;
+}
+
+.user-add-label {
+    line-height: 34px;
+    padding-right: 2%;
+    width: 18%;
+    text-align: right;
+    margin: 0;
+    font-weight: 500;
+}
+
+.user-add-div-div {
+    width: 80%;
+    display: inline-block;
+}
+
+.user-add-but-div {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.user-add-popup {
+    background-color: #062643;
+}
+
+/*用户绑定角色*/
+.roleList-table {
+    width: 100%;
+    font-size: 13px;
+}
+
+.roleList-commit-div {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.td-border-bottom{
+    color: #ffffff;
+}
+
+.td-border-bottom:hover {
+    border-bottom: 1px #ffffff solid;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 5px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+}
+
+::-webkit-scrollbar-thumb {
+    min-height: 20px;
+    background-clip: content-box;
+    box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
