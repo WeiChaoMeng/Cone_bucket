@@ -102,6 +102,8 @@
 
 <script src="../../static/js/coneBucketManager/coneBucketManager.js"></script>
 <script type="text/javascript">
+    function addCone() {
 
+    }
 </script>
 </html>

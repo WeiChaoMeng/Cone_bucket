@@ -38,7 +38,7 @@ $('#device').on('click', function () {
         '<div class="secondary-menu-device">' +
         '<div onclick="coneBucketManagement(this)" class="secondary-menu-style-color">锥桶管理</div>' +
         '</div>')
-    $('#inlineFrame').attr("src", "/coneBucketManage.do");
+    $('#inlineFrame').attr("src", "/coneBucket/toIndex?page=1");
 });
 
 //日志管理
@@ -759,6 +759,83 @@ function commitBindingPermission() {
     }
 }
 
+//添加锥桶
+function addConeBucket() {
+    window.lar = layer.open({
+        title: '添加锥桶',
+        type: 1,
+        area: ['390px', '270px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addConeBucket"),
+        offset: "auto"
+    });
+
+    var userInfo = '';
+    userInfo += '<div class="model-style">';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">锥桶编号</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<input type="text" id="deviceId" class="form-control" autocomplete="off">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">锥桶类型</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<select class="form-control" id="coneBucketType">';
+    userInfo += '<option value="0">内部监管</option>';
+    userInfo += '<option value="1">高德平台</option>';
+    userInfo += '</select>';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-but-div">';
+    userInfo += '<input class="btn btn-primary btn-sm" type="button" onclick="commitConeBucketFun()" value="提交">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+
+    $('#addConeBucket').html(userInfo);
+}
+
+//提交添加
+function commitConeBucketFun() {
+    var deviceId = $('#deviceId').val();
+    var coneBucketType = $("#coneBucketType option:selected");
+    if (coneBucketType.val() === "1"){
+        layer.msg("无高德平台锥桶！");
+    } else{
+        if (deviceId !== '') {
+            frame.window.commitConeBucket(deviceId,coneBucketType.val());
+        } else {
+            layer.msg("锥桶编号不可以为空！");
+        }
+    }
+}
+
+//删除锥桶
+function deleteConeBucket(id) {
+    //提示窗
+    layer.confirm('确定要删除吗？', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: '/coneBucket/delete',
+                data: {'deviceId': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！');
+                        frame.window.reloadConeBucketPage(1);
+                    } else {
+                        layer.msg('删除失败！')
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            });
+        }
+    );
+}
 /****************js判空方法********************/
 
 function isNull(str) {

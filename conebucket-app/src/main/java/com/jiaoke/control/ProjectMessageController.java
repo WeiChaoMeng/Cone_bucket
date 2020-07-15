@@ -54,6 +54,9 @@ public class ProjectMessageController {
     private ProjectScheduleService projectScheduleService;
 
     @Resource
+    private ConeBucketService coneBucketService;
+
+    @Resource
     private Activiti activiti;
 
     /**
@@ -106,9 +109,12 @@ public class ProjectMessageController {
         List<ConeBucketType> coneBucketTypeList = coneBucketTypeService.selectAll();
         //查询工程类型
         List<ProjectType> projectTypeList = projectTypeService.selectAll();
+        //锥桶
+        List<ConeBucket> coneBucketList = coneBucketService.selectAll();
 
         model.addAttribute("coneBucketTypeList", coneBucketTypeList);
         model.addAttribute("projectTypeList", projectTypeList);
+        model.addAttribute("coneBucketList", coneBucketList);
         return "project/add";
     }
 
