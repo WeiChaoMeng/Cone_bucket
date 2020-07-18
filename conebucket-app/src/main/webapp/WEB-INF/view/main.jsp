@@ -107,6 +107,16 @@
     </div>
 </div>
 
+<%--模态窗（工程详情-锥桶）--%>
+<div id="projectDetailedConeBucket" class="model-dis">
+    <div class="content">
+        <table class="table table-condensed table-bordered table-hover"
+               style="text-align: center;font-size: 13px;margin: 0">
+            <tbody id="coneBucketBody"></tbody>
+        </table>
+    </div>
+</div>
+
 <%--模态窗（添加用户）--%>
 <div id="addUser" class="model-dis"></div>
 
@@ -153,6 +163,8 @@
 <div id="addConeBucket" class="model-dis"></div>
 </body>
 
+<%--添加锥桶--%>
+<div id="addConeBucket" class="model-dis"></div>
 
 <!-- jquery -->
 <script src="../../static/js/jquery-1.12.4.min.js"></script>

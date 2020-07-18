@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.web.dao.RoadInfoMapper">
+
+    <select id="selectById" resultType="com.jiaoke.bean.RoadInfo">
+        select
+            road_id as roadId,
+            road_name as roadName,
+            stake as stake,
+            is_up as isUp,
+            dis as dis
+        FROM
+            `road_info`
+        where cone_bucket_id = #{id}
+    </select>
+
+    <select id="selectRoadIdById" resultType="com.jiaoke.bean.RoadInfo">
+        select
+            road_id as roadId
+        FROM
+            `road_info`
+        where cone_bucket_id = #{coneBucketId}
+    </select>
+
+</mapper>
