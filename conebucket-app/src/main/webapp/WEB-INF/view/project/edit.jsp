@@ -145,19 +145,19 @@
                 <td style="">锥桶类型</td>
                 <td style="width: 40%">
                     <select class="form-control" id="coneBucketType" name="coneBucketType">
-                        <c:if test="${fn:length(projectMessage.coneBucketMessage) == 0}">
+                        <c:if test="${fn:length(projectMessage.coneBucket) == 0}">
                             <option value="">--请选择--</option>
                             <c:forEach items="${coneBucketTypeList}" var="coneBucketType">
                                 <option value="${coneBucketType.id}">${coneBucketType.typeName}</option>
                             </c:forEach>
                         </c:if>
 
-                        <c:if test="${fn:length(projectMessage.coneBucketMessage) > 0}">
-                            <c:forEach items="${projectMessage.coneBucketMessage}" var="coneBucketMessage" begin="0"
+                        <c:if test="${fn:length(projectMessage.coneBucket) > 0}">
+                            <c:forEach items="${projectMessage.coneBucket}" var="coneBucket" begin="0"
                                        end="0">
                                 <c:forEach items="${coneBucketTypeList}" var="coneBucketType">
                                     <c:choose>
-                                        <c:when test="${coneBucketType.id == coneBucketMessage.coneBucketType}">
+                                        <c:when test="${coneBucketType.id == coneBucket.coneBucketTypeId}">
                                             <option value="${coneBucketType.id}"
                                                     selected>${coneBucketType.typeName}</option>
                                         </c:when>
@@ -174,8 +174,8 @@
                 <td style="">锥桶编号</td>
                 <td>
                     <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off"
-                           value="${coneBucketNum}"
-                           onkeyup="this.value=this.value.replace(/，/g,','),this.value=this.value.replace(/\s+/g,'')">
+                           readonly onclick="selectConeBarrel()" value="${coneBucketNum}">
+                           <%--onkeyup="this.value=this.value.replace(/，/g,','),this.value=this.value.replace(/\s+/g,'')">--%>
                 </td>
             </tr>
 
@@ -201,22 +201,42 @@
 </div>
 
 </body>
+
+<%--勾选锥桶--%>
+<div id="chooseConeBarrel" style="display: none">
+    <%--<div style="height: 75%;padding: 15px 30px;overflow: auto;" id="multipleConeBarrel">--%>
+        <%--<ul style="margin: 0;padding: 0">--%>
+            <%--<c:forEach items="${coneBucketList}" var="coneBucketList">--%>
+                <%--<li style="margin-bottom: 5px;">--%>
+                    <%--<input type="checkbox" style="zoom: 130%;margin: 0 10px 0 0;padding: 0;vertical-align: middle;" value="${coneBucketList.id}">--%>
+                    <%--<span style="font-size: 15px;">${coneBucketList.id}</span>--%>
+                <%--</li>--%>
+            <%--</c:forEach>--%>
+        <%--</ul>--%>
+    <%--</div>--%>
+    <%--<div style="height: 25%;text-align: center;padding-top: 15px;">--%>
+        <%--<button class="btn btn-primary btn-sm" onclick="addChooseConeBarrel()">确认</button>--%>
+    <%--</div>--%>
+</div>
+
 <script src="../../../static/js/jquery.js"></script>
+<script src="../../../static/plugin/layer/layer.js"></script>
 <script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
 <%--引入腾讯地图--%>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
 <script>
 
-    //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
-    var map = new qq.maps.Map(document.getElementById("container"), {
-        center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
-        zoom: 11                                                 // 地图的中心地理坐标。
-    });
-
     //解析工程经纬度，展示在地图上
     var path = [];
     var projectLocationJson = '${projectLocationList}';
     var projectLocation = JSON.parse(projectLocationJson);
+
+    //定义map变量 调用 qq.maps.Map() 构造函数   获取地图显示容器
+    var map = new qq.maps.Map(document.getElementById("container"), {
+        center: new qq.maps.LatLng(projectLocation[0].latitude, projectLocation[0].longitude),      // 地图的中心地理坐标。
+        zoom: 11                                                 // 地图的中心地理坐标。
+    });
+
     for (var i = 0; i < projectLocation.length; i++) {
         path.push(new qq.maps.LatLng(projectLocation[i].latitude, projectLocation[i].longitude));
         //点
@@ -268,13 +288,83 @@
             },
             success: function (data) {
                 if (data === "success") {
-                    alert('修改成功');
-                    history.back(-1);
+                    layer.msg('修改成功');
+                    window.location.href = localStorage.getItem("ajaxUrl") + "/projectMessage/toIndex.do";
                 } else {
-                    alert('修改失败');
+                    layer.msg('修改失败');
                 }
             }
         });
+    }
+
+    var coneBucketList = JSON.parse('${coneBucketList}');
+    var selectedConeBucketList = JSON.parse('${selectedConeBucketList}');
+    var sel;
+
+    //勾选锥桶
+    function selectConeBarrel(){
+        var coneBucketContent = '';
+        coneBucketContent += '<div style="height: 75%;padding: 15px 30px;overflow: auto;" id="multipleConeBarrel">';
+        coneBucketContent += '        <ul style="margin: 0;padding: 0">';
+        for (var i = 0; i < coneBucketList.length; i++) {
+            coneBucketContent += '<li style="margin-bottom: 5px;">';
+
+            if (selectedConeBucketList.length > 0){
+                for (var j = 0; j < selectedConeBucketList.length; j++) {
+                    if (coneBucketList[i].id === selectedConeBucketList[j].id) {
+                        sel = '<input type="checkbox" checked style="zoom: 130%;margin: 0 10px 0 0;padding: 0;vertical-align: middle;" value="'+ coneBucketList[i].id +'">';
+                        break;
+                    }else {
+                        sel ='<input type="checkbox" style="zoom: 130%;margin: 0 10px 0 0;padding: 0;vertical-align: middle;" value="'+ coneBucketList[i].id +'">';
+                    }
+                }
+            } else{
+                sel ='<input type="checkbox" style="zoom: 130%;margin: 0 10px 0 0;padding: 0;vertical-align: middle;" value="'+ coneBucketList[i].id +'">';
+            }
+
+            coneBucketContent += sel;
+            coneBucketContent += '<span style="font-size: 15px;">'+coneBucketList[i].id+'</span>';
+            coneBucketContent += '</li>';
+        }
+
+
+        coneBucketContent += '        </ul>';
+        coneBucketContent += '    </div>';
+        coneBucketContent += '    <div style="height: 25%;text-align: center;padding-top: 15px;">';
+        coneBucketContent += '        <button class="btn btn-primary btn-sm" onclick="addChooseConeBarrel()">确认</button>';
+        coneBucketContent += '    </div>';
+
+        $('#chooseConeBarrel').html(coneBucketContent);
+        window.lar = layer.open({
+            type: 1,
+            title: '选择锥桶',
+            area: ['300px', '300px'],
+            skin: 'layer-ext-yourskin',
+            // shade: [0.8, '#393D49'],
+            shadeClose: false, //点击遮罩关闭
+            content: $("#chooseConeBarrel"),
+            offset: "auto",
+            success: function () {
+                //Enter回车，遮罩无限弹出
+                $(':focus').blur();
+            }
+        });
+    }
+
+    //确认勾选的锥桶
+    function addChooseConeBarrel(){
+        var str = "";
+        var list = $("#multipleConeBarrel input:checked");
+        for (var i = 0; i < list.length; i++) {
+            str += list[i].value + ",";
+        }
+        if (str.length > 0) {
+            $('#coneBucketNum').val(str.substring(0, str.length - 1));
+            layer.close(window.lar);
+        }else {
+            layer.close(window.lar);
+            $('#coneBucketNum').val("");
+        }
     }
 
     //初始化

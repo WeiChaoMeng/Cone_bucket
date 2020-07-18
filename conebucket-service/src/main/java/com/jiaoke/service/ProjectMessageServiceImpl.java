@@ -96,41 +96,48 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
             String coneBucketNum = projectMessage.getConeBucketNum();
             String[] strings = coneBucketNum.split(",");
             for (int i = 0; i < strings.length; i++) {
-                //查询锥桶是否已经存在
-                ConeBucketMessage coneBucket = coneBucketMessageMapper.selectByConeBucketNum(strings[i]);
-
-                //不存在则将锥桶录入锥桶管理表
-                if (coneBucket == null) {
-                    //插入锥桶信息表并返回主键
-                    ConeBucketMessage coneBucketMessage = new ConeBucketMessage();
-                    coneBucketMessage.setConeBucketType(projectMessage.getConeBucketType());
-                    coneBucketMessage.setConeBucketNum(strings[i]);
-                    coneBucketMessage.setCreateTime(new Date());
-                    int coneBucketMessageInsert = coneBucketMessageMapper.insertReturnPrimaryKey(coneBucketMessage);
-                    if (coneBucketMessageInsert < 0) {
-                        return 0;
-                    }
-
-
-                    //插入工程锥桶表
-                    ProjectConeBucket projectConeBucket = new ProjectConeBucket();
-                    projectConeBucket.setProId(projectMessage.getId());
-                    projectConeBucket.setConeBucketId(coneBucketMessage.getId());
-                    int projectConeBucketInsert = projectConeBucketMapper.insert(projectConeBucket);
-                    if (projectConeBucketInsert < 0) {
-                        return 0;
-                    }
-
-                } else {
-                    //如果存在直接插入工程锥桶表
-                    ProjectConeBucket projectConeBucket = new ProjectConeBucket();
-                    projectConeBucket.setProId(projectMessage.getId());
-                    projectConeBucket.setConeBucketId(coneBucket.getId());
-                    int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
-                    if (projectConeBucketinsert < 0) {
-                        return 0;
-                    }
+                ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+                projectConeBucket.setProId(projectMessage.getId());
+                projectConeBucket.setConeBucketId(strings[i]);
+                int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
+                if (projectConeBucketinsert < 0) {
+                    return 0;
                 }
+                // //查询锥桶是否已经存在
+                // ConeBucketMessage coneBucket = coneBucketMessageMapper.selectByConeBucketNum(strings[i]);
+                //
+                // //不存在则将锥桶录入锥桶管理表
+                // if (coneBucket == null) {
+                //     //插入锥桶信息表并返回主键
+                //     ConeBucketMessage coneBucketMessage = new ConeBucketMessage();
+                //     coneBucketMessage.setConeBucketType(projectMessage.getConeBucketType());
+                //     coneBucketMessage.setConeBucketNum(strings[i]);
+                //     coneBucketMessage.setCreateTime(new Date());
+                //     int coneBucketMessageInsert = coneBucketMessageMapper.insertReturnPrimaryKey(coneBucketMessage);
+                //     if (coneBucketMessageInsert < 0) {
+                //         return 0;
+                //     }
+                //
+                //
+                //     //插入工程锥桶表
+                //     ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+                //     projectConeBucket.setProId(projectMessage.getId());
+                //     projectConeBucket.setConeBucketId(coneBucketMessage.getId());
+                //     int projectConeBucketInsert = projectConeBucketMapper.insert(projectConeBucket);
+                //     if (projectConeBucketInsert < 0) {
+                //         return 0;
+                //     }
+                //
+                // } else {
+                //     //如果存在直接插入工程锥桶表
+                //     ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+                //     projectConeBucket.setProId(projectMessage.getId());
+                //     projectConeBucket.setConeBucketId(coneBucket.getId());
+                //     int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
+                //     if (projectConeBucketinsert < 0) {
+                //         return 0;
+                //     }
+                // }
             }
         }
         return 1;
@@ -217,43 +224,51 @@ public class ProjectMessageServiceImpl implements ProjectMessageService {
         String coneBucketNum = projectMessage.getConeBucketNum();
         String[] strings = coneBucketNum.split(",");
         for (int i = 0; i < strings.length; i++) {
-            //查询锥桶是否已经存在
-            ConeBucketMessage coneBucket = coneBucketMessageMapper.selectByConeBucketNum(strings[i]);
-
-            //不存在则将锥桶录入锥桶管理表
-            if (coneBucket == null) {
-                //插入锥桶信息表并返回主键
-                ConeBucketMessage coneBucketMessage = new ConeBucketMessage();
-                coneBucketMessage.setConeBucketType(projectMessage.getConeBucketType());
-                coneBucketMessage.setConeBucketNum(strings[i]);
-                coneBucketMessage.setCreateTime(new Date());
-                int coneBucketMessageInsert = coneBucketMessageMapper.insertReturnPrimaryKey(coneBucketMessage);
-                if (coneBucketMessageInsert < 0) {
-                    return -1;
-                }
-
-                //插入工程锥桶表
-                ProjectConeBucket projectConeBucket = new ProjectConeBucket();
-                projectConeBucket.setProId(projectMessage.getId());
-                projectConeBucket.setConeBucketId(coneBucketMessage.getId());
-                int projectConeBucketInsert = projectConeBucketMapper.insert(projectConeBucket);
-                if (projectConeBucketInsert < 0) {
-                    return -1;
-                }
-
-            } else {
-                //更新锥桶信息
-                coneBucket.setConeBucketType(projectMessage.getConeBucketType());
-                coneBucketMessageMapper.updateByPrimaryKeySelective(coneBucket);
-                //如果存在直接插入工程锥桶表
-                ProjectConeBucket projectConeBucket = new ProjectConeBucket();
-                projectConeBucket.setProId(projectMessage.getId());
-                projectConeBucket.setConeBucketId(coneBucket.getId());
-                int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
-                if (projectConeBucketinsert < 0) {
-                    return -1;
-                }
+            //如果存在直接插入工程锥桶表
+            ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+            projectConeBucket.setProId(projectMessage.getId());
+            projectConeBucket.setConeBucketId(strings[i]);
+            int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
+            if (projectConeBucketinsert < 0) {
+                return -1;
             }
+            // //查询锥桶是否已经存在
+            // ConeBucketMessage coneBucket = coneBucketMessageMapper.selectByConeBucketNum(strings[i]);
+            //
+            // //不存在则将锥桶录入锥桶管理表
+            // if (coneBucket == null) {
+            //     //插入锥桶信息表并返回主键
+            //     ConeBucketMessage coneBucketMessage = new ConeBucketMessage();
+            //     coneBucketMessage.setConeBucketType(projectMessage.getConeBucketType());
+            //     coneBucketMessage.setConeBucketNum(strings[i]);
+            //     coneBucketMessage.setCreateTime(new Date());
+            //     int coneBucketMessageInsert = coneBucketMessageMapper.insertReturnPrimaryKey(coneBucketMessage);
+            //     if (coneBucketMessageInsert < 0) {
+            //         return -1;
+            //     }
+            //
+            //     //插入工程锥桶表
+            //     ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+            //     projectConeBucket.setProId(projectMessage.getId());
+            //     projectConeBucket.setConeBucketId(coneBucketMessage.getId());
+            //     int projectConeBucketInsert = projectConeBucketMapper.insert(projectConeBucket);
+            //     if (projectConeBucketInsert < 0) {
+            //         return -1;
+            //     }
+            //
+            // } else {
+            //     //更新锥桶信息
+            //     coneBucket.setConeBucketType(projectMessage.getConeBucketType());
+            //     coneBucketMessageMapper.updateByPrimaryKeySelective(coneBucket);
+            //     //如果存在直接插入工程锥桶表
+            //     ProjectConeBucket projectConeBucket = new ProjectConeBucket();
+            //     projectConeBucket.setProId(projectMessage.getId());
+            //     projectConeBucket.setConeBucketId(coneBucket.getId());
+            //     int projectConeBucketinsert = projectConeBucketMapper.insert(projectConeBucket);
+            //     if (projectConeBucketinsert < 0) {
+            //         return -1;
+            //     }
+            // }
         }
 
         return 1;

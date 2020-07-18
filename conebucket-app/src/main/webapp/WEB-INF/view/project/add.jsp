@@ -153,8 +153,8 @@
 
                 <td style="">锥桶编号</td>
                 <td colspan="3">
-                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" autocomplete="off"
-                           onkeyup="this.value=this.value.replace(/，/g,','),this.value=this.value.replace(/\s+/g,'')">
+                    <input class="form-control" type="text" id="coneBucketNum" name="coneBucketNum" readonly
+                           onclick="selectConeBarrel()">
                 </td>
             </tr>
 
@@ -180,6 +180,25 @@
 </div>
 
 </body>
+
+<%--勾选锥桶--%>
+<div id="chooseConeBarrel" style="display: none">
+    <div style="height: 75%;padding: 15px 30px;overflow: auto;" id="multipleConeBarrel">
+        <ul style="margin: 0;padding: 0">
+            <c:forEach items="${coneBucketList}" var="coneBucketList">
+                <li style="margin-bottom: 5px;">
+                    <input type="checkbox" style="zoom: 130%;margin: 0 10px 0 0;padding: 0;vertical-align: middle;" value="${coneBucketList.id}">
+                    <span style="font-size: 15px;">${coneBucketList.id}</span>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+    <div style="height: 25%;text-align: center;padding-top: 15px;">
+        <button class="btn btn-primary btn-sm" onclick="addChooseConeBarrel()">确认</button>
+    </div>
+</div>
+
+
 <script src="../../../static/plugin/date_pickers/jquery.date_input.pack.js"></script>
 <%--引入腾讯地图--%>
 <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=UTKBZ-2XGL4-KFHUB-XO2FA-7JCX5-CUFQ4"></script>
@@ -277,11 +296,44 @@
     $('#containConeBucket').change(function () {
         if ($(this).val() == 1) {
             $('#coneBucketTypeSelect').hide();
-            $('#coneBucketType').empty();
         } else if ($(this).val() == 2) {
             $('#coneBucketTypeSelect').show();
         }
     });
+
+    //勾选锥桶
+    function selectConeBarrel(){
+        window.lar = layer.open({
+            type: 1,
+            title: '选择锥桶',
+            area: ['300px', '300px'],
+            skin: 'layer-ext-yourskin',
+            // shade: [0.8, '#393D49'],
+            shadeClose: false, //点击遮罩关闭
+            content: $("#chooseConeBarrel"),
+            offset: "auto",
+            success: function () {
+                //Enter回车，遮罩无限弹出
+                $(':focus').blur();
+            }
+        });
+    }
+
+    //确认勾选的锥桶
+    function addChooseConeBarrel(){
+        var str = "";
+        var list = $("#multipleConeBarrel input:checked");
+        for (var i = 0; i < list.length; i++) {
+            str += list[i].value + ",";
+        }
+        if (str.length > 0) {
+            $('#coneBucketNum').val(str.substring(0, str.length - 1));
+            layer.close(window.lar);
+        }else {
+            layer.close(window.lar);
+            $('#coneBucketNum').val("");
+        }
+    }
 
     //初始化地图
     $(function () {

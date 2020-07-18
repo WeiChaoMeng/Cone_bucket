@@ -54,6 +54,9 @@ public class ProjectMessageController {
     private ProjectScheduleService projectScheduleService;
 
     @Resource
+    private ConeBucketService coneBucketService;
+
+    @Resource
     private Activiti activiti;
 
     /**
@@ -106,9 +109,11 @@ public class ProjectMessageController {
         List<ConeBucketType> coneBucketTypeList = coneBucketTypeService.selectAll();
         //查询工程类型
         List<ProjectType> projectTypeList = projectTypeService.selectAll();
+        List<ConeBucket> coneBucketList =  coneBucketService.selectAll();
 
         model.addAttribute("coneBucketTypeList", coneBucketTypeList);
         model.addAttribute("projectTypeList", projectTypeList);
+        model.addAttribute("coneBucketList", coneBucketList);
         return "project/add";
     }
 
@@ -142,10 +147,14 @@ public class ProjectMessageController {
         List<ProjectType> projectTypeList = projectTypeService.selectAll();
         //所有工程展示在地图
         List<ProjectMessage> projectMessageList = projectMessageService.selectAllData();
+        //锥桶位置信息
+        List<ConeBucket> coneBucketList = coneBucketService.allConeBucketPosition();
+
         model.addAttribute("projectStatusList", projectStatusList);
         model.addAttribute("projectScheduleList", projectScheduleList);
         model.addAttribute("projectTypeList", projectTypeList);
         model.addAttribute("projectMessageList", JsonHelper.toJSONString(projectMessageList));
+        model.addAttribute("coneBucketList", JsonHelper.toJSONString(coneBucketList));
         return "project/project_query";
     }
 
@@ -209,9 +218,9 @@ public class ProjectMessageController {
     public String details(Integer id) {
         HashMap<String, Object> map = new HashMap<String, Object>(16);
         ProjectMessage projectMessage = projectMessageService.selectById(id);
-        List<ConeBucketMessage> coneBucketMessageList = coneBucketMessageService.selectByProId(id);
+        List<ConeBucket> coneBucketList = coneBucketService.selectByProId(id);
         map.put("projectMessage", projectMessage);
-        map.put("coneBucketMessageList", coneBucketMessageList);
+        map.put("coneBucketList", coneBucketList);
         return JsonHelper.toJSONString(map);
     }
 
@@ -240,15 +249,14 @@ public class ProjectMessageController {
     @RequiresPermissions("projectEntry")
     @RequestMapping("/toEdit.do")
     public String toEdit(Integer id, Model model) {
-        System.out.println(id);
         //工程信息
         ProjectMessage projectMessage = projectMessageService.selectById(id);
         //工程锥桶信息
-        List<ConeBucketMessage> coneBucketMessageList = projectMessage.getConeBucketMessage();
+        List<ConeBucket> coneBucketList = projectMessage.getConeBucket();
         String coneBucketNum = "";
-        for (int i = 0; i < coneBucketMessageList.size(); i++) {
-            coneBucketNum += coneBucketMessageList.get(i).getConeBucketNum();
-            if (coneBucketMessageList.size() - 1 != i) {
+        for (int i = 0; i < coneBucketList.size(); i++) {
+            coneBucketNum += coneBucketList.get(i).getId();
+            if (coneBucketList.size() - 1 != i) {
                 coneBucketNum += ",";
             }
         }
@@ -259,12 +267,16 @@ public class ProjectMessageController {
         List<ConeBucketType> coneBucketTypeList = coneBucketTypeService.selectAll();
         //查询工程类型
         List<ProjectType> projectTypeList = projectTypeService.selectAll();
+        //锥桶信息
+        List<ConeBucket> coneBucketInfoList = coneBucketService.selectAll();
 
         model.addAttribute("coneBucketTypeList", coneBucketTypeList);
         model.addAttribute("projectLocationList", JsonHelper.toJSONString(projectLocationList));
         model.addAttribute("projectTypeList", projectTypeList);
         model.addAttribute("projectMessage", projectMessage);
         model.addAttribute("coneBucketNum", coneBucketNum);
+        model.addAttribute("coneBucketList", JsonHelper.toJSONString(coneBucketInfoList));
+        model.addAttribute("selectedConeBucketList", JsonHelper.toJSONString(coneBucketList));
         return "project/edit";
     }
 

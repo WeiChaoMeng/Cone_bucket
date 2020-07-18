@@ -1,7 +1,7 @@
 // $(function () {
 //     //存入全局Ajax地址
-    localStorage.setItem('ajaxUrl', 'http://localhost:8080');
-//     localStorage.setItem('ajaxUrl', 'http://39.105.60.246');
+//     localStorage.setItem('ajaxUrl', 'http://localhost:8080');
+    localStorage.setItem('ajaxUrl', 'http://47.94.248.16');
 // });
 
 function login() {

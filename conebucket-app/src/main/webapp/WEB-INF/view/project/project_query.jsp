@@ -318,10 +318,13 @@
         }
     }
 
+    var map;
+    var markersArray = [];
+
     //地图展示
     function projectLocationShow(proMessageAllList) {
         //腾讯地图
-        var map = new qq.maps.Map(document.getElementById("container"), {
+        map = new qq.maps.Map(document.getElementById("container"), {
             center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
             zoom: 10                                                 // 地图的中心地理坐标。
         });
@@ -387,40 +390,106 @@
             }
         }
 
-        //锥桶位置
-        var coneBucketLocation = [
-            //骏业路
-            new qq.maps.LatLng(23.135964, 113.531507),
-            new qq.maps.LatLng(23.136044, 113.531761),
+        var coneBucketList = JSON.parse('${coneBucketList}');
 
-            //西三环
-            new qq.maps.LatLng(39.9234289527, 116.3101959229),
-            new qq.maps.LatLng(39.9228694481, 116.3102227449),
+        for (var i = 0; i < coneBucketList.length; i++) {
 
-            //东四环
-            new qq.maps.LatLng(39.9223428514, 116.4897751808),
-            new qq.maps.LatLng(39.920582014, 116.4897322655)
-        ];
+            //锥桶线路信息，离线锥桶为undefined
+            var roadInfo = coneBucketList[i].roadInfo;
 
-        for (var i = 0; i < coneBucketLocation.length; i++) {
+            //锥桶位置信息
+            var loc = coneBucketList[i].lastLocation;
+            var arr = loc.split(',');
+
+            if (roadInfo === undefined || arr[0] === '0' || arr[1] === '0') {
+                continue;
+            }
+
             //点
             var marker = new qq.maps.Marker({
-                position: coneBucketLocation[i],
+                position: new qq.maps.LatLng(arr[1], arr[0]),
                 map: map
             });
 
             //点
-            var anchor = new qq.maps.Point(10, 24),
-                size = new qq.maps.Size(20, 26),
+            var anchor = new qq.maps.Point(16, 16),
+                size = new qq.maps.Size(32, 32),
                 origin = new qq.maps.Point(0, 0),
                 markerIcon = new qq.maps.MarkerImage(
-                    "../../../static/img/cone_bucket.png",
+                    "../../../static/img/cone_bucket_32.png",
                     size,
                     origin,
                     anchor
                 );
             marker.setIcon(markerIcon);
+
+            markersArray.push(marker);
+
         }
+
+        dynamicConeBarrel();
+    }
+
+    //定时器
+    var refreshIntervalId;
+
+    function dynamicConeBarrel() {
+        refreshIntervalId = window.setInterval(function () {
+
+            //清除地图上的marker
+            if (markersArray) {
+                for (m in markersArray) {
+                    markersArray[m].setMap(null);
+                }
+                markersArray.length = 0;
+            }
+
+            $.ajax({
+                type: "post",
+                url: localStorage.getItem("ajaxUrl") + '/coneBucket/allConeBucketPosition',
+                async: false,
+                dataType: 'json',
+                success: function (coneBucketList) {
+
+                    for (var i = 0; i < coneBucketList.length; i++) {
+
+                        //锥桶线路信息，离线锥桶为undefined
+                        var roadInfo = coneBucketList[i].roadInfo;
+
+                        //锥桶位置信息
+                        var loc = coneBucketList[i].lastLocation;
+                        var arr = loc.split(',');
+
+                        if (roadInfo === undefined || arr[0] === '0' || arr[1] === '0') {
+                            continue;
+                        }
+
+                        //点
+                        var marker = new qq.maps.Marker({
+                            position: new qq.maps.LatLng(arr[1], arr[0]),
+                            map: map
+                        });
+
+                        //点
+                        var anchor = new qq.maps.Point(16, 16),
+                            size = new qq.maps.Size(32, 32),
+                            origin = new qq.maps.Point(0, 0),
+                            markerIcon = new qq.maps.MarkerImage(
+                                "../../../static/img/cone_bucket_32.png",
+                                size,
+                                origin,
+                                anchor
+                            );
+                        marker.setIcon(markerIcon);
+
+                        markersArray.push(marker);
+                    }
+
+                }, error: function (request) {
+                    console.log(request);
+                }
+            })
+        }, 300000);//1000 毫秒= 1 秒
     }
 
     //初始化
@@ -430,6 +499,11 @@
         projectLocationShow(projectMessageList);
         loadData(1);
     });
+
+    /*退出页面-关闭定时器*/
+    window.onbeforeunload = function (e) {
+        window.clearInterval(refreshIntervalId);
+    };
 
 </script>
 </html>
