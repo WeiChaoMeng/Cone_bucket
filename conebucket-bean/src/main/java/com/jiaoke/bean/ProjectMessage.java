@@ -164,7 +164,7 @@ public class ProjectMessage {
      * 工程锥桶表
      */
     @Transient
-    private List<ConeBucketMessage> coneBucketMessage;
+    private List<ConeBucket> coneBucket;
 
     /**
      * 工作流任务id
@@ -180,12 +180,12 @@ public class ProjectMessage {
         this.taskId = taskId;
     }
 
-    public List<ConeBucketMessage> getConeBucketMessage() {
-        return coneBucketMessage;
+    public List<ConeBucket> getConeBucket() {
+        return coneBucket;
     }
 
-    public void setConeBucketMessage(List<ConeBucketMessage> coneBucketMessage) {
-        this.coneBucketMessage = coneBucketMessage;
+    public void setConeBucket(List<ConeBucket> coneBucket) {
+        this.coneBucket = coneBucket;
     }
 
     public List<ProjectLocation> getProjectLocation() {

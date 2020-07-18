@@ -10,8 +10,8 @@
                     select="com.jiaoke.web.dao.ProjectLocationMapper.selectByProId"/>
 
         <!--关联查询工程锥桶-->
-        <collection property="coneBucketMessage" ofType="com.jiaoke.bean.ConeBucketMessage" column="id"
-                    select="com.jiaoke.web.dao.ConeBucketMessageMapper.selectByProId"/>
+        <collection property="coneBucket" ofType="com.jiaoke.bean.ConeBucket" column="id"
+                    select="com.jiaoke.web.dao.ConeBucketMapper.selectByProId"/>
     </resultMap>
 
     <insert id="insertReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id"

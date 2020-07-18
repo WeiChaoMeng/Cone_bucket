@@ -834,18 +834,17 @@
                             ProjectMessage += '<td>' + ProjectMessageList[i].proStatusStr + '</td>';
                             ProjectMessage += '<td>' + ProjectMessageList[i].proScheduleStr + '</td>';
                             ProjectMessage += '<td style="text-align: center; width: 110px;">';
-                            ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细';
-                            ProjectMessage += '</button>';
                             if (ProjectMessageList[i].proScheduleStr == "未进场") {
+                                ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="details(' + ProjectMessageList[i].id + ')">详细</button>';
                                 <shiro:hasPermission name="projectImplementation">
                                 ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="startWork(' + ProjectMessageList[i].id + ')">进场</button>';
                                 </shiro:hasPermission>
                             } else {
+                                ProjectMessage += '<button class="btn btn-primary btn-sm" style="margin-right: 5px;" onclick="detailsAndConeBucket(' + ProjectMessageList[i].id + ')">详细</button>';
                                 <shiro:hasPermission name="projectImplementation">
-                                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工';
+                                ProjectMessage += '<button class="btn btn-primary btn-sm" onclick="implementPerform(' + ProjectMessageList[i].taskId + ',' + ProjectMessageList[i].id + ')">完工</button>';
                                 </shiro:hasPermission>
                             }
-                            ProjectMessage += '</button>';
                             ProjectMessage += '</td>';
                             ProjectMessage += '</tr>';
                         }
@@ -1127,6 +1126,23 @@
             success: function (data) {
                 var mapObject = JSON.parse(data);
                 parent.projectDetailed(mapObject);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
+    }
+
+    //工程详情信息(携带锥桶信息)
+    function detailsAndConeBucket(id) {
+        $.ajax({
+            type: "post",
+            url: localStorage.getItem("ajaxUrl") + '/projectMessage/details.do',
+            data: {'id': id},
+            async: false,
+            success: function (data) {
+                var mapObject = JSON.parse(data);
+                parent.projectDetailedConeBucket(mapObject);
             },
             error: function (result) {
                 layer.msg("出错！");

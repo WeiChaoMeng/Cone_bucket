@@ -28,7 +28,7 @@ public class ProjectConeBucket {
     /**
      * 关联锥桶id
      */
-    private Integer coneBucketId;
+    private String coneBucketId;
 
     public Integer getId() {
         return id;
@@ -46,11 +46,11 @@ public class ProjectConeBucket {
         this.proId = proId;
     }
 
-    public Integer getConeBucketId() {
+    public String getConeBucketId() {
         return coneBucketId;
     }
 
-    public void setConeBucketId(Integer coneBucketId) {
+    public void setConeBucketId(String coneBucketId) {
         this.coneBucketId = coneBucketId;
     }
 }

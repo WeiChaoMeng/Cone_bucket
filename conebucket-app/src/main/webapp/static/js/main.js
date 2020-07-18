@@ -38,7 +38,7 @@ $('#device').on('click', function () {
         '<div class="secondary-menu-device">' +
         '<div onclick="coneBucketManagement(this)" class="secondary-menu-style-color">锥桶管理</div>' +
         '</div>')
-    $('#inlineFrame').attr("src", "/coneBucketManage.do");
+    $('#inlineFrame').attr("src", "/coneBucket/toIndex?page=1");
 });
 
 //日志管理
@@ -225,22 +225,20 @@ function projectDetailed(mapObject) {
     //锥桶信息
     detailedInfo += '<td>锥桶类型</td>';
     detailedInfo += '<td class="table-td-content" id="coneBucketTypeStr">';
-    if (mapObject.coneBucketMessageList.length < 1) {
+    if (mapObject.coneBucketList.length < 1) {
         detailedInfo += '无';
     } else {
-        for (var i = 0; i < mapObject.coneBucketMessageList.length; i++) {
-            detailedInfo += mapObject.coneBucketMessageList[i].coneBucketTypeStr;
-        }
+        detailedInfo += mapObject.coneBucketList[0].coneBucketTypeStr;
     }
     detailedInfo += '</td>';
     detailedInfo += '<td>锥桶编号</td>';
     detailedInfo += '<td class="table-td-content" id="coneBucketNum">';
-    if (mapObject.coneBucketMessageList.length < 1) {
+    if (mapObject.coneBucketList.length < 1) {
         detailedInfo += '无';
     } else {
-        for (var i = 0; i < mapObject.coneBucketMessageList.length; i++) {
-            detailedInfo += mapObject.coneBucketMessageList[i].coneBucketNum;
-            if (mapObject.coneBucketMessageList.length - 1 !== i) {
+        for (var i = 0; i < mapObject.coneBucketList.length; i++) {
+            detailedInfo += mapObject.coneBucketList[i].id;
+            if (mapObject.coneBucketList.length - 1 !== i) {
                 detailedInfo += ",";
             }
         }
@@ -311,6 +309,235 @@ function projectDetailed(mapObject) {
         editable: false,
         map: map
     });
+}
+
+//工程详细信息
+function projectDetailedConeBucket(mapObject) {
+    window.lar = layer.open({
+        title: '工程详情信息(锥桶)',
+        type: 1,
+        area: ['80%', '90%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#projectDetailedConeBucket"),
+        offset: "5%"
+    });
+
+    var detailedInfo = "";
+    detailedInfo += '<tr>';
+    detailedInfo += '<td>工程名称</td>';
+    detailedInfo += '<td class="table-td-content" colspan="5">' + mapObject.projectMessage.proName + '</td>';
+    detailedInfo += '<td style="width: 10%">工程类型</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.proTypeStr + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td style="vertical-align: middle">工程概述</td>';
+    detailedInfo += '<td class="table-td-content" colspan="7" style="height: 55px;padding: 5px">' + mapObject.projectMessage.proSummarize + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td style="width: 10%">开始时间</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.proStartTimeStr + '</td>';
+    detailedInfo += '<td style="width: 10%">结束时间</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.proEndTimeStr + '</td>';
+    detailedInfo += '<td style="width: 10%">主管单位</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.governorUnit + '</td>';
+    detailedInfo += '<td style="width: 10%">联系方式</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.governorUnitPhone + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td>施工单位</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.constructionUnit + '</td>';
+    detailedInfo += '<td>联系方式</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.constructionUnitPhone + '</td>';
+    detailedInfo += '<td>监理单位</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.constructionUnit + '</td>';
+    detailedInfo += '<td>联系方式</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.supervisorUnitPhone + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td>工程位置</td>';
+    detailedInfo += '<td class="table-td-content" colspan="7">' + mapObject.projectMessage.proLocation + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+
+    //锥桶信息
+    detailedInfo += '<td>锥桶类型</td>';
+    detailedInfo += '<td class="table-td-content" id="coneBucketTypeStr">';
+    if (mapObject.coneBucketList.length < 1) {
+        detailedInfo += '无';
+    } else {
+        detailedInfo += mapObject.coneBucketList[0].coneBucketTypeStr;
+    }
+    detailedInfo += '</td>';
+    detailedInfo += '<td>锥桶编号</td>';
+    detailedInfo += '<td class="table-td-content" id="coneBucketNum">';
+    if (mapObject.coneBucketList.length < 1) {
+        detailedInfo += '无';
+    } else {
+        for (var i = 0; i < mapObject.coneBucketList.length; i++) {
+            detailedInfo += mapObject.coneBucketList[i].id;
+            if (mapObject.coneBucketList.length - 1 !== i) {
+                detailedInfo += ",";
+            }
+        }
+    }
+    detailedInfo += '</td>';
+    detailedInfo += '<td>工程状态</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.proStatusStr + '</td>';
+    detailedInfo += '<td>工程进度</td>';
+    detailedInfo += '<td class="table-td-content">' + mapObject.projectMessage.proScheduleStr + '</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td class="table-td-title" colspan="8">施工范围</td>';
+    detailedInfo += '</tr>';
+    detailedInfo += '<tr>';
+    detailedInfo += '<td colspan="8" style="height: 350px;">';
+    detailedInfo += '<div id="containerConeBucket"></div>';
+    detailedInfo += '</td>';
+    detailedInfo += '</tr>';
+
+    $("#coneBucketBody").html(detailedInfo);
+
+    var projectLocationList = mapObject.projectMessage.projectLocation;
+    var mapCenter;
+    if (projectLocationList.length > 1) {
+        for (var i = 0; i < projectLocationList.length; i++) {
+            mapCenter = new qq.maps.LatLng(projectLocationList[0].latitude, projectLocationList[0].longitude);
+        }
+    }
+
+    //腾讯地图
+    var map = new qq.maps.Map(document.getElementById("containerConeBucket"), {
+        center: mapCenter,      // 地图的中心地理坐标。
+        zoom: 11                                                 // 地图的中心地理坐标。
+    });
+
+    //施工范围
+    var path = [];
+
+    for (var i = 0; i < projectLocationList.length; i++) {
+        //点
+        var marker = new qq.maps.Marker({
+            position: new qq.maps.LatLng(projectLocationList[i].latitude, projectLocationList[i].longitude),
+            map: map
+        });
+
+        //点
+        var anchor = new qq.maps.Point(10, 24),
+            size = new qq.maps.Size(20, 26),
+            origin = new qq.maps.Point(0, 0),
+            markerIcon = new qq.maps.MarkerImage(
+                "../../static/img/marker.png",
+                size,
+                origin,
+                anchor
+            );
+        marker.setIcon(markerIcon);
+
+        //线
+        path.push(new qq.maps.LatLng(projectLocationList[i].latitude, projectLocationList[i].longitude));
+    }
+
+    //线
+    var polyline = new qq.maps.Polyline({
+        path: path,
+        strokeColor: '#3366FF',
+        strokeWeight: 2,
+        editable: false,
+        map: map
+    });
+
+    /*实时锥桶位置*/
+    //施工范围
+    var path = [];
+
+    for (var i = 0; i < projectLocationList.length; i++) {
+        //点
+        var marker = new qq.maps.Marker({
+            position: new qq.maps.LatLng(projectLocationList[i].latitude, projectLocationList[i].longitude),
+            map: map
+        });
+
+        //点
+        var anchor = new qq.maps.Point(10, 24),
+            size = new qq.maps.Size(20, 26),
+            origin = new qq.maps.Point(0, 0),
+            markerIcon = new qq.maps.MarkerImage(
+                "../../static/img/marker.png",
+                size,
+                origin,
+                anchor
+            );
+        marker.setIcon(markerIcon);
+
+        //线
+        path.push(new qq.maps.LatLng(projectLocationList[i].latitude, projectLocationList[i].longitude));
+    }
+
+    //线
+    var polyline = new qq.maps.Polyline({
+        path: path,
+        strokeColor: '#3366FF',
+        strokeWeight: 2,
+        editable: false,
+        map: map
+    });
+
+    //锥桶id
+    var ids = [];
+    var list = mapObject.coneBucketList;
+    if (list.length > 0) {
+        for (var i = 0; i < list.length; i++) {
+            ids.push(list[i].id);
+        }
+
+        //锥桶位置
+        var coneBucketPath = [];
+
+        var res = mapObject.projectMessage.coneBucket;
+
+        for (var i = 0; i < res.length; i++) {
+
+            //锥桶位置信息为0,0
+            var loc = res[i].lastLocation;
+            var arr = loc.split(',');
+
+            //锥桶线路信息，离线锥桶为undefined
+            var roadInfo = res[i].roadInfo;
+
+            if (roadInfo === undefined || arr[0] === '0' || arr[1] === '0') {
+                continue;
+            }
+
+            var coneBucketMarker = new qq.maps.Marker({
+                position: new qq.maps.LatLng(arr[1], arr[0]),
+                map: map
+            });
+
+            var coneBucketAnchor = new qq.maps.Point(10, 10),
+                coneBucketSize = new qq.maps.Size(20, 20),
+                coneBucketOrigin = new qq.maps.Point(0, 0),
+                coneBucketMarkerIcon = new qq.maps.MarkerImage(
+                    "../../static/img/cone_bucket_style.png",
+                    coneBucketSize,
+                    coneBucketOrigin,
+                    coneBucketAnchor
+                );
+            coneBucketMarker.setIcon(coneBucketMarkerIcon);
+
+            //线
+            coneBucketPath.push(new qq.maps.LatLng(arr[1], arr[0]));
+        }
+
+        //线
+        var coneBucketPolyline = new qq.maps.Polyline({
+            path: coneBucketPath,
+            strokeColor: '#ff0000',
+            strokeWeight: 2,
+            editable: false,
+            map: map
+        });
+    }
+
 }
 
 //添加用户
@@ -757,6 +984,84 @@ function commitBindingPermission() {
             }
         })
     }
+}
+
+//添加锥桶
+function addConeBucket() {
+    window.lar = layer.open({
+        title: '添加锥桶',
+        type: 1,
+        area: ['390px', '270px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addConeBucket"),
+        offset: "auto"
+    });
+
+    var userInfo = '';
+    userInfo += '<div class="model-style">';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">锥桶编号</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<input type="text" id="deviceId" class="form-control" autocomplete="off">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-div">';
+    userInfo += '<label class="user-add-label">锥桶类型</label>';
+    userInfo += '<div class="user-add-div-div">';
+    userInfo += '<select class="form-control" id="coneBucketType">';
+    userInfo += '<option value="0">内部监管</option>';
+    userInfo += '<option value="1">高德平台</option>';
+    userInfo += '</select>';
+    userInfo += '</div>';
+    userInfo += '</div>';
+    userInfo += '<div class="user-add-but-div">';
+    userInfo += '<input class="btn btn-primary btn-sm" type="button" onclick="commitConeBucketFun()" value="提交">';
+    userInfo += '</div>';
+    userInfo += '</div>';
+
+    $('#addConeBucket').html(userInfo);
+}
+
+//提交添加
+function commitConeBucketFun() {
+    var deviceId = $('#deviceId').val();
+    var coneBucketType = $("#coneBucketType option:selected");
+    if (coneBucketType.val() === "1") {
+        layer.msg("无高德平台锥桶！");
+    } else {
+        if (deviceId !== '') {
+            frame.window.commitConeBucket(deviceId, coneBucketType.val());
+        } else {
+            layer.msg("锥桶编号不可以为空！");
+        }
+    }
+}
+
+//删除锥桶
+function deleteConeBucket(id) {
+    //提示窗
+    layer.confirm('确定要删除吗？', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: '/coneBucket/delete',
+                data: {'deviceId': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！');
+                        frame.window.reloadConeBucketPage(1);
+                    } else {
+                        layer.msg('删除失败！')
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            });
+        }
+    );
 }
 
 /****************js判空方法********************/
